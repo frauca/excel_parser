@@ -1,0 +1,20 @@
+package frauca.readers.sheetables
+
+import org.grails.plugins.excelimport.ExcelImportUtils
+import org.grails.plugins.excelimport.*
+
+class IESheetable extends AbstractExcelImporter {
+
+	static Map CONFIG_BOOK_CELL_MAP = [ sheet:'Sheet1', cellMap: [ 'A4':'operation_date', 'B4':'value_date', 'C4':'concept', ] ]
+
+	static Map CONFIG_BOOK_COLUMN_MAP = [ sheet:'Sheet1', startRow: 6, columnMap: [ 'A':'operation_date', 'B':'value_date', 'C':'concept', ] ]
+
+	//can also configure injection in resources.groovy def getExcelImportService() { ExcelImportService.getService() }
+
+	public IESheetable(fileName) { super(fileName) }
+
+	List<Map> getBooks() { List bookList = excelImportService.columns(workbook, CONFIG_BOOK_COLUMN_MAP) }
+
+	Map getOneMoreBookParams() { Map bookParams = excelImportService.cells(workbook, CONFIG_BOOK_CELL_MAP ) }
+
+}
