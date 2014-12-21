@@ -1,14 +1,20 @@
 includeTargets << grailsScript("_GrailsInit")
 includeTargets << grailsScript("_GrailsBootstrap")
 
-
-target(filesLoader: "The description of the script goes here!") {
-   loadApp()
-	for (grailsClass in grailsApp.allClasses) { println grailsClass }
+target(showcontext: "Test to see if the context is available"){
+	loadApp()
+	for (grailsClass in grailsApp.allClasses) {
+		println grailsClass
+	}
 	configureApp()
 	appCtx.beanDefinitionNames.sort().each { println it }
+}
+
+target(filesLoader: "The description of the script goes here!") {
+	loadApp()
+	configureApp()
 	c = appCtx.getBean('readerService')
-	c.readFile('/home/riro/Documents/Banc/2014/data/2014_01_11_barclays.xls')
+	c.readFile('D:/proyectos/docs/personal/learn/docs/')
 }
 
 setDefaultTarget(filesLoader)
