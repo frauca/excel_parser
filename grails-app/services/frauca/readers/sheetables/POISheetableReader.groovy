@@ -24,33 +24,36 @@ class POISheetableReader extends BaseSheetable  {
 	@Override
 	public Object getCeilValue(Object ceil) {
 		CellReference ref = new CellReference(ceil)
-		log.trace "reading '$ceil' '${ref.row}' '${ref.col}'"
 		Row row = sheet.getRow(ref.getRow());
 		Cell cell = row.getCell(ref.getCol());
+		log.trace "reading '$ceil' '${ref.row}' '${ref.col}' "
 		return getCeilVaule(cell);
 	}
 
 	public Object getCeilVaule(Cell cell){
-		if(HSSFDateUtil.isCellDateFormatted(cell)){
-			
-			double dv = cell.getNumberValue();
-			Date date = HSSFDateUtil.getJavaDate(dv);
-
-			return date
-
-		}
-		if (cell!=null) {
-			switch (cell.getCellType()) {
-				case Cell.CELL_TYPE_BOOLEAN:
-				return cell.getBooleanCellValue()
-				case Cell.CELL_TYPE_NUMERIC:
-				return cell.getNumericCellValue()
-				case Cell.CELL_TYPE_STRING:
-				return cell.getStringCellValue()
-				default:
-				log.debug "unkonw cell type '$cell' "+cell.getCellType()
-				return cell.getStringCellValue()
+		try{
+			if (cell!=null) {
+				switch (cell.getCellType()) {
+					case Cell.CELL_TYPE_BOOLEAN:
+					return cell.getBooleanCellValue()
+					case Cell.CELL_TYPE_NUMERIC:
+					double dv = cell.getNumericCellValue();
+						if(HSSFDateUtil.isCellDateFormatted(cell)){
+							Date date = HSSFDateUtil.getJavaDate(dv);
+							return date
+						}
+						return dv
+					case Cell.CELL_TYPE_STRING:
+					return cell.getStringCellValue()
+					case Cell.CELL_TYPE_BLANK:
+						return null
+					default:
+					log.trace "unkonw cell type '$cell' ${cell.getRowIndex()}-${cell.getColumnIndex()} "+cell.getCellType()
+					return cell.getStringCellValue()
+				}
 			}
+		}catch(e){
+			log.trace "could not parse cell",e
 		}
 	}
 

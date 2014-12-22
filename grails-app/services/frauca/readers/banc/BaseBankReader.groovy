@@ -98,6 +98,9 @@ abstract class BaseBankReader {
 	}
 	
 	public Double getDoubeVale(def posdouble){
+		if(!posdouble){
+			return null
+		}
 		if(posdouble instanceof Double){
 			return posdouble
 		}else if(posdouble instanceof Number){

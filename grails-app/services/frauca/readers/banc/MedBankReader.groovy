@@ -12,10 +12,8 @@ class MedBankReader extends BaseBankReader {
 		MedBankReader me = new MedBankReader()
 		me.sheettable = new POISheetableReader(file)
 		if(me.itsMine()){
-			log.trace "its me"
 			return me
 		}
-		log.trace "its nt me"
 		return null;
 	}
 
@@ -51,16 +49,18 @@ class MedBankReader extends BaseBankReader {
 
 	@Override
 	public Object getAmountCell(int row) {
-		Double pagos=0
-		try{
-			pagos=getDoubeVale(sheettable.getCeilValue("E"+row))
-		}catch(e){}
 		
-		Double ingresos=0
-		try{
-			ingresos=getDoubeVale(sheettable.getCeilValue("D"+row))
-		}catch(e){}
-		pagos - ingresos 
+		Double pagos=getDoubeVale(sheettable.getCeilValue("D"+row))
+		if(!pagos){
+			pagos=0
+		}
+		
+		Double ingresos=getDoubeVale(sheettable.getCeilValue("E"+row))
+		if(!ingresos){
+			ingresos=0
+		}
+		log.debug "${ingresos}-${pagos}=${ingresos-pagos} ${row} '${sheettable.getCeilValue("D"+row)}'"
+		ingresos - pagos 
 	}
 
 	@Override
