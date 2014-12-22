@@ -1,5 +1,6 @@
 package frauca.readers.sheetables
 
+import org.jopendocument.dom.ODValueType;
 import org.jopendocument.dom.spreadsheet.Sheet
 import org.jopendocument.dom.spreadsheet.SpreadSheet
 
@@ -9,6 +10,7 @@ class JODSheetableReader extends BaseSheetable  {
 	Sheet sheet
 	
 	JODSheetableReader(File  f){
+		file =f
 		sheettable = SpreadSheet.createFromFile(f)
 		sheet = sheettable.firstSheet
 	}
@@ -16,5 +18,10 @@ class JODSheetableReader extends BaseSheetable  {
 	@Override
 	public def getCeilValue(Object ceil) {
 		return sheet.getCellAt(ceil).getValue()
+	}
+
+	@Override
+	public int getLastRowNum() {
+		return sheet.getRowCount()
 	}
 }

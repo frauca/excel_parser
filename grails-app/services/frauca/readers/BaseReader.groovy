@@ -1,7 +1,10 @@
 package frauca.readers
 
+import frauca.AccountMovRaw;
 import frauca.FileSource
-import frauca.readers.banc.BaseBanckReader
+import frauca.readers.banc.BarBankReader
+import frauca.readers.banc.BaseBankReader
+import frauca.readers.banc.IngBankReader
 import frauca.readers.banc.MedBankReader
 import frauca.readers.sheetables.*
 
@@ -9,8 +12,7 @@ class BaseReader {
 
 	FileSource fileS
 	File file
-	def stReader
-	BaseBanckReader bnkReader
+	BaseBankReader bnkReader
 
 
 	// first default constructor
@@ -30,45 +32,34 @@ class BaseReader {
 	def afterInit(){
 		//Find the reader who could read file
 		log.debug "Init from path "+fileS.path
-		if(findSuitableSTReader(file)){
-			
-		}
+		findSuitableBankReader(file)
 		
 		//IESheetable st=new IESheetable(path)
 	}
 
-	/**
-	 * Will try sheetable readers until find one that could read it
-	 * @return
-	 */
-	def findSuitableSTReader(File file){
-		//POI
-		try{
-			stReader=new POISheetableReader(file)
-			log.debug "Opened with poi"
-			return stReader
-		}catch(e){
-			log.debug "POI could not read "+file.name,e
+	
+	
+	def findSuitableBankReader(File file){
+		BaseBankReader[] suitables = [new BarBankReader(), new IngBankReader()
+							,new MedBankReader()]
+		suitables.find {suitable->
+			try{
+				log.debug "try to read it with ${suitable}"
+				bnkReader = suitable.iCouldHandle(file)
+				return bnkReader
+			}catch(e){
+				log.debug "could not read it with ${suitable}"
+				log.trace "reason",e
+			}
 		}
-		//JOpenDocument
-		try{
-			stReader=new JODSheetableReader(file)
-			log.debug "Openend with JOpenDocument"
-			return stReader
-		}catch(e){
-			log.debug "JOpenDocument could not read "+file.name,e
-		}
-		return null
+		return null //no one could read it
 	}
 	
-	def findSuitableBankReader(BaseSheetable sheet){
-		//Try Med
-		try{
-			bnkReader = new MedBankReader(sheet)
-			log.info "The ccc is "+bnkReader.getAccount().rawCCC
-		}catch(e){
-		 log.debug "It is not a Med bank type ",e
-		}
-
-	}
+	/**
+	 * @return all the rows of the file
+	 */
+	AccountMovRaw[] readAllMovements(){
+		log.debug "Reading from ${bnkReader}"
+		 bnkReader.readAllMovements()
+	 }
 }

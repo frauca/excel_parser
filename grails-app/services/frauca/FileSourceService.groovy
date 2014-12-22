@@ -14,6 +14,7 @@ class FileSourceService {
 	def importAllFiles(path){
 		def files=[]
 		def dir = new File(path)
+		
 		if(dir.isDirectory()){
 			dir.eachFileRecurse (FileType.FILES) { file -> 
 				files << file 

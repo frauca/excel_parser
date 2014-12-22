@@ -114,7 +114,7 @@ log4j.main = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
-	info 'grails.app',
-			'frauca'
-	debug 'frauca.readers.banc'
+	info 'grails.app'
+	debug 'grails.app.services.frauca.readers',
+			'grails.app.services.frauca.ReaderService'		 
 }
