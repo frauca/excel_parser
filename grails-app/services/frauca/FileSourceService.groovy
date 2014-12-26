@@ -3,8 +3,10 @@ package frauca
 import org.springframework.stereotype.Component;
 
 import frauca.FileSource
+import grails.transaction.Transactional;
 import groovy.io.FileType
 
+@Transactional
 class FileSourceService {
 
 	/**
@@ -34,7 +36,7 @@ class FileSourceService {
 	def persistAllFiles(files){
 		files.each{ file->
 			def fsource = new FileSource(file)
-			log.info "looking for "+file.name
+			log.debug "looking for "+file.name
 			def fs=FileSource.findByName(file.name)
 			if(fs){
 				log.info "file already exists "+fs.path

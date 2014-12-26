@@ -15,6 +15,7 @@ class AccountMovRaw {
 	 */
 	String conceptRaw
 
+	static belongsTo = [source:FileSource]
     static constraints = {
     }
 }

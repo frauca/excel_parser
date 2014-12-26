@@ -5,10 +5,12 @@ class FileSource {
 	String name
 	String state
 	
+	static hasMany = [rawMovs: AccountMovRaw]
+	
     static constraints = {
 		path blank:false
 		name blank:false
-		state inList: ["new", "parsed", "error"]
+		state inList: ["new", "parsed", "error","error_not_readed"]
     }
 	
 	FileSource(File file){

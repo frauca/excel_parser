@@ -68,4 +68,10 @@ class MedBankReader extends BaseBankReader {
 		sheettable.getCeilValue("F"+row)
 	}
 
+	@Override
+	public String getConceptFromRaw(String raw) {
+		String concpet = StringUtils.replaceLast(raw, "-", "").trim()
+		return concpet;
+	}
+
 }

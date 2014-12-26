@@ -7,6 +7,7 @@ import grails.transaction.Transactional
 class ReaderService {
 
 	def fileSourceService
+	def accountMovRawService
 	
     /**
      * Persist all files to database
@@ -44,11 +45,13 @@ class ReaderService {
 	 */
 	def process(FileSource file){
 		BaseReader reader=new BaseReader(file)
-		log.debug "Read all moves ${reader.bnkReader}"
-		AccountMovRaw[] movs = reader.readAllMovements()
-		log.debug "show all movs ${movs.size()}"
-		movs.each {
-			log.info "${it.concept} ${it.conceptRaw} ${it.valueDate} ${it.operationDate} ${it.amount} ${it.totalAmount}"
+		if(!reader.bnkReader){
+			log.debug "Could not read the file"
+			file.state="error_not_readed"
+		}else{
+			accountMovRawService.saveAllMov(file,reader.readAllMovements())
+			file.state="parsed"
 		}
+		file.save()
 	}
 }

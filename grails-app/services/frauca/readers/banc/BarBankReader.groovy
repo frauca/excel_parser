@@ -1,6 +1,7 @@
 package frauca.readers.banc
 
 import frauca.readers.sheetables.JODSheetableReader
+import frauca.utils.StringUtils;
 
 class BarBankReader extends BaseBankReader {
 
@@ -52,6 +53,12 @@ class BarBankReader extends BaseBankReader {
 	@Override
 	public Object getTotalAmountCell(int row) {
 		sheettable.getCeilValue("E"+row)
+	}
+
+	@Override
+	public String getConceptFromRaw(String raw) {
+		String concept =StringUtils.removeAnyReplacements(raw, /RECIBO SEPA \d+  /)
+		return concept 
 	}
 	
 	

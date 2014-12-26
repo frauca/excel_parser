@@ -1,8 +1,7 @@
 package frauca.readers.banc
 
-import java.io.File;
-
 import frauca.readers.sheetables.JODSheetableReader
+import frauca.utils.StringUtils
 
 class IngBankReader extends BaseBankReader {
 	
@@ -54,6 +53,13 @@ class IngBankReader extends BaseBankReader {
 	@Override
 	public Object getTotalAmountCell(int row) {
 		sheettable.getCeilValue("F"+row)
+	}
+
+	@Override
+	public String getConceptFromRaw(String raw) {
+		String concept =StringUtils.removeAnyReplacements(raw, /TARGETA \*\d+ /)
+		(concept =~ /CAIXER TARG\. \*\d+ /).replaceAll("CAIXER ")
+		return concept 
 	}
 
 }

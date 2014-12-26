@@ -16,6 +16,15 @@ def showAllFiles(){
     }
 }
 
-readFile('D:/proyectos/docs/personal/learn/docs/med1.xls')
+def showAllMovsAllFiles(){
+	FileSource.findAll().each {
+		println "File ${it.path} ${it.state}"
+		it.rawMovs.each {mov->
+			println "\t Move ${mov.concept} ${mov.operationDate}"
+		}
+	}
+}
+
+readFile('D:/proyectos/docs/personal/learn/docs/ing.ods')
 
  //showAllFiles()

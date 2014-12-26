@@ -16,6 +16,9 @@ class CheckNewFilesJobSpec extends Specification {
     def cleanup() {
     }
 
-    void "test something"() {
+     void "test dontborder"() {
+		given:
+		expect:
+			1+1==2
     }
 }

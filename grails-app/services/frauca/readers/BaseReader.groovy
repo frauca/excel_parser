@@ -33,8 +33,6 @@ class BaseReader {
 		//Find the reader who could read file
 		log.debug "Init from path "+fileS.path
 		findSuitableBankReader(file)
-		
-		//IESheetable st=new IESheetable(path)
 	}
 
 	

@@ -65,6 +65,7 @@ abstract class BaseBankReader {
 		 row.operationDate=getDateVale( getOperationDateCell(rownum))
 		 row.valueDate=getDateVale(getValueDateCell(rownum))
 		 row.conceptRaw=getConcpetCell(rownum)
+		 row.concept = getConceptFromRaw(row.conceptRaw)
 		 row.amount=getDoubeVale(getAmountCell(rownum))
 		 row.totalAmount=getDoubeVale(getTotalAmountCell(rownum))
 		 return row
@@ -79,6 +80,12 @@ abstract class BaseBankReader {
 	def abstract getConcpetCell(int row)
 	def abstract getAmountCell(int row)
 	def abstract getTotalAmountCell(int row)
+	/**
+	 * Parse the raw concept and make better understandable
+	 * @param raw concepte to process
+	 * @return processed concept
+	 */
+	def abstract String getConceptFromRaw(String raw)
 	
 	
 	public Date getDateVale(def posdate){
