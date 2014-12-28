@@ -3,6 +3,7 @@ package frauca.readers.banc
 import java.text.SimpleDateFormat
 
 import frauca.Account
+import frauca.AccountMov
 import frauca.AccountMovRaw
 import frauca.readers.sheetables.BaseSheetable
 
@@ -18,10 +19,20 @@ abstract class BaseBankReader {
 		log.debug "get the account of the bank"
 		def ccc = getAccountCeilVal()
 		if(ccc!=null){
-			Account ac = new Account()
-			ac.rawCCC = ccc
-			log.debug "the ccc is on a place "+ac.rawCCC
-			return ac
+			def ac = Account.findByRawCCC(ccc)
+			if(ac){
+				return ac
+			}else{
+				ac = new Account()
+				ac.rawCCC = ccc
+				ac.save()
+				if(ac.hasErrors()){
+					ac.errors.allErrors.each{log.error "could not save account "+it}
+				}else{
+					log.debug "the ccc is on a place "+ac.rawCCC
+					return ac
+				}
+			}
 		}
 		return null;
 	}
@@ -52,8 +63,8 @@ abstract class BaseBankReader {
 			 try{
 				 rows << readRowMovements(i)
 			 }catch(e){
-			 	log.debug "stop reading file at ${i} because ${e.message}",e
-				 
+			 	log.debug "stop reading file at ${i} because ${e.message}"
+				log.trace "stop reading because: ",e 
 				 break
 			 }
 		 }
@@ -68,6 +79,7 @@ abstract class BaseBankReader {
 		 row.concept = getConceptFromRaw(row.conceptRaw)
 		 row.amount=getDoubeVale(getAmountCell(rownum))
 		 row.totalAmount=getDoubeVale(getTotalAmountCell(rownum))
+		 row.rowOfDoc=rownum
 		 return row
 	 }
 	 /**
@@ -118,4 +130,21 @@ abstract class BaseBankReader {
 		}
 		return null
 	}
+	
+	/**
+	 * The find movement is done in the basebank to let in the future find by diferent way depending on the bank
+	 *
+	 * @param rawmove
+	 * @return
+	 */
+	public AccountMov findRawMove(AccountMovRaw rawmove){
+		//TODO detectar duplicats a autopista
+		def dup = AccountMov.where{
+			operationDate == rawmove.operationDate
+			concept == rawmove.concept
+			amount == rawmove.amount
+		}
+		return dup.find()
+	}
+	
 }

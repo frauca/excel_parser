@@ -14,5 +14,9 @@ class Account {
 	static hasMany = [files: FileSource]
 	
     static constraints = {
+		name nullable:true
+		comments nullable:true
+		ccc nullable:true
+		iban nullable:true
     }
 }

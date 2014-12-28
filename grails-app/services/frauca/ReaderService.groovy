@@ -1,11 +1,15 @@
 package frauca
 
+import javax.transaction.Transactional;
+
 import frauca.readers.BaseReader
-import grails.transaction.Transactional
+import frauca.readers.banc.BaseBankReader;
+import grails.transaction.NotTransactional
+
 
 @Transactional
 class ReaderService {
-
+	
 	def fileSourceService
 	def accountMovRawService
 	
@@ -15,7 +19,7 @@ class ReaderService {
      * @return
      */
     def readFile(String path) {
-		log.error "reading "+path
+		log.debug "reading "+path
 		fileSourceService.importAllFiles(path)
     }
 	
@@ -32,9 +36,11 @@ class ReaderService {
 	 * @return
 	 */
 	def processAllNewFiles(){
+		log.debug "process all new files"
 		FileSource.findAllByState("new").each {fs ->
 			process(fs)
 		}
+		log.debug "all new files procesed"
 	}
 
 	
@@ -44,14 +50,20 @@ class ReaderService {
 	 * @return
 	 */
 	def process(FileSource file){
+		log.debug "process "+file.path
 		BaseReader reader=new BaseReader(file)
 		if(!reader.bnkReader){
 			log.debug "Could not read the file"
 			file.state="error_not_readed"
 		}else{
+			log.debug "read all moves"
 			accountMovRawService.saveAllMov(file,reader.readAllMovements())
 			file.state="parsed"
+			file.account=reader.getAccount()
 		}
 		file.save()
+		if(reader.bnkReader){
+			accountMovRawService.processAllPendingMoves(reader.bnkReader)
+		}
 	}
 }

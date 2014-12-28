@@ -1,6 +1,7 @@
 package frauca.readers
 
-import frauca.AccountMovRaw;
+import frauca.Account
+import frauca.AccountMovRaw
 import frauca.FileSource
 import frauca.readers.banc.BarBankReader
 import frauca.readers.banc.BaseBankReader
@@ -58,6 +59,17 @@ class BaseReader {
 	 */
 	AccountMovRaw[] readAllMovements(){
 		log.debug "Reading from ${bnkReader}"
-		 bnkReader.readAllMovements()
+		def res= bnkReader.readAllMovements()
+		log.info "${res.size()} have been readed from ${file.name}"
+		return res
+		
 	 }
+	
+	/**
+	 * Account for the file readed
+	 * @return
+	 */
+	Account getAccount(){
+		return bnkReader.getAccount()
+	}
 }

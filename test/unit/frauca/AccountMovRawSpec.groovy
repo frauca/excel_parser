@@ -15,9 +15,22 @@ class AccountMovRawSpec extends Specification {
     def cleanup() {
     }
 
-    void "test dontborder"() {
+    void "test emptySave"() {
 		given:
+			AccountMovRaw raw1=getNewAccountRaw()
+			raw1.save()
 		expect:
-			1+1==2
+			0 == raw1.errors.allErrors.size()
     }
+	
+	AccountMovRaw getNewAccountRaw(){
+		AccountMovRaw raw1=new AccountMovRaw()
+		
+		raw1.operationDate=new Date()
+		raw1.valueDate=new Date()
+		raw1.amount=10
+		raw1.totalAmount=1000
+		raw1.sourceFile=new FileSource(new File("c:/tmp"))
+		raw1
+	}
 }

@@ -6,6 +6,10 @@ import frauca.FileSource
 import grails.transaction.Transactional;
 import groovy.io.FileType
 
+/**
+ * @author rofc
+ * This service will manage the fileSource and account instances
+ */
 @Transactional
 class FileSourceService {
 

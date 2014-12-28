@@ -1,9 +1,7 @@
 package frauca.readers.banc
 
-import java.io.File;
-
-import frauca.readers.sheetables.BaseSheetable
 import frauca.readers.sheetables.POISheetableReader
+import frauca.utils.StringUtils
 
 class MedBankReader extends BaseBankReader {
 	
