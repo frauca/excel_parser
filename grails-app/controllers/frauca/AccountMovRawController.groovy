@@ -10,5 +10,8 @@ class AccountMovRawController extends RestfulController {
 		super(AccountMovRaw)
 	}
 	
-   
+    def index() { 
+		def res=AccountMovRaw.list(max:3)
+		respond res, model:[movRawCount:res.size()]
+	}
 }
