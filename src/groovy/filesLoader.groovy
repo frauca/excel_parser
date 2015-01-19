@@ -10,10 +10,6 @@ def readFile(def path){
     println "readed"
 }
 
-def processAllSourceFiles(){
-    ac = ctx.getBean('accountMovRawService')
-    ac.processAllPendingMoves()
-}
 
 def showAllFiles(){
     FileSource.findAll().each {
@@ -39,7 +35,6 @@ def showAllMovs(){
 
 readFile('D:/proyectos/docs/personal/learn/docs/2014_12_08_mediolanum.xls')
 
-//processAllSourceFiles()
 showAllMovsAllFiles()
 showAllFiles()
 showAllMovs()

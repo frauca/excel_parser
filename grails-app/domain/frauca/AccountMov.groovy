@@ -1,7 +1,9 @@
 package frauca
 
-import java.util.Date;
+import grails.rest.Resource
 
+
+@Resource(uri='/acount_movs')
 class AccountMov {
 
 	Date operationDate

@@ -1,5 +1,9 @@
 package frauca
 
+import grails.rest.Resource
+
+
+@Resource
 class AccountMovRaw {
 	
 	Date operationDate
