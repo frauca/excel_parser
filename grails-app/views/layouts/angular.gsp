@@ -10,6 +10,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title><g:layoutTitle default="Grails"/> - <g:meta name="app.title"/></title>
+		<base href="${resource()}/" /><!-- angular gets urls -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="shortcut icon" href="${assetPath(src: 'favicon.ico')}" type="image/x-icon">
 		<link rel="apple-touch-icon" href="${assetPath(src: 'apple-touch-icon.png')}">
@@ -21,7 +22,9 @@
 		<asset:javascript src="plugins/angular/1.3.8/angular.js"/>
 		<asset:javascript src="plugins/smart-table/smart-table.min.js"/>
 		<asset:javascript src="angular/app.js"/>
+		<asset:javascript src="angular/controllers.js"/>
 		<g:layoutHead/>
+		
 	</head>
 	<body>
 		<header class="navbar">

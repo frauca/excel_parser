@@ -8,20 +8,20 @@
 		<table st-table="rowCollection" class="table table-striped">
 			<thead>
 				<tr>
-					<th>first name</th>
-					<th>last name</th>
-					<th>birth date</th>
-					<th>balance</th>
-					<th>email</th>
+					<th>operation D</th>
+					<th>value D</th>
+					<th>concept</th>
+					<th>amount</th>
+					<th>total</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="row in rowCollection">
-					<td>{{row.firstName}}</td>
-					<td>{{row.lastName}}</td>
-					<td>{{row.birthDate}}</td>
-					<td>{{row.balance}}</td>
-					<td>{{row.email}}</td>
+					<td>{{row.operationDate}}</td>
+					<td>{{row.valueDate}}</td>
+					<td>{{row.concept}}</td>
+					<td>{{row.amount}}</td>
+					<td>{{row.totalAmount}}</td>
 				</tr>
 			</tbody>
 		</table>
