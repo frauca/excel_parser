@@ -2,7 +2,7 @@ package frauca
 
 import grails.rest.RestfulController;
 
-class AccountMovRawController extends RestfulController {
+class AccountMovRawController extends RestfulController<AccountMovRaw> {
 
 	static responseFormats = ['json', 'xml']
 

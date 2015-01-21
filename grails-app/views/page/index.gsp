@@ -5,26 +5,18 @@
 </head>
 <body>
 	<div ng-controller="movListCtrl">
-		<table st-table="rowCollection" class="table table-striped">
-			<thead>
-				<tr>
-					<th>operation D</th>
-					<th>value D</th>
-					<th>concept</th>
-					<th>amount</th>
-					<th>total</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="row in rowCollection">
-					<td>{{row.operationDate}}</td>
-					<td>{{row.valueDate}}</td>
-					<td>{{row.concept}}</td>
-					<td>{{row.amount}}</td>
-					<td>{{row.totalAmount}}</td>
-				</tr>
-			</tbody>
-		</table>
+	
+		
+		<table ng-table="tableParams" show-filter="true" class="table">
+        <tr ng-repeat="user in $data">
+        	<td data-title="'Operation'">{{user.operationDate}}</td>
+        	<td data-title="'Value'">{{user.valueDate}}</td>
+            <td data-title="'Concept'" filter="{ 'concept': 'text' }">{{user.concept}}</td>
+            <td data-title="'Amount'" sortable="'amount'">{{user.amount}}</td>
+            <td data-title="'Total'">{{user.total}}</td>
+        </tr>
+        </table>
+		
 	</div>
 </body>
 </html>

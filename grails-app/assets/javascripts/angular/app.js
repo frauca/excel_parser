@@ -1,5 +1,5 @@
 var app = angular.module('app', [
-                'smart-table',
+                'ngTable',
                 'movsControllers'
 ]);
 

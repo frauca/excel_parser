@@ -3,7 +3,7 @@ package frauca
 import grails.rest.Resource
 
 
-@Resource(uri='/acount_movs')
+@Resource
 class AccountMov {
 
 	Date operationDate

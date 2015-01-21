@@ -17,10 +17,11 @@
 		<link rel="apple-touch-icon" sizes="114x114" href="${assetPath(src: 'apple-touch-icon-retina.png')}">
   		<asset:stylesheet src="plugins/bootstrap/3.3.1/bootstrap.css"/>
   		<asset:stylesheet src="plugins/bootstrap/3.3.1/bootstrap-theme.css"/>
+  		<asset:stylesheet src="plugins/ng-table/ng-table.css"/>
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<asset:javascript src="plugins/bootstrap/3.3.1/bootstrap.js"/>
 		<asset:javascript src="plugins/angular/1.3.8/angular.js"/>
-		<asset:javascript src="plugins/smart-table/smart-table.min.js"/>
+		<asset:javascript src="plugins/ng-table/ng-table.js"/>
 		<asset:javascript src="angular/app.js"/>
 		<asset:javascript src="angular/controllers.js"/>
 		<g:layoutHead/>
