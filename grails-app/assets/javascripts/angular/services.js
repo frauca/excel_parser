@@ -6,7 +6,9 @@ var categoriesServices = angular.module('categoriesServices', ['ngResource']);
 
 categoriesServices.factory('Category', ['$resource',
   function($resource){
-    return $resource('category', {id: "@id"},{
-    	query: {method:'GET', params:{max:'-1'}, isArray:false}
+    return $resource('category/:id.json', {id: "@id"},{
+    	query: {method:'GET', params:{max:'-1'}, isArray:true},
+    	update: { method: 'put', isArray: false },
+    	create: { method: 'post' }
     });
   }]);
