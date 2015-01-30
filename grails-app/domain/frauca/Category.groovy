@@ -2,7 +2,7 @@ package frauca
 
 import grails.rest.Resource;
 
-@Resource(uri='/category')
+@Resource
 class Category {
 
 	String name

@@ -1,7 +1,8 @@
 var app = angular.module('app', [
                 'ngTable',
                 'movsControllers',
-                'categoriesServices'
+                'categoriesServices',
+                'ui.bootstrap'
 ]);
 
 angular.module('app').config(function ($locationProvider) {

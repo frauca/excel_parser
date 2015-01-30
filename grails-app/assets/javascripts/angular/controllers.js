@@ -1,6 +1,6 @@
 var movsControllers = angular.module('movsControllers', []);
 
-movsControllers.controller('movListCtrl', function ($scope,$http,$filter,ngTableParams) {
+movsControllers.controller('movListCtrl', function ($scope,$http,$filter,ngTableParams, $modal) {
 	$http.get('acount_movs.json?max=-1').success(function(data) {
 		$scope.rowCollection = data;
 		$scope.tableParams = new ngTableParams({
@@ -18,6 +18,10 @@ movsControllers.controller('movListCtrl', function ($scope,$http,$filter,ngTable
 	        }
 	    });
 	  });
+	
+	$scope.setCategory = function(mov){
+		console.log("set category");
+	}
 });
 
 movsControllers.controller('movCategoriesCtrl', function ($scope,$http,$filter,$resource,$timeout,ngTableParams,Category) {

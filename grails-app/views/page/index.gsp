@@ -14,6 +14,10 @@
             <td data-title="'Concept'" filter="{ 'concept': 'text' }">{{user.concept}}</td>
             <td data-title="'Amount'" sortable="'amount'">{{user.amount}}</td>
             <td data-title="'Total'">{{user.total}}</td>
+            <td >
+            	<a ng-if="!user.categoritzation"	href="" class="btn btn-default">No Catalogat</a>
+            	<a ng-if="user.categoritzation"	href="" class="btn btn-default">{{user.categoritzation.category.name}}</a>
+            </td>
         </tr>
         </table>
 		

@@ -9,6 +9,7 @@ class Account {
 	 * ccc or iban as readed on file
 	 */
 	String rawCCC
+	Categoritzation categoritzation;
 	
 	
 	static hasMany = [files: FileSource]

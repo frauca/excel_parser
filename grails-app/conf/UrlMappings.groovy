@@ -4,6 +4,8 @@ class UrlMappings {
 		
 		"/acount_movs"(resources:"accountMov")
 		"/acount_raw_movs"(resources:"accountMovRaw")
+		"/categoritzation"(resources:"categoritzation")
+		"/category"(resources:"category")
 		
         "/$controller/$action?/$id?(.$format)?"{
             constraints {
