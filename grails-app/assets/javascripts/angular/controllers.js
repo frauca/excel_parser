@@ -1,26 +1,58 @@
 var movsControllers = angular.module('movsControllers', []);
 
-movsControllers.controller('movListCtrl', function ($scope,$http,$filter,ngTableParams, $modal) {
-	$http.get('acount_movs.json?max=-1').success(function(data) {
-		$scope.rowCollection = data;
-		$scope.tableParams = new ngTableParams({
-	        page: 1,            // show first page
-	        count: 10           // count per page
-	    }, {
-	    	counts: [], // hides page sizes
-	        total: data.length, // length of data
-	        getData: function($defer, params) {
+movsControllers.controller('movListCtrl', function ($scope,$http,$filter,ngTableParams,$modal,Acc_movs,Categoritzation) {
+	
+	
+	$scope.tableParams = new ngTableParams({
+        page: 1,            // show first page
+        count: 10           // count per page
+    }, {
+    	counts: [], // hides page sizes
+        getData: function($defer, params) {
+        	$http.get('acount_movs.json?max=-1').success(function(data) {
 	        	var orderedData = params.sorting() ?
                         $filter('orderBy')(data, params.orderBy()) : data;
                 orderedData = params.filter() ?
                                 $filter('filter')(orderedData, params.filter()) : orderedData;
 	            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-	        }
-	    });
-	  });
+        	});  
+        }
+    });
 	
 	$scope.setCategory = function(mov){
-		console.log("set category");
+		$scope.acc_mov=mov
+		var modalInstance = $modal.open({
+		      templateUrl: 'modal/setCategory',
+		      controller:'movCategorCtrl',
+		      scope:$scope
+		    });
+		modalInstance.result.then(function (cat) {
+				mov.categoritzation=cat.id;
+				Acc_movs.update(mov,function(){
+					$scope.tableParams.reload();
+				});
+				
+		    });
+	}
+	
+	$scope.getCategoryFromId = function(catId){
+		categorit = Categoritzation.get({id:1},function(categorit){
+			console.log("cate ."+categorit.category);
+			return "other";
+		});
+	}
+});
+
+movsControllers.controller('movCategorCtrl', function ($scope,Categoritzation,Category,$modalInstance) {
+	$scope.categories=Category.query();
+	$scope.cat = new Categoritzation();
+	$scope.cat.type="MANUAL";
+	//$scope.cat.accountMov=$scope.acc_mov.id;
+	$scope.save=function(cat){	
+		Categoritzation.save(cat,function(data){
+			$modalInstance.close(data);
+		});
+		
 	}
 });
 

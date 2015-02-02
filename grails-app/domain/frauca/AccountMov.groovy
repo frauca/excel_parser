@@ -27,6 +27,7 @@ class AccountMov {
 	 * Concept excatly as excel file
 	 */
 	String conceptRaw
+	Categoritzation categoritzation;
 	
 	static hasMany = [rawMoves:AccountMovRaw]
 	
@@ -36,6 +37,7 @@ class AccountMov {
 		amount blank:false
 		totalAmountRaw blank:false
 		totalAmount nullable:true 
+		categoritzation nullable:true;
     }
 	
 	public AccountMov(AccountMovRaw raw){

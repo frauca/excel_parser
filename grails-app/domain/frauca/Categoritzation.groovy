@@ -8,10 +8,16 @@ final enum SetterType{
 
 @Resource
 class Categoritzation {
-	SetterType setType;
+	SetterType type;
 	Category category;
 	String comment;
-	static belongsTo = Account  
+	Date dateCreated
+	Date lastUpdated
+	static belongsTo = AccountMov
     static constraints = {
     }
+	
+	String getCategoryName(){
+		category.name;
+	}
 }

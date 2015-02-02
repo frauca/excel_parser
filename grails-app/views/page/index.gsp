@@ -8,15 +8,15 @@
 	
 		
 		<table ng-table="tableParams" show-filter="true" class="table">
-        <tr ng-repeat="user in $data">
-        	<td data-title="'Operation'">{{user.operationDate}}</td>
-        	<td data-title="'Value'">{{user.valueDate}}</td>
-            <td data-title="'Concept'" filter="{ 'concept': 'text' }">{{user.concept}}</td>
-            <td data-title="'Amount'" sortable="'amount'">{{user.amount}}</td>
-            <td data-title="'Total'">{{user.total}}</td>
+        <tr ng-repeat="mov in $data">
+        	<td data-title="'Operation'">{{mov.operationDate}}</td>
+        	<td data-title="'Value'">{{mov.valueDate}}</td>
+            <td data-title="'Concept'" filter="{ 'concept': 'text' }">{{mov.concept}}</td>
+            <td data-title="'Amount'" sortable="'amount'">{{mov.amount}}</td>
+            <td data-title="'Total'">{{mov.total}}</td>
             <td >
-            	<a ng-if="!user.categoritzation"	href="" class="btn btn-default">No Catalogat</a>
-            	<a ng-if="user.categoritzation"	href="" class="btn btn-default">{{user.categoritzation.category.name}}</a>
+            	<a ng-if="!mov.categoritzation"	href="" class="btn btn-default" ng-click="setCategory(mov)">No Catalogat</a>
+            	<a ng-if="mov.categoritzation"	href="" class="btn btn-default">-{{getCategoryFromId(mov.categoritzation.id)}}-</a>
             </td>
         </tr>
         </table>
