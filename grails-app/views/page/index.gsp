@@ -14,9 +14,9 @@
             <td data-title="'Concept'" filter="{ 'concept': 'text' }">{{mov.concept}}</td>
             <td data-title="'Amount'" sortable="'amount'">{{mov.amount}}</td>
             <td data-title="'Total'">{{mov.total}}</td>
-            <td >
-            	<a ng-if="!mov.categoritzation"	href="" class="btn btn-default" ng-click="setCategory(mov)">No Catalogat</a>
-            	<a ng-if="mov.categoritzation"	href="" class="btn btn-default">-{{getCategoryFromId(mov.categoritzation.id)}}-</a>
+            <td data-title="'Category'" sortable="'category'">
+            	<a ng-if="!mov.categoryName"	href="" class="btn btn-default" ng-click="setCategory(mov)">No Catalogat</a>
+            	<a ng-if="mov.categoryName"	href="" class="btn btn-default">-{{mov.categoryName}}-</a>
             </td>
         </tr>
         </table>
