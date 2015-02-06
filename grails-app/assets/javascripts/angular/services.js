@@ -16,7 +16,9 @@ categoriesServices.factory('Category', ['$resource',
 categoriesServices.factory('Categoritzation', ['$resource',
     function($resource){
       return $resource('categoritzation/:id.json', {id: "@id"},{
-      	query: {method:'GET', params:{max:'-1'}, isArray:true}
+      	query: {method:'GET', params:{max:'-1'}, isArray:true},
+      	get: {method:'GET', isArray:false},
+      	update: { method: 'put', isArray: false },
       });
     }]);
 

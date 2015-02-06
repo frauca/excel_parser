@@ -15,6 +15,7 @@ class Categoritzation {
 	Date lastUpdated
 	static belongsTo = AccountMov
     static constraints = {
+		comment nullable: true, blank: true
     }
 	
 	String getCategoryName(){

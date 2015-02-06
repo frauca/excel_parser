@@ -15,8 +15,8 @@
             <td data-title="'Amount'" sortable="'amount'">{{mov.amount}}</td>
             <td data-title="'Total'">{{mov.total}}</td>
             <td data-title="'Category'" sortable="'category'">
-            	<a ng-if="!mov.categoryName"	href="" class="btn btn-default" ng-click="setCategory(mov)">No Catalogat</a>
-            	<a ng-if="mov.categoryName"	href="" class="btn btn-default">-{{mov.categoryName}}-</a>
+            	<a ng-if="!mov.categoryName"	href="" class="btn btn-warning" ng-click="setCategory(mov)">No Catalogat</a>
+            	<a ng-if="mov.categoryName"	ng-class="{'btn-success': mov.categoryType.name=='MANUAL','btn-primary': mov.categoryType.name=='AUTOMATIC'}" "href="" class="btn " ng-click="setCategory(mov)">{{mov.categoryName}}</a>
             </td>
         </tr>
         </table>

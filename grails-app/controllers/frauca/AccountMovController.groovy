@@ -17,10 +17,12 @@ class AccountMovController extends RestfulController<AccountMov>{
 				id:it.id,
 				operationDate:it.operationDate,
 				valueDate:it.valueDate,
+				concept:it.concept,
 				amount:it.amount,
 				total:it.totalAmount,
 				categoritzaion:it.categoritzation?.id,
-				categoryName:it.categoritzation?.category?.name
+				categoryName:it.categoritzation?.category?.name,
+				categoryType:it.categoritzation?.type
 			]
 		}
 	}

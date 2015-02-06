@@ -43,7 +43,7 @@ class FileSourceService {
 			log.debug "looking for "+file.name
 			def fs=FileSource.findByName(file.name)
 			if(fs){
-				log.info "file already exists "+fs.path
+				log.debug "file already exists "+fs.path
 			}else{
 				fsource.save()
 			}

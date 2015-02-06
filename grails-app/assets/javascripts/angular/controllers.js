@@ -10,6 +10,7 @@ movsControllers.controller('movListCtrl', function ($scope,$http,$filter,ngTable
     	counts: [], // hides page sizes
         getData: function($defer, params) {
         	$http.get('acount_movs.json?max=-1').success(function(data) {
+        		params.total(data.length);
 	        	var orderedData = params.sorting() ?
                         $filter('orderBy')(data, params.orderBy()) : data;
                 orderedData = params.filter() ?
@@ -35,24 +36,43 @@ movsControllers.controller('movListCtrl', function ($scope,$http,$filter,ngTable
 		    });
 	}
 	
-	$scope.getCategoryFromId = function(catId){
-		categorit = Categoritzation.get({id:1},function(categorit){
-			console.log("cate ."+categorit.category);
-			return "other";
-		});
-	}
 });
 
-movsControllers.controller('movCategorCtrl', function ($scope,Categoritzation,Category,$modalInstance) {
+movsControllers.controller('movCategorCtrl', function ($scope,Categoritzation,Category,$modalInstance,$q) {
 	$scope.categories=Category.query();
-	$scope.cat = new Categoritzation();
-	$scope.cat.type="MANUAL";
+	if($scope.acc_mov.categoritzaion){
+		$scope.updating=true;
+		$q.all([getSyncCategoritzation($scope.acc_mov.categoritzaion)]
+			).then(function(data) {
+				$scope.cat = data[0];
+				$scope.cat.category=$scope.cat.category.id;
+		     });
+		
+	}else{
+		$scope.updating=false;
+		$scope.cat = new Categoritzation();
+		$scope.cat.type="MANUAL";
+	}
+	
 	//$scope.cat.accountMov=$scope.acc_mov.id;
 	$scope.save=function(cat){	
-		Categoritzation.save(cat,function(data){
-			$modalInstance.close(data);
-		});
-		
+		if($scope.updating){
+			Categoritzation.update(cat,function(data){
+				$modalInstance.close(data);
+			});
+		}else{
+			Categoritzation.save(cat,function(data){
+				$modalInstance.close(data);
+			});
+		}
+			
+	}
+	function getSyncCategoritzation(catId){
+		var d = $q.defer();
+		var result = Categoritzation.get({id:catId},function(categorit){
+			  d.resolve(categorit); 
+			});
+	   return d.promise;
 	}
 });
 

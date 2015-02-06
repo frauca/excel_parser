@@ -4,7 +4,7 @@ import frauca.ReaderService
 
 
 
-class CheckNewFilesJob {
+class LookForFilesJob {
 	
 	def readerService
 	
