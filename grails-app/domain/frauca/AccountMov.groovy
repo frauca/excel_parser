@@ -28,6 +28,8 @@ class AccountMov {
 	 */
 	String conceptRaw
 	Categoritzation categoritzation;
+	Account account;
+	AccountMovRaw original;
 	
 	static hasMany = [rawMoves:AccountMovRaw]
 	
@@ -47,6 +49,7 @@ class AccountMov {
 		totalAmountRaw=raw.totalAmount
 		concept=raw.concept
 		conceptRaw=raw.conceptRaw
+		original=raw
 		addToRawMoves(raw)
 	}
 }

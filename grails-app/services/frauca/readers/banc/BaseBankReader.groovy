@@ -19,6 +19,7 @@ abstract class BaseBankReader {
 		log.debug "get the account of the bank"
 		def ccc = getAccountCeilVal()
 		if(ccc!=null){
+			log.trace "loking for ${ccc}"
 			def ac = Account.findByRawCCC(ccc)
 			if(ac){
 				return ac
@@ -132,6 +133,7 @@ abstract class BaseBankReader {
 	}
 	
 	/**
+	 * Look for already insert movements
 	 * The find movement is done in the basebank to let in the future find by diferent way depending on the bank
 	 *
 	 * @param rawmove
@@ -143,6 +145,7 @@ abstract class BaseBankReader {
 			operationDate == rawmove.operationDate
 			concept == rawmove.concept
 			amount == rawmove.amount
+			original.sourceFile != rawmove.sourceFile
 		}
 		return dup.find()
 	}

@@ -66,4 +66,5 @@ class ReaderService {
 			accountMovRawService.processAllPendingMoves(reader.bnkReader)
 		}
 	}
+	
 }

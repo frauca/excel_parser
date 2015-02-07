@@ -31,38 +31,24 @@ class AccountMovRawService {
 	 */
 	def processAllPendingMoves(BaseBankReader bnkReader){
 		log.trace "the new state move accounts are going to be saved"
-		def newMoves=AccountMovRaw.findAllByState("new")
-		log.debug "${newMoves.size()} accountmoves are going to be procesed"
+		def newMoves=AccountMovRaw.findAllByState("new",[sort: "rowOfDoc", order: "asc"])
+		Account ccc=bnkReader.getAccount()
+		log.debug "${newMoves.size()} accountmoves are going to be procesed with ${bnkReader} in ${ccc}"
 		newMoves.each {rawmove->
 			AccountMov mov = bnkReader.findRawMove(rawmove)
 			log.trace "find "+mov
 			if(mov){
-				log.trace "is duplicated"
+				log.trace "${rawmove.concept} on  ${rawmove.rowOfDoc} is duplicated"
 				rawmove.duplicatedBy(mov)
 			}else{
 				log.trace "creating new mov"
 				mov= new AccountMov(rawmove)
 				mov = rawmove.copiedBy(mov)
+				mov.account=ccc
 				saveAndPrintErrors(rawmove)
 				saveAndPrintErrors(mov)
 			}
 		}
-	}
-	
-	/**
-	 * The find movement is done in the basebank to let in the future find by diferent way depending on the bank
-	 *
-	 * Move out because on the inital plan there is a transitien state that i could not resolve, so i moved it out
-	 * @param rawmove
-	 * @return
-	 */
-	public AccountMov findRawMove(AccountMovRaw rawmove){
-		def dup = AccountMov.where{
-			operationDate == rawmove.operationDate
-			concept == rawmove.concept
-			amount == rawmove.amount
-		}
-		return dup.find()
 	}
 	
 	
