@@ -33,6 +33,7 @@ class AccountMovRawService {
 		log.trace "the new state move accounts are going to be saved"
 		def newMoves=AccountMovRaw.findAllByState("new",[sort: "rowOfDoc", order: "asc"])
 		Account ccc=bnkReader.getAccount()
+		AccountMov lastest=findLatestMovForAccount(ccc)
 		log.debug "${newMoves.size()} accountmoves are going to be procesed with ${bnkReader} in ${ccc}"
 		newMoves.each {rawmove->
 			AccountMov mov = bnkReader.findRawMove(rawmove)
@@ -45,8 +46,11 @@ class AccountMovRawService {
 				mov= new AccountMov(rawmove)
 				mov = rawmove.copiedBy(mov)
 				mov.account=ccc
+				log.trace "last"+lastest+"mov"+mov+" "+lastest.id+" mov"+mov.amount
+				mov.totalAmount=(lastest?.totalAmount?lastest.totalAmount + mov.amount:mov.totalAmountRaw).round(2)
 				saveAndPrintErrors(rawmove)
 				saveAndPrintErrors(mov)
+				lastest=mov
 			}
 		}
 	}
@@ -61,6 +65,17 @@ class AccountMovRawService {
 		mov.save()
 		if(mov.hasErrors()){
 			mov.errors.allErrors.each{log.error "could not save account "+it}
+		}
+	}
+	
+	public AccountMov findLatestMovForAccount(Account ccc){
+		def last=AccountMov.executeQuery("""from AccountMov mov
+                                     where mov.id = (select max(m.id) from AccountMov m where m.account = :ccc)
+                                    """,[ccc:ccc])
+		if(last){
+			return last[0]
+		}else{
+			return last
 		}
 	}
 }
