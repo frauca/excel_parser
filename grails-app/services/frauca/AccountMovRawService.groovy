@@ -46,7 +46,7 @@ class AccountMovRawService {
 				mov= new AccountMov(rawmove)
 				mov = rawmove.copiedBy(mov)
 				mov.account=ccc
-				log.trace "last"+lastest+"mov"+mov+" "+lastest.id+" mov"+mov.amount
+				log.trace "last"+lastest+"mov"+mov+" "+lastest?.id+" mov"+mov?.amount
 				mov.totalAmount=(lastest?.totalAmount?lastest.totalAmount + mov.amount:mov.totalAmountRaw).round(2)
 				saveAndPrintErrors(rawmove)
 				saveAndPrintErrors(mov)
@@ -69,13 +69,15 @@ class AccountMovRawService {
 	}
 	
 	public AccountMov findLatestMovForAccount(Account ccc){
-		def last=AccountMov.executeQuery("""from AccountMov mov
-                                     where mov.id = (select max(m.id) from AccountMov m where m.account = :ccc)
-                                    """,[ccc:ccc])
-		if(last){
-			return last[0]
-		}else{
-			return last
+		if(ccc){
+			def last=AccountMov.executeQuery("""from AccountMov mov
+	                                     where mov.id = (select max(m.id) from AccountMov m where m.account = :ccc)
+	                                    """,[ccc:ccc])
+			if(last){
+				return last[0]
+			}else{
+				return last
+			}
 		}
 	}
 }

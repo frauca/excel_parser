@@ -11,8 +11,8 @@ abstract class BaseBankReader {
 
 	BaseSheetable sheettable
 
-		 /**
-	  * Read the accound from the sheettable
+	/**
+	 * Read the accound from the sheettable
 	 * @return null if can not be found or Account if it could
 	 */
 	 Account getAccount() {

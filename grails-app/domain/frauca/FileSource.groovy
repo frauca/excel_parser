@@ -33,7 +33,7 @@ class FileSource {
 	
 	def fillAttr(File file){
 		BasicFileAttributes attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
-		log.info "date"+attr.creationTime()+"mod"+attr.lastModifiedTime()
+		log.trace "date"+attr.creationTime()+"mod"+attr.lastModifiedTime()
 		creationTime=new Date(attr.creationTime().toMillis());
 	}
 }
