@@ -1,9 +1,13 @@
 package frauca
 
+import grails.rest.Resource;
+
 import java.nio.file.Files
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes
 
+
+@Resource
 class FileSource {
 	String path
 	String name

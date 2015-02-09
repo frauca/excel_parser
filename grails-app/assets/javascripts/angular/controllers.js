@@ -1,7 +1,8 @@
 var movsControllers = angular.module('movsControllers', []);
 
-movsControllers.controller('movListCtrl', function ($scope,$http,$filter,ngTableParams,$modal,Acc_movs,Categoritzation) {
+movsControllers.controller('movListCtrl', function ($scope,$http,$filter,ngTableParams,$modal,Acc_movs,Categoritzation,File,Account) {
 	
+	setSelects();
 	
 	$scope.tableParams = new ngTableParams({
         page: 1,            // show first page
@@ -36,6 +37,10 @@ movsControllers.controller('movListCtrl', function ($scope,$http,$filter,ngTable
 		    });
 	}
 	
+	function setSelects(){
+		$scope.files=File.query();
+		$scope.accounts=Account.query();
+	}
 });
 
 movsControllers.controller('movCategorCtrl', function ($scope,Categoritzation,Category,$modalInstance,$q) {

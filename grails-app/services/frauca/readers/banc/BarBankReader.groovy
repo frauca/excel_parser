@@ -82,6 +82,7 @@ class BarBankReader extends BaseBankReader {
 	@Override
 	public String getConceptFromRaw(String raw) {
 		String concept =StringUtils.removeAnyReplacements(raw, /RECIBO SEPA \d+  /)
+		concept =StringUtils.removeAnyReplacements(concept, /RECIBO A SU CARGO Nº \d+ /)
 		concept =StringUtils.removeAnyReplacements(concept, /COMPRA CON TARJETA SERVIRED /)
 		concept =StringUtils.removeAnyReplacements(concept, /DISPOSICION CAJERO AUTOMATICO /)
 		concept =StringUtils.removeAnyReplacements(concept, /DISPOSICION /)

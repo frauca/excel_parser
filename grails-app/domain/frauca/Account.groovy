@@ -1,5 +1,8 @@
 package frauca
 
+import grails.rest.Resource;
+
+@Resource
 class Account {
 	String name
 	String comments

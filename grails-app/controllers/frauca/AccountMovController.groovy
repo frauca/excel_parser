@@ -15,8 +15,8 @@ class AccountMovController extends RestfulController<AccountMov>{
 		respond AccountMov.list(params).collect(){
 			[
 				id:it.id,
-				operationDate:it.operationDate,
-				valueDate:it.valueDate,
+				operationDate:it?.operationDate?.format("yyyy/MM/dd"),
+				valueDate:it?.valueDate?.format("yyyy/MM/dd"),
 				concept:it.concept,
 				amount:it.amount,
 				total:it.totalAmount,

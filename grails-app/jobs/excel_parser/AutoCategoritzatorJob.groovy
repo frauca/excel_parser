@@ -5,13 +5,15 @@ import frauca.CategorizerService;
 class AutoCategoritzatorJob {
 
 	CategorizerService categorizerService
+	def concurrent = false
 	
 	static triggers = {
 		simple name: 'autoCategorizer', startDelay: 1000, repeatInterval: 30000   // execute job once in 5 seconds
 	  }
   
 	  def execute() {
-		  log.debug "autoCateogirzer"
+		  log.info "autoCateogirzer started"
 		  categorizerService.replicateMostManualSetted()
+		  log.info "autoCateogirzer end"
 	  }
 }

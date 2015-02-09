@@ -5,7 +5,8 @@
 </head>
 <body>
 	<div ng-controller="movListCtrl">
-	
+		<select ng-model="selectAccount" ng-options="account.id as account.name for account in accounts"></select>
+		<select ng-model="selectFile" ng-options="file.id as file.name for file in files"></select>
 		
 		<table ng-table="tableParams" show-filter="true" class="table">
         <tr ng-repeat="mov in $data">

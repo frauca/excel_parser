@@ -2,6 +2,8 @@ package frauca.readers.banc
 
 import java.text.SimpleDateFormat
 
+import org.hibernate.NonUniqueResultException
+
 import frauca.Account
 import frauca.AccountMov
 import frauca.AccountMovRaw
@@ -62,7 +64,12 @@ abstract class BaseBankReader {
 		 log.debug "we are going to read from ${getFirstDataRow()} to ${sheettable.getLastRowNum()}"
 		 for(int i in getFirstDataRow()..sheettable.getLastRowNum()){
 			 try{
-				 rows << readRowMovements(i)
+				 AccountMovRaw row=readRowMovements(i)
+				 if(row.amount&&row.concept){
+				 	rows << row
+				 }else{
+				 	log.debug "The row ${i} has not ammount value and has not been added from ${row?.sourceFile?.name}"
+				 }
 			 }catch(e){
 			 	log.debug "stop reading file at ${i} because ${e.message}"
 				log.trace "stop reading because: ",e 
@@ -147,7 +154,15 @@ abstract class BaseBankReader {
 			amount == rawmove.amount
 			original.sourceFile != rawmove.sourceFile
 		}
-		return dup.find()
+		try{
+			return dup.find()
+		}catch(NonUniqueResultException e){
+			log.debug "Looking for duplicates i found ${dup?.size()}  on ${rawmove?.sourceFile?.name} ${rawmove?.rowOfDoc}"
+			dup.each {mov->
+				log.trace "dup ${mov.concept} ${mov?.original?.sourceFile?.name} ${mov?.original?.rowOfDoc}"
+			}
+			dup[0]
+		}
 	}
 	
 }

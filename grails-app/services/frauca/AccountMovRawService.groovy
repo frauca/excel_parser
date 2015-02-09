@@ -16,7 +16,7 @@ class AccountMovRawService {
 			mov.sourceFile=fileSource
 			mov.save()
 			if(mov.hasErrors()){
-				log.error "could not save there are" + mov.errors.allErrors.size()
+				log.error "could not save there are ${fileSource.name} on ${mov.rowOfDoc} errors found:" + mov.errors.allErrors.size()
 				mov.errors.allErrors.each {error->
 					log.debug "error: "+error.toString()
 				}

@@ -13,6 +13,18 @@ categoriesServices.factory('Category', ['$resource',
     });
   }]);
 
+categoriesServices.factory('Account', ['$resource',
+function($resource){
+  return $resource('account/:id.json', {id: "@id"},{
+  });
+}]);
+
+categoriesServices.factory('File', ['$resource',
+   function($resource){
+     return $resource('file/:id.json', {id: "@id"},{
+     });
+   }]);
+
 categoriesServices.factory('Categoritzation', ['$resource',
     function($resource){
       return $resource('categoritzation/:id.json', {id: "@id"},{
