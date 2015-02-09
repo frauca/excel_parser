@@ -10,7 +10,7 @@ movsControllers.controller('movListCtrl', function ($scope,$http,$filter,ngTable
     }, {
     	counts: [], // hides page sizes
         getData: function($defer, params) {
-        	$http.get('acount_movs.json?max=-1').success(function(data) {
+        	$http.get(getMovsURL()).success(function(data) {
         		params.total(data.length);
 	        	var orderedData = params.sorting() ?
                         $filter('orderBy')(data, params.orderBy()) : data;
@@ -37,9 +37,26 @@ movsControllers.controller('movListCtrl', function ($scope,$http,$filter,ngTable
 		    });
 	}
 	
+	function getMovsURL(){
+		movsurl='acount_movs.json?max=-1';
+		if($scope.selectedFile){
+			movsurl+="&file="+$scope.selectedFile;
+		}
+		if($scope.selectAccount){
+			movsurl+="&ccc="+$scope.selectAccount;
+		}
+		return movsurl;
+	}
 	function setSelects(){
 		$scope.files=File.query();
 		$scope.accounts=Account.query();
+	}
+	$scope.changedCCC=function(){
+		$scope.files=File.query({ccc:$scope.selectAccount});
+		$scope.tableParams.reload();
+	}
+	$scope.changedFile=function(){
+		$scope.tableParams.reload();
 	}
 });
 

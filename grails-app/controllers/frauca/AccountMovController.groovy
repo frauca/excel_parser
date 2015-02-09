@@ -12,7 +12,14 @@ class AccountMovController extends RestfulController<AccountMov>{
 	
 	
 	def index(Integer max) {
-		respond AccountMov.list(params).collect(){
+		def q=AccountMov.where{}
+		if(params.file){
+			q=q.where{original{sourceFile{id==params.file}}}
+		}
+		if(params.ccc){
+			q=q.where{account{id==params.ccc}}
+		}
+		respond q.list(params).collect(){
 			[
 				id:it.id,
 				operationDate:it?.operationDate?.format("yyyy/MM/dd"),

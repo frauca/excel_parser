@@ -21,7 +21,7 @@ function($resource){
 
 categoriesServices.factory('File', ['$resource',
    function($resource){
-     return $resource('file/:id.json', {id: "@id"},{
+     return $resource('file/:id.json?ccc=:ccc', {id: "@id",ccc:"@ccc"},{
      });
    }]);
 
