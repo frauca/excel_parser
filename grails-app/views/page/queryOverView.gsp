@@ -1,0 +1,1 @@
+Aqui fariem crides al /query/overView i les mostrem amb angular
