@@ -29,8 +29,7 @@ movsControllers.controller('movListCtrl', function ($scope,$http,$filter,ngTable
 		      scope:$scope
 		    });
 		modalInstance.result.then(function (cat) {
-				mov.categoritzation=cat.id;
-				Acc_movs.update(mov,function(){
+				Acc_movs.update({id:mov.id,categoritzation:{id:cat.id}},function(){
 					$scope.tableParams.reload();
 				});
 				

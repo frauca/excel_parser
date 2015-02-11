@@ -17,7 +17,12 @@ class IngBankReader extends BaseBankReader {
 
 	@Override
 	public Object getAccountCeilVal() {
-		return sheettable.getCeilValue("C2")
+		def ccc=sheettable.getCeilValue("C2")
+		def match=(ccc =~ /[\d+ ]+/)
+		if(match)
+			return match[0]
+		else
+			return ccc
 	}
 
 	@Override

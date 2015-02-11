@@ -8,7 +8,7 @@ class AutoCategoritzatorJob {
 	def concurrent = false
 	
 	static triggers = {
-		simple name: 'autoCategorizer', startDelay: 1000, repeatInterval: 300000   // execute job once in 5 seconds
+		simple name: 'autoCategorizer', startDelay: 1000, repeatInterval: 10000   // execute job once in 5 seconds
 	  }
   
 	  def execute() {
