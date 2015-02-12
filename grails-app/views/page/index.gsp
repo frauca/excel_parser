@@ -4,6 +4,8 @@
 <title>Pagina principal</title>
 </head>
 <body>
+<g:link controller="page" action="configuration" >Configuration</g:link>
+<g:link controller="page" action="configuration" target="_self" >Configuration</g:link>
 	<div ng-controller="movListCtrl">
 		<select ng-change="changedCCC()" ng-model="selectAccount" ng-options="account.id as account.name for account in accounts">
 			<option/>
