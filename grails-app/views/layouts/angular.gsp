@@ -110,18 +110,11 @@
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
-                        </li>
-                       
+                        </li>                       
             <!-- /.navbar-static-side -->
         </nav>
-		
 		</header>
-		<div id="page-wrapper" style="min-height: 572px;">
-			<div class="row">
-				<div class="col-lg-12">
-					<h4>Accounts Movements </h4>
-				</div>
-			</div>            
+		<div id="page-wrapper" style="min-height: 572px;">			            
 			<div class="row">
 				<g:layoutBody/>
 			</div>
