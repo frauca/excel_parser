@@ -41,3 +41,11 @@ categoriesServices.factory('Acc_movs', ['$resource',
     	update: { method: 'put', isArray: false },
      });
    }]);
+
+categoriesServices.factory('Directory', ['$resource',
+	function($resource){
+	  return $resource('directory/:id.json', {id: "@id"},{
+		  update: { method: 'put', isArray: false },
+	      create: { method: 'post' }
+	  });
+	}]);

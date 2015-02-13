@@ -8,6 +8,7 @@ class UrlMappings {
 		"/category"(resources:"category")
 		"/account"(resources:"account")
 		"/file"(resources:"fileSource")
+		"/directory"(resources:"directorySource")
 		
         "/$controller/$action?/$id?(.$format)?"{
             constraints {
