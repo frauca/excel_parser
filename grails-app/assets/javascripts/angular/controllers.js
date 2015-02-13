@@ -163,7 +163,8 @@ movsControllers.controller('movCategoriesCtrl', function($scope, $http,$filter, 
 	}
 });
 
-movsControllers.controller('directoryCtrl', function($scope, Directory,	$modalInstance, $q) {
+movsControllers.controller('directoryCtrl', function($scope,$http,$filter, Directory,ngTableParams) {
+	console.log('Directory controller');
 	$scope.tableParams = new ngTableParams({
 		page : 1, // show first page
 		count : 10
@@ -200,7 +201,7 @@ movsControllers.controller('directoryCtrl', function($scope, Directory,	$modalIn
 	}
 
 	$scope.addDirectory = function(directory) {
-		dir = new Category(directory);
+		dir = new Directory(directory);
 		Directory.create(dir, function(data) {
 			$scope.tableParams.reload();
 		});
@@ -208,7 +209,7 @@ movsControllers.controller('directoryCtrl', function($scope, Directory,	$modalIn
 	}
 
 	$scope.deleteDirectory = function(directory) {
-		dir = new Category(directory);
+		dir = new Directory(directory);
 		Directory.remove(dir, function(data) {
 			$scope.tableParams.reload();
 		});
