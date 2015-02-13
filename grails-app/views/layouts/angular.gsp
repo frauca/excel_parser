@@ -114,7 +114,6 @@
                        
             <!-- /.navbar-static-side -->
         </nav>
-		
 		</header>
 		<div id="page-wrapper" style="min-height: 572px;">
 			<div class="row">
