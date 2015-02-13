@@ -4,8 +4,6 @@
 <title>Pagina principal</title>
 </head>
 <body>
-<<<<<<< HEAD
-
 	<div class="col-lg-12" ng-controller="movListCtrl">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -14,7 +12,6 @@
 					<option/>
 				</select>
 		 		<i class="fa fa-file-excel-o fa-fw"></i> File
-=======
 	<div class="col-lg-12">
 		<h4>Movements </h4>
 	</div>
@@ -26,7 +23,6 @@
 					<option/>
 				</select>
 		 		<i class="fa fa-file-excel-o fa-fw"></i> File 
->>>>>>> branch 'master' of https://github.com/frauca/excel_parser.git
 				<select ng-change="changedFile()" ng-model="selectedFile" ng-options="file.id as file.name for file in files">
 					<option/>
 				</select>
