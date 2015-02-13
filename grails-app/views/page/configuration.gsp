@@ -7,7 +7,7 @@
 	<div class="col-lg-12">
 		<h4>Configuracions </h4>
 	</div>
-	<div >
+	<div class="col-lg-12" >
 		<accordion close-others="oneAtATime">
 	    	<accordion-group   heading="Categories management" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
 	    		<div ng-controller="movCategoriesCtrl"> 
