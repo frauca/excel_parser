@@ -13,6 +13,9 @@ class FileSourceController extends RestfulController<FileSource>{
 		if(params.ccc){
 			q=q.where{account{id==params.ccc}}
 		}
+		if(params.withRows=="true"){
+			q=q.where{isNotEmpty("rawMovs")}
+		}
 		respond q.list(params+[sort:"creationTime",order:"desc"])
 	}
 	

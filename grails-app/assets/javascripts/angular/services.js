@@ -22,6 +22,7 @@ function($resource){
 categoriesServices.factory('File', ['$resource',
    function($resource){
      return $resource('file/:id.json?ccc=:ccc', {id: "@id",ccc:"@ccc"},{
+    	 query: {method:'GET', params:{max:'30',withRows:'true'}, isArray:true},
      });
    }]);
 

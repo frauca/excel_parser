@@ -114,9 +114,10 @@ log4j.main = {
            'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
            'org.springframework',
            'org.hibernate',
-           'net.sf.ehcache.hibernate'
+           'net.sf.ehcache.hibernate',
+		   'grails.app.jobs'
 	info 'grails.app'
-	//debug 'grails.app.services.frauca.AccountMovRawService'
+	debug 'grails.app.services'
 	//		'grails.app.services'
 	//'grails.app.services.frauca' 
 	//trace 'grails.app.services.frauca.readers.banc'

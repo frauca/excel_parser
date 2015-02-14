@@ -22,7 +22,9 @@ class FileSourceService {
 		def dir = new File(path)
 		
 		if(dir.isDirectory()){
+			log.debug "recursive ${dir}"
 			dir.eachFileRecurse (FileType.FILES) { file -> 
+				log.trace "adding ${file}"
 				files << file 
 			}
 		}else{
@@ -30,6 +32,8 @@ class FileSourceService {
 		}
 		persistAllFiles(files)
 	}
+	
+	
 
 
 	/**
