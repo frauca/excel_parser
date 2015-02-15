@@ -45,7 +45,7 @@ class FileSourceService {
 		files.each{ file->
 			def fsource = new FileSource(file)
 			log.debug "looking for "+file.name
-			def fs=FileSource.findByName(file.name)
+			def fs=FileSource.findByPath(file.path)
 			if(fs){
 				log.debug "file already exists "+fs.path
 			}else{
