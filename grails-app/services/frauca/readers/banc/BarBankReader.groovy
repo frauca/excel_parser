@@ -46,6 +46,7 @@ class BarBankReader extends BaseBankReader {
 
 	@Override
 	public Object itsMine() {
+		log.trace "Its bar ${sheettable.getCeilValue('E4')}==Saldo"
 		return "Saldo".equalsIgnoreCase(sheettable.getCeilValue("E4"))
 	}
 

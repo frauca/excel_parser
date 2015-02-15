@@ -3,6 +3,7 @@ package frauca.readers
 import frauca.Account
 import frauca.AccountMovRaw
 import frauca.FileSource
+import frauca.readers.banc.IngBank2Reader
 import frauca.readers.banc.BarBank2Reader
 import frauca.readers.banc.BarBankReader
 import frauca.readers.banc.BaseBankReader
@@ -41,12 +42,14 @@ class BaseReader {
 	
 	def findSuitableBankReader(File file){
 		BaseBankReader[] suitables = [new BarBankReader(), new IngBankReader()
-							,new MedBankReader(),new BarBank2Reader()]
+							,new MedBankReader(),new IngBank2Reader(),new BarBank2Reader()]
 		suitables.find {suitable->
 			try{
 				log.debug "try to read it with ${suitable}"
 				bnkReader = suitable.iCouldHandle(file)
-				return bnkReader
+				if(bnkReader){
+					return bnkReader
+				}
 			}catch(e){
 				log.debug "could not read it with ${suitable}"
 				log.trace "reason",e
