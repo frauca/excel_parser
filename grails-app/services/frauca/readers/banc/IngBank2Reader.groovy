@@ -4,7 +4,7 @@ package frauca.readers.banc
 import frauca.readers.sheetables.JODSheetableReader
 import frauca.utils.StringUtils
 
-class IngBank2Reader extends BaseBankReader{
+class IngBank2Reader extends IngBankReader{
 	@Override
 	public BaseBankReader iCouldHandle(File file) {
 		IngBank2Reader me = new IngBank2Reader()
@@ -65,10 +65,5 @@ class IngBank2Reader extends BaseBankReader{
 		sheettable.getCeilValue("G"+row)
 	}
 
-	@Override
-	public String getConceptFromRaw(String raw) {
-		String concept =StringUtils.removeAnyReplacements(raw, /TARGETA \*\d+ /)
-		 concept =(concept =~ /CAIXER TARG\. \*\d+ /).replaceAll("CAIXER ")
-		return concept 
-	}
+	
 }

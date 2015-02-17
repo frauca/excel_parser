@@ -64,6 +64,7 @@ class IngBankReader extends BaseBankReader {
 	public String getConceptFromRaw(String raw) {
 		String concept =StringUtils.removeAnyReplacements(raw, /TARGETA \*\d+ /)
 		 concept =(concept =~ /CAIXER TARG\. \*\d+ /).replaceAll("CAIXER ")
+		 concept =StringUtils.removeAnyReplacements(raw, /DEBIT COMERC /)
 		return concept 
 	}
 

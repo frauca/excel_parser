@@ -28,6 +28,15 @@ class CategorizerService {
                                      order by num desc
                                     """)
 	}
+	
+	def orderedUncategorizedConcepts(){
+		Categoritzation.executeQuery("""select concept,count(1) as num
+                                    from AccountMov mov
+                                     where mov.categoritzation is null
+                                     group by concept
+                                     order by num desc
+                                    """)
+	}
 
 	def manualCategorizedConcept(){
 		def q=AccountMov.withCriteria{
@@ -42,4 +51,13 @@ class CategorizerService {
             isNull('categoritzation')
         }.list()
     }
+	
+	
+	def manualCatUncategorized(String concept, Category category){
+		ucategoryzedMov(concept).each {mov->
+			Categoritzation ct = new Categoritzation(type:SetterType.MANUAL,category:category)
+			mov.categoritzation = ct
+			mov.save();
+		}
+	}
 }

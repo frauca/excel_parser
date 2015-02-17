@@ -86,6 +86,9 @@ grails.hibernate.pass.readonly = false
 // configure passing read-only to OSIV session by default, requires "singleSession = false" OSIV mode
 grails.hibernate.osiv.readonly = false
 
+//json xml pretty print
+grails.converters.default.pretty.print=true
+
 environments {
     development {
         grails.logging.jul.usebridge = true
@@ -120,6 +123,6 @@ log4j.main = {
 	//debug 'grails.app.services'
 	//		'grails.app.services'
 	//'grails.app.services.frauca' 
-	//trace 'grails.app.services.frauca.readers.banc'
+	//trace 'grails.app.services.frauca.readers'
 	//		'grails.app.services.frauca.readers.banc'
 }
