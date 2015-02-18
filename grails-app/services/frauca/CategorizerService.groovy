@@ -23,7 +23,7 @@ class CategorizerService {
 	def orderedManualSetted(String concept){
 		Categoritzation.executeQuery("""select cat.category,count(cat.category) as num
                                     from Categoritzation cat
-                                     where cat.id in (select categoritzation from AccountMov where concept = '${concept}')
+                                     where cat.id in (select categoritzation from AccountMov where concept = '${concept}' and type in('MANUAL'))
                                      group by cat.category
                                      order by num desc
                                     """)
@@ -55,7 +55,7 @@ class CategorizerService {
 	
 	def manualCatUncategorized(String concept, Category category){
 		ucategoryzedMov(concept).each {mov->
-			Categoritzation ct = new Categoritzation(type:SetterType.MANUAL,category:category)
+			Categoritzation ct = new Categoritzation(type:SetterType.MULTIPLE,category:category)
 			mov.categoritzation = ct
 			mov.save();
 		}

@@ -10,5 +10,10 @@ class Category {
 	Date lastUpdated
 	
     static constraints = {
+		name unique: true
     }
+	
+	static mapping = {
+		sort name: "asc"
+	}
 }
