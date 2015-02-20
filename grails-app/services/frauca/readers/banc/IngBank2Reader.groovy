@@ -22,7 +22,7 @@ class IngBank2Reader extends IngBankReader{
 		def match=(ccc =~ /\d+ \- \d+ \- \d+ \- \d+/)
 		if(match[0]){
 			log.trace "Ing2 has been found ${match[0]}"
-			return match[0]
+			return StringUtils.removeAnyReplacements(match[0], / \-/)
 		}
 		else
 			return ccc

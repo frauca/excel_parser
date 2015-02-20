@@ -19,9 +19,10 @@ abstract class BaseBankReader {
 	 */
 	 Account getAccount() {
 		log.debug "get the account of the bank"
-		def ccc = getAccountCeilVal()
+		String ccc = getAccountCeilVal()
 		if(ccc!=null){
 			log.trace "loking for ${ccc}"
+			ccc=ccc.trim()
 			def ac = Account.findByRawCCC(ccc)
 			if(ac){
 				return ac
