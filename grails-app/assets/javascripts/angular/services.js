@@ -16,6 +16,8 @@ categoriesServices.factory('Category', ['$resource',
 categoriesServices.factory('Account', ['$resource',
 function($resource){
   return $resource('account/:id.json', {id: "@id"},{
+	  update: { method: 'put', isArray: false },
+	  create: { method: 'post' }
   });
 }]);
 

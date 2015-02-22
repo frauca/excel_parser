@@ -11,7 +11,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 	    		<i class="fa fa-list fa-fw"></i> Accounts   
-	       		<select ng-change="changedCCC()" ng-model="selectAccount" ng-options="account.id as account.name for account in accounts">
+	       		<select ng-change="changedCCC()" ng-model="selectAccount" ng-options="account.id as (account.name + ' - ' + account.ccc) for account in accounts">
 					<option/>
 				</select>
 		 		<i class="fa fa-file-excel-o fa-fw"></i> File 
@@ -24,7 +24,9 @@
 	        	<td data-title="'Operation'">{{mov.operationDate}}</td>
 	        	<td data-title="'Value'">{{mov.valueDate}}</td>
 	            <td data-title="'Concept'" filter="{ 'concept': 'text' }">{{mov.concept}}</td>
-	            <td data-title="'Amount'" sortable="'amount'">{{mov.amount}}</td>
+	            <td data-title="'Amount'" sortable="'amount'">
+	            	<span ng-class="{ 'plus': mov.amount >= 0,'minus': mov.amount < 0 }">{{mov.amount}}</span>
+	            </td>
 	            <td data-title="'Total'">{{mov.total}}</td>
 	            <td data-title="'Category'" sortable="'category'">
 	            	<a ng-if="!mov.categoryName"	href="" class="btn btn-warning" ng-click="setCategory(mov)">No Catalogat</a>

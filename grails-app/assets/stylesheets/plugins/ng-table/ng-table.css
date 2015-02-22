@@ -86,6 +86,41 @@
 .ng-table + .pagination {
   margin-top: 0;
 }
+
+
+.ng-table .plus, .ng-table .minus {
+    font-weight: bold;
+    padding-left: 18px;
+    position: relative;
+}
+.ng-table .plus:before, .ng-table .minus:before {
+    content:"";
+    border-width: 4px;
+    border-style:solid;
+    left: 8px;
+    top: 50%;
+    position: absolute;
+    margin-top: -2px;
+}
+.ng-table .plus {
+    color: green;
+}
+.ng-table .plus:before {
+    border-color: green;
+    border-top:none;
+    border-left:4px solid transparent;
+    border-right:4px solid transparent;
+}
+.ng-table .minus {
+    color: red;
+}
+.ng-table .minus:before {
+    border-color: red;
+    border-bottom:none;
+    border-left:4px solid transparent;
+    border-right:4px solid transparent;
+}
+
 @media only screen and (max-width: 800px) {
   .ng-table-responsive {
     border-bottom: 1px solid #999999;

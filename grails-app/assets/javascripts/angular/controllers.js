@@ -215,3 +215,64 @@ movsControllers.controller('directoryCtrl', function($scope,$http,$filter, Direc
 		});
 	}
 });
+
+
+movsControllers.controller('movAccountCtrl', function($scope, $http, $filter, $resource, $timeout, ngTableParams, Account) {
+
+	$scope.tableParams = new ngTableParams({
+		page : 1, // show first page
+		count : 10
+	// count per page
+	}, {
+		counts : [], // hides page sizes
+		getData : function($defer, params) {
+			$http.get('account.json?max=-1').success(
+					function(data) {
+						var orderedData = params.sorting() ? $filter('orderBy')
+								(data, params.orderBy()) : data;
+						orderedData = params.filter() ? $filter('filter')(
+								orderedData, params.filter()) : orderedData;
+						$defer.resolve(orderedData.slice((params.page() - 1)
+								* params.count(), params.page()
+								* params.count()));
+					});
+		}
+	});
+	
+
+	$scope.editAccount = function(account) {
+		if (account.$edit) {
+			//TODO: Comentar amb roger com vol omplir els camps ccc & iban
+			account.ccc = account.rawCCC;
+			console.log("try to update editAccount");
+			acc = new Account(account);
+			
+			console.log("After new Account");
+			
+			//acc.iban = account.ccc;
+			Account.update(acc, function(data) {
+				console.log("try to update ");
+				$scope.tableParams.reload();
+			});
+			account.$edit = false;
+		} else {
+			account.$edit = true;
+		}
+	}
+
+	$scope.addAccount = function(account) {
+		acc = new Account(account);
+		acc.rawCCC = account.ccc;
+		Account.create(acc, function(data) {
+			$scope.tableParams.reload();
+		});
+
+	}
+
+	$scope.deleteAccount = function(account) {
+		acc = new Account(account);
+		Account.remove(acc, function(data) {
+			$scope.tableParams.reload();
+		});
+	}
+});
