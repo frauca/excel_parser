@@ -217,6 +217,34 @@ movsControllers.controller('directoryCtrl', function($scope,$http,$filter, Direc
 });
 
 
+movsControllers.controller('uncatMovCtrl', function($scope, $http,$filter,ngTableParams,Category) {
+	$scope.categories = Category.query();
+	$scope.tableParams2 = new ngTableParams({
+		page : 1, // show first page
+		count : 10
+	// count per page
+	}, {
+		counts : [], // hides page sizes
+		getData : function($defer, params) {
+			$http.get('accountMov/showUncatPending?max=-1').success(
+					function(data) {
+						params.total(data.length);//update paginator
+						$defer.resolve(data.slice((params.page() - 1)
+								* params.count(), params.page()
+								* params.count()));
+					});
+		}
+	});
+	
+	$scope.categorizeConcept= function(concept,cat){
+		console.log(" categorize " +concept+ " cat "+cat)
+		$http.get('accountMov/categorizedAll?concept='+concept+"&cat="+cat).success(
+				function(data) {
+					$scope.tableParams2.reload();
+				});
+	}
+});
+
 movsControllers.controller('movAccountCtrl', function($scope, $http, $filter, $resource, $timeout, ngTableParams, Account) {
 
 	$scope.tableParams = new ngTableParams({

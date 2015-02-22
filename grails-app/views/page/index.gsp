@@ -30,7 +30,25 @@
 	            <td data-title="'Total'">{{mov.total}}</td>
 	            <td data-title="'Category'" sortable="'category'">
 	            	<a ng-if="!mov.categoryName"	href="" class="btn btn-warning" ng-click="setCategory(mov)">No Catalogat</a>
-	            	<a ng-if="mov.categoryName"	ng-class="{'btn-success': mov.categoryType.name=='MANUAL','btn-primary': mov.categoryType.name=='AUTOMATIC'}" "href="" class="btn " ng-click="setCategory(mov)">{{mov.categoryName}}</a>
+	            	<a ng-if="mov.categoryName"	ng-class="{'btn-success': mov.categoryType.name=='MANUAL','btn-primary': mov.categoryType.name=='AUTOMATIC','btn-info': mov.categoryType.name=='MULTIPLE'}" "href="" class="btn " ng-click="setCategory(mov)">{{mov.categoryName}}</a>
+	            </td>
+	        </tr>
+	        </table>			
+		</div>
+	</div>
+	<div class="col-lg-12" ng-controller="uncatMovCtrl">  	
+		<div class="panel panel-default">
+			<div class="panel-heading">
+	    		<i class="fa fa-list fa-fw"></i> Pendents de categoritzar  
+        	</div>
+			<table ng-table="tableParams2" show-filter="true" class="table">
+	        <tr ng-repeat="mov in $data">
+	        	<td data-title="'concept'">{{mov[0]}}</td>
+	        	<td data-title="'Num'">{{mov[1]}}</td>
+	            <td data-title="'Categorize'" >
+	            	<select ng-change="categorizeConcept(mov[0],catForUncategorized)" ng-model="catForUncategorized" ng-options="category.id as category.name for category in categories">
+	            		<option >Pendents Cat</option>
+	            	</select>
 	            </td>
 	        </tr>
 	        </table>			

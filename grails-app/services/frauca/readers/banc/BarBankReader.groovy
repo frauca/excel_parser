@@ -46,6 +46,7 @@ class BarBankReader extends BaseBankReader {
 
 	@Override
 	public Object itsMine() {
+		log.trace "Its bar ${sheettable.getCeilValue('E4')}==Saldo"
 		return "Saldo".equalsIgnoreCase(sheettable.getCeilValue("E4"))
 	}
 
@@ -96,13 +97,18 @@ class BarBankReader extends BaseBankReader {
 		 def rows=[]
 		 log.trace "BarBankReader to read from ${getFirstDataRow()} to ${sheettable.getLastRowNum()}"
 		 AccountMovRaw last;
+		 int empties=0;
 		 for(int i in getFirstDataRow()..sheettable.getLastRowNum()){
 			 try{
 				 AccountMovRaw tmp=readRowMovements(i)//this one could be just the concept value
 				 if(!tmp.amount){
 					 if(last){
-						 last.conceptRaw=tmp.conceptRaw+"-"+last.conceptRaw
-						 last.concept=tmp.conceptRaw//This is the good value
+						 last.conceptRaw=last.conceptRaw+"-"+tmp.conceptRaw
+						 log.trace "${i}-${empties}-${last.concept}-${last.conceptRaw}"
+						 if(++empties<=1){
+							 last.concept=tmp.conceptRaw//This is the good value
+						 }
+						 
 					 }else{
 					 	log.info "A line with no values on first place ${tmp.rowOfDoc}"
 					 }
@@ -110,6 +116,7 @@ class BarBankReader extends BaseBankReader {
 				 	log.trace "This one is a good line ${tmp.rowOfDoc}"
 					 last=tmp
 					 rows << last
+					 empties=0;
 				 }
 				 
 			 }catch(e){

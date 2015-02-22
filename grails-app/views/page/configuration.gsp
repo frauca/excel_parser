@@ -11,7 +11,7 @@
 		<accordion close-others="oneAtATime">
 	    	<accordion-group is-open="status.isFirstOpen">
 	    		<accordion-heading>
-		            Categories management <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isFirstOpen, 'glyphicon-chevron-right': !status.isFirstOpen}"></i>
+		            Categories <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isFirstOpen, 'glyphicon-chevron-right': !status.isFirstOpen}"></i>
 		        </accordion-heading>
 		        <div ng-controller="movCategoriesCtrl">
 	    			<div class="panel panel-default">
@@ -39,7 +39,7 @@
 			</accordion-group>
 			<accordion-group is-open="status.isSecondOpen">
 				<accordion-heading>
-		            Accounts management <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isSecondOpen, 'glyphicon-chevron-right': !status.isSecondOpen}"></i>
+		            Accounts <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isSecondOpen, 'glyphicon-chevron-right': !status.isSecondOpen}"></i>
 		        </accordion-heading>
       			<div ng-controller="movAccountCtrl">
       				<div class="panel panel-default">
@@ -70,7 +70,7 @@
 		    </accordion-group>		
 		    <accordion-group is-open="status.open">
 		    	<accordion-heading>
-		            Directoris management <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+		            Directoris <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 		        </accordion-heading>		   
 			    	<div ng-controller="directoryCtrl">
 			    		<div class="panel panel-default">
