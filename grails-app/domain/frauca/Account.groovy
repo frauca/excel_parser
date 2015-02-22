@@ -12,7 +12,7 @@ class Account {
 	 * ccc or iban as readed on file
 	 */
 	String rawCCC
-	
+
 	
 	static hasMany = [files: FileSource]
 	

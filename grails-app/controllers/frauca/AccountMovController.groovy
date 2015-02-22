@@ -1,11 +1,13 @@
 package frauca
 
-import java.util.Date;
-
-import grails.rest.RestfulController;
+import grails.converters.JSON
+import grails.converters.XML
+import grails.rest.RestfulController
 
 class AccountMovController extends RestfulController<AccountMov>{
 
+	def categorizerService;
+	
 	AccountMovController(){
 		super(AccountMov)
 	}
@@ -32,5 +34,22 @@ class AccountMovController extends RestfulController<AccountMov>{
 				categoryType:it.categoritzation?.type
 			]
 		}
+	}
+	
+	def showUncatPending() {
+		def res = categorizerService.orderedUncategorizedConcepts()
+		switch(params.format){
+			case  "xml":
+				render( res  as XML)
+			default:
+			render( res  as JSON)
+		}
+		
+	}
+	
+	def categorizedAll(String concept,long cat) {
+		log.debug "all ${concept} as ${cat}"
+		categorizerService.manualCatUncategorized(concept,Category.get(cat))
+		render "Done"
 	}
 }

@@ -3,7 +3,7 @@ package frauca
 import grails.rest.Resource;
 
 final enum SetterType{
-	MANUAL,AUTOMATIC
+	MANUAL,AUTOMATIC,MULTIPLE
 }
 
 @Resource
