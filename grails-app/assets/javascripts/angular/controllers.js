@@ -245,6 +245,7 @@ movsControllers.controller('uncatMovCtrl', function($scope, $http,$filter,ngTabl
 	}
 });
 
+
 movsControllers.controller('movAccountCtrl', function($scope, $http, $filter, $resource, $timeout, ngTableParams, Account) {
 
 	$scope.tableParams = new ngTableParams({
@@ -303,4 +304,56 @@ movsControllers.controller('movAccountCtrl', function($scope, $http, $filter, $r
 			$scope.tableParams.reload();
 		});
 	}
+});
+
+
+movsControllers.controller('queryOverViewCtrl', function($scope, $http, $filter, $resource, $timeout) {
+	
+	$http.get('query/overView').success(				
+		function(data) {
+			
+			/* Set Data for donut*/
+			var arrayToReturn=[];
+			var dataToadd;
+			for(var i=0; i < data.categoria.length; i++){						
+				dataToadd = {'label': data.categoria[i][0], 'value': data.categoria[i][1]};
+				console.log(dataToadd);
+				arrayToReturn.push(dataToadd);
+			}
+			
+			/* Instance donut */
+			Morris.Donut({
+				 element: 'pie-chart-donut',
+				  data: arrayToReturn
+			});
+		
+		});
+
+});
+
+movsControllers.controller('queryOverViewCtrl2', function($scope, $http, $filter, $resource, $timeout) {
+	
+	$http.get('query/overView').success(				
+		function(data) {
+			
+			/* Set Data for donut*/
+			var arrayToPrint=[];
+			var dataIn;
+			var dataOut;				
+				dataIn = {'label': 'ingresos', 'value': data.ingresos.total};
+				arrayToPrint.push(dataIn);
+				
+				dataOut = {'label': 'gastos', 'value': data.gastos.total*-1};
+				arrayToPrint.push(dataOut);
+				
+				
+				console.log(arrayToPrint);
+
+			/* Instance donut */
+			Morris.Donut({
+				 element: 'pie-chart-donut2',
+				  data: arrayToPrint
+			});
+		});
+
 });

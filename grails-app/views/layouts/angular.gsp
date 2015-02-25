@@ -37,6 +37,14 @@
 	    <asset:stylesheet src="plugins/dist/css/sb-admin-2.css"/>	
 	    <!-- Custom Fonts -->
 	    <asset:stylesheet src="plugins/font-awesome/css/font-awesome.min.css"/>
+		<!-- Morris Charts JavaScript -->
+	    <asset:javascript src="plugins/raphael/raphael-min.js"/>
+	    <asset:javascript src="plugins/morrisjs/morris.min.js" />
+	    <asset:javascript src="plugins/angular-morris-chart/src/angular-morris-chart.min.js" />
+	    
+	    <!-- Morris Charts CSS -->
+    	<asset:stylesheet src="plugins/morrisjs/morris.css" />
+	    
 		
 		
 		<g:layoutHead/>
@@ -103,12 +111,12 @@
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse">
                                 <li>
-                                    <a href="flot.html">Flot Charts</a>
+                                	<g:link controller="page" action="queryOverView" target="_self" ></i> Charts Analyze (jmorris)</g:link>                                    
                                 </li>
-                                <li>
+                                <%--<li>
                                     <a href="morris.html">Morris.js Charts</a>
                                 </li>
-                            </ul>
+                            --%></ul>
                             <!-- /.nav-second-level -->
                         </li>                       
             <!-- /.navbar-static-side -->
