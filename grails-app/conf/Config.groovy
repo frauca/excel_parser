@@ -123,6 +123,6 @@ log4j.main = {
 	//debug 'grails.app.services'
 	//		'grails.app.services'
 	//'grails.app.services.frauca' 
-	//trace 'grails.app.services.frauca.readers'
+	trace 'grails.app.services.frauca'
 	//		'grails.app.services.frauca.readers.banc'
 }

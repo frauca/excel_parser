@@ -32,6 +32,9 @@ class QueryService {
 				,categoria:AccountMov.executeQuery("""select categoritzation.category.name,sum(amount) 
 																	from AccountMov where 1=1 """
 													+ands+" group by categoritzation.category.name")
+				,concepte:AccountMov.executeQuery("""select categoritzation.category.name,concept,sum(amount)
+																	from AccountMov where 1=1 """
+													+ands+" group by categoritzation.category.name,concept")
 				,detalls:AccountMov.executeQuery("from AccountMov where amount>=0"+ands)
 			]
 		return res
