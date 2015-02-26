@@ -6,7 +6,10 @@ movsControllers.controller('movListCtrl', function($scope, $http, $filter,ngTabl
 
 	$scope.tableParams = new ngTableParams({
 		page : 1, // show first page
-		count : 10
+		count : 10,
+		sorting: {
+			valueDate: 'desc'     // initial sorting
+        }
 	// count per page
 	}, {
 		counts : [], // hides page sizes
@@ -46,7 +49,7 @@ movsControllers.controller('movListCtrl', function($scope, $http, $filter,ngTabl
 	}
 
 	function getMovsURL() {
-		movsurl = 'acount_movs.json?max=-1';
+		movsurl = 'acount_movs.json?max=1000&sort=valueDate&order=desc';
 		if ($scope.selectedFile) {
 			movsurl += "&file=" + $scope.selectedFile;
 		}
