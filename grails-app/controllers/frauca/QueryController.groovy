@@ -8,7 +8,7 @@ class QueryController {
 
     def overView() { 
 		
-		def res =queryService.totalMovsAmount(params.ccc)
+		def res =queryService.totalMovsAmount(params)
 		
 		switch(params.format){
 			case  "xml":

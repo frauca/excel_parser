@@ -121,11 +121,8 @@ movsControllers.controller('movCategoriesCtrl', function($scope, $http,$filter, 
 		getData : function($defer, params) {
 			$http.get('category.json?max=-1').success(
 					function(data) {
-						var orderedData = params.sorting() ? $filter('orderBy')
-								(data, params.orderBy()) : data;
-						orderedData = params.filter() ? $filter('filter')(
-								orderedData, params.filter()) : orderedData;
-						$defer.resolve(orderedData.slice((params.page() - 1)
+						params.total(data.length);
+						$defer.resolve(data.slice((params.page() - 1)
 								* params.count(), params.page()
 								* params.count()));
 					});

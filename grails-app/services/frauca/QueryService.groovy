@@ -5,11 +5,23 @@ import grails.transaction.Transactional
 @Transactional
 class QueryService {
 
-    def totalMovsAmount(ccc=null) {
+    def totalMovsAmount(params) {
 		def query =""""""
 		def ands=""
-		if(ccc){
-			ands +=" and account=${ccc}"
+		if(params.ccc){
+			ands +=" and account=${params.ccc}"
+		}
+		if(params.year){
+			ands +=" and year(valueDate)=${params.year}"
+		}
+		if(params.month){
+			ands +=" and month(valueDate)=${params.month}"
+		}
+		if(params.dateBigger){
+			ands +=" and valueDate>='${params.dateBigger}'"
+		}
+		if(params.dateLower){
+			ands +=" and valueDate<='${params.dateLower}'"
 		}
 		log.info "totalAmount ${query}"
 		def res=[total:AccountMov.executeQuery("select sum(amount) from AccountMov where 1=1"+ands)[0]?.round(2)
