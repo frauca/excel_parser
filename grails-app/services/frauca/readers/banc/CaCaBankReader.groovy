@@ -8,7 +8,7 @@ class CaCaBankReader  extends BaseBankReader{
 	public BaseBankReader iCouldHandle(File file) {
 		CaCaBankReader me = new CaCaBankReader()
 		me.sheettable = new POISheetableReader(file)
-		log.trace "CaCa iCouldHandle ${me.sheettable}"
+		log.debug "CaCa iCouldHandle ${me.sheettable}"
 		if(me.itsMine()){
 			return me
 		}
@@ -17,13 +17,13 @@ class CaCaBankReader  extends BaseBankReader{
 
 	@Override
 	public Object getAccountCeilVal() {
-		def ccc=sheettable.getCeilValue("B7")
+		def ccc=sheettable.getCeilValue("B6")
 		return ccc
 	}
 
 	@Override
 	public Object itsMine() {
-		log.trace "CaCa ${sheettable?.getCeilValue('A3')}==Consulta de moviments"
+		log.debug "CaCa ${sheettable?.getCeilValue('A7')}==Consulta de moviments"
 		return "IBAN:".equalsIgnoreCase(sheettable.getCeilValue("A7"))
 	}
 

@@ -9,6 +9,7 @@ import frauca.readers.banc.BarBankReader
 import frauca.readers.banc.BaseBankReader
 import frauca.readers.banc.IngBankReader
 import frauca.readers.banc.MedBankReader
+import frauca.readers.banc.CaCaBankReader
 import frauca.readers.sheetables.*
 
 class BaseReader {
@@ -42,7 +43,7 @@ class BaseReader {
 	
 	def findSuitableBankReader(File file){
 		BaseBankReader[] suitables = [new BarBankReader(), new IngBankReader()
-							,new MedBankReader(),new IngBank2Reader(),new BarBank2Reader()]
+							,new MedBankReader(),new IngBank2Reader(),new BarBank2Reader(), new CaCaBankReader()]
 		suitables.find {suitable->
 			try{
 				log.debug "try to read it with ${suitable}"
@@ -51,7 +52,7 @@ class BaseReader {
 					return bnkReader
 				}
 			}catch(e){
-				log.debug "could not read it with ${suitable}"
+				log.info "could not read it with ${suitable}"
 				log.trace "reason",e
 			}
 		}
