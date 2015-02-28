@@ -61,4 +61,5 @@ class CaCaBankReader  extends BaseBankReader{
 	public String getConceptFromRaw(String raw) {
 		return raw;
 	}
+
 }

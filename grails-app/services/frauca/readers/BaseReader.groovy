@@ -43,7 +43,8 @@ class BaseReader {
 	
 	def findSuitableBankReader(File file){
 		BaseBankReader[] suitables = [new BarBankReader(), new IngBankReader()
-							,new MedBankReader(),new IngBank2Reader(),new BarBank2Reader(), new CaCaBankReader()]
+							,new MedBankReader(),new IngBank2Reader(),new BarBank2Reader(), 
+							new CaCaBankReader()]
 		suitables.find {suitable->
 			try{
 				log.debug "try to read it with ${suitable}"
