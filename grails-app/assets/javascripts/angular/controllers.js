@@ -307,53 +307,178 @@ movsControllers.controller('movAccountCtrl', function($scope, $http, $filter, $r
 });
 
 
-movsControllers.controller('queryOverViewCtrl', function($scope, $http, $filter, $resource, $timeout) {
-	
-	$http.get('query/overView').success(				
-		function(data) {
-			
-			/* Set Data for donut*/
-			var arrayToReturn=[];
+movsControllers.controller('queryOverViewCtrl', function($scope, $http, $filter, $resource, $timeout,Acc_movs) {
+
+	$scope.rogerYears=Acc_movs.years();
+	console.log("test"+$scope.rogerYears);
+	$scope.initChartsDef = function() {
+		$http.get('query/overView').success(function(data) {
+			/* Draw char Categories */
+			drawCategoryBarChart(data);
+			/* Draw char Balance */
+			drawBalanceDonutChart(data);
+			/*Initialyze to null */
+		//	$scope.year=null;
+		//	$scope.month=null;
+		});
+	}
+
+	$scope.updateCharts = function() {
+		var params = "";
+		if (($scope.year) && ($scope.year.value!="0"))
+			params += 'year=' + $scope.year.value;
+		if (($scope.month) && ($scope.month.value!="0"))
+			params += '&month=' + $scope.month.value;
+		$http.get('query/overView?' + params).success(function(data) {
+			/* Update data to char Categories */
+			drawCategoryBarChart(data);
+			/* Update data to char Balance */
+			drawBalanceDonutChart(data);
+		});
+	}
+
+	var barchart = Morris.Bar({
+		element : 'pie-chart-barchar',
+		// TODO: Inicialitzar?? data: {'y': 0, 'a': 0},
+		xkey : 'y',
+		ykeys : [ 'a' ],
+		labels : [ 'Import' ],
+		fillOpacity : 0.6,
+		hideHover : 'auto',
+		behaveLikeLine : true,
+		stacked : true,
+		resize : true,
+		pointFillColors : [ '#ffffff' ],
+		pointStrokeColors : [ 'black' ],
+		lineColors : [ 'gray', 'red' ],
+		grid : true
+	});
+
+	var donutchart = Morris.Donut({
+		element : 'pie-chart-balance',
+		data : [ 'label: ' + "", 'value: ' + 0 ],
+		resize : true
+	});
+
+	function parseDataToTypeChart(data, type) {
+		if ("balance" == type) {
+			var arrayToPrint = [];
+			var dataIn;
+			var dataOut;
+			dataIn = {
+				'label' : 'ingresos',
+				'value' : data.ingresos.total
+			};
+			arrayToPrint.push(dataIn);
+			dataOut = {
+				'label' : 'gastos',
+				'value' : data.gastos.total * -1
+			};
+			arrayToPrint.push(dataOut);
+
+			return arrayToPrint;
+
+		} else if ("barchar" == type) {
+			var arrayToReturn = [];
 			var dataToadd;
-			for(var i=0; i < data.categoria.length; i++){						
-				dataToadd = {'label': data.categoria[i][0], 'value': data.categoria[i][1]};
+			for (var i = 0; i < data.categoria.length; i++) {
+				dataToadd = {
+					'y' : data.categoria[i][0],
+					'a' : data.categoria[i][1]
+				};
 				console.log(dataToadd);
 				arrayToReturn.push(dataToadd);
 			}
-			
-			/* Instance donut */
-			Morris.Donut({
-				 element: 'pie-chart-donut',
-				  data: arrayToReturn
-			});
-		
-		});
+
+			return arrayToReturn;
+		}
+	}
+
+	function drawCategoryBarChart(data) {
+		/* Set Data */
+		barchart.setData(parseDataToTypeChart(data, "barchar"));
+	}
+
+	function drawBalanceDonutChart(data) {
+		/* Set Data */
+		donutchart.setData(parseDataToTypeChart(data, "balance"));
+	}
+	
+	$scope.years = [
+	               	                { name: '2008', value: 2008 },
+	                { name: '2009', value: 2009 },
+					{ name: '2010', value: 2010 },
+					{ name: '2011', value: 2011 },
+					{ name: '2012', value: 2012 },
+	                { name: '2013', value: 2013 },
+	                { name: '2014', value: 2014 },
+	                { name: '2015', value: 2015 }
+	            ];
+	$scope.months = [
+	             
+	                { name: 'Gener', value: 01 },
+					{ name: 'Febrer', value: 02 },
+					{ name: 'Març', value: 03 },
+					{ name: 'Abril', value: 04 },
+	                { name: 'Maig', value: 05 },
+	                { name: 'Juny', value: 06 },
+	                { name: 'Juliol', value: 07 },
+	                { name: 'Agost', value: 08 },
+					{ name: 'Setembre', value: 09 },
+	                { name: 'Octubre', value: 10 },
+	                { name: 'Novembre', value: 11 },
+	                { name: 'Desembre', value: 12 }
+	            ];
+	
 
 });
 
-movsControllers.controller('queryOverViewCtrl2', function($scope, $http, $filter, $resource, $timeout) {
-	
-	$http.get('query/overView').success(				
-		function(data) {
-			
-			/* Set Data for donut*/
-			var arrayToPrint=[];
-			var dataIn;
-			var dataOut;				
-				dataIn = {'label': 'ingresos', 'value': data.ingresos.total};
-				arrayToPrint.push(dataIn);
-				
-				dataOut = {'label': 'gastos', 'value': data.gastos.total*-1};
-				arrayToPrint.push(dataOut);
-				
-				
-				console.log(arrayToPrint);
 
-			/* Instance donut */
-			Morris.Donut({
-				 element: 'pie-chart-donut2',
-				  data: arrayToPrint
-			});
-		});
+movsControllers.controller('DatepickerFromCtrl', function($scope) {
+	$scope.today = function() {
+		$scope.dtFrom = new Date();
+	};
 
+	$scope.clear = function() {
+		$scope.dtFrom = null;
+	};
+
+	$scope.open = function($event) {
+		$event.preventDefault();
+		$event.stopPropagation();
+
+		$scope.opened = true;
+	};
+
+	$scope.dateOptionsFrom = {
+		formatYear : 'yy',
+		startingDay : 1
+	};
+	// $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy',
+	// 'shortDate'];
+	$scope.format = 'dd-MM-yyyy';
+});
+
+
+movsControllers.controller('DatepickerToCtrl', function($scope) {
+	$scope.today = function() {
+		$scope.dtTo = new Date();
+	};
+	$scope.clear = function() {
+		$scope.dtTo = null;
+	};
+
+	$scope.open = function($event) {
+		$event.preventDefault();
+		$event.stopPropagation();
+
+		$scope.opened = true;
+	};
+
+	$scope.dateOptionsTo = {
+		formatYear : 'yy',
+		startingDay : 1
+	};
+	// $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+	$scope.format = 'dd-MM-yyyy';
 });
