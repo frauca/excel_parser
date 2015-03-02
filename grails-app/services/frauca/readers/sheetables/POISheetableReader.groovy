@@ -59,7 +59,7 @@ class POISheetableReader extends BaseSheetable  {
 
 	@Override
 	public int getLastRowNum() {
-		return sheet.getLastRowNum()
+		return sheet.getLastRowNum()+1
 	}
 }
 

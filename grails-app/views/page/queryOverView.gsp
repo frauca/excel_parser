@@ -14,7 +14,7 @@
             </div> 
             <br />
 			<div class="col-lg-4" >	
-					
+				Roger year <select ng-model="rogerYear" ng-options="year as year for year in rogerYears" ng-change='updateCharts()'></select>	
 				Select year <select ng-options='year.name for year in years track by year.value' ng-model="year" ng-change='updateCharts()'></select><br /><br />
 				Select Month <select ng-options='month.name for month in months track by month.value' ng-model="month" ng-change='updateCharts()'></select>
 			</div>

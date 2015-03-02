@@ -307,8 +307,10 @@ movsControllers.controller('movAccountCtrl', function($scope, $http, $filter, $r
 });
 
 
-movsControllers.controller('queryOverViewCtrl', function($scope, $http, $filter, $resource, $timeout) {
+movsControllers.controller('queryOverViewCtrl', function($scope, $http, $filter, $resource, $timeout,Acc_movs) {
 
+	$scope.rogerYears=Acc_movs.years();
+	console.log("test"+$scope.rogerYears);
 	$scope.initChartsDef = function() {
 		$http.get('query/overView').success(function(data) {
 			/* Draw char Categories */
@@ -316,8 +318,8 @@ movsControllers.controller('queryOverViewCtrl', function($scope, $http, $filter,
 			/* Draw char Balance */
 			drawBalanceDonutChart(data);
 			/*Initialyze to null */
-			$scope.year=null;
-			$scope.month=null;
+		//	$scope.year=null;
+		//	$scope.month=null;
 		});
 	}
 
@@ -403,8 +405,7 @@ movsControllers.controller('queryOverViewCtrl', function($scope, $http, $filter,
 	}
 	
 	$scope.years = [
-	                { name: 'All years', value: 0 },
-	                { name: '2008', value: 2008 },
+	               	                { name: '2008', value: 2008 },
 	                { name: '2009', value: 2009 },
 					{ name: '2010', value: 2010 },
 					{ name: '2011', value: 2011 },
@@ -414,7 +415,7 @@ movsControllers.controller('queryOverViewCtrl', function($scope, $http, $filter,
 	                { name: '2015', value: 2015 }
 	            ];
 	$scope.months = [
-	                { name: 'All months', value: 0 },
+	             
 	                { name: 'Gener', value: 01 },
 					{ name: 'Febrer', value: 02 },
 					{ name: 'Març', value: 03 },
