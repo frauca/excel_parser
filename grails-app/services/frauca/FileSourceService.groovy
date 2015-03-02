@@ -25,7 +25,7 @@ class FileSourceService {
 			log.debug "recursive ${dir}"
 			dir.eachFileRecurse (FileType.FILES) { file -> 
 				log.trace "adding ${file}"
-				if(!file.name.startsWith("~")){//do not read linux temporal files
+				if(!file.name.startsWith(".~")){//do not read linux temporal files
 					files << file 
 				}
 			}
