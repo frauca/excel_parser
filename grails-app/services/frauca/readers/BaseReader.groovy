@@ -53,7 +53,7 @@ class BaseReader {
 					return bnkReader
 				}
 			}catch(e){
-				log.info "could not read it with ${suitable}"
+				log.debug "could not read it with ${suitable}"
 				log.trace "reason",e
 			}
 		}
