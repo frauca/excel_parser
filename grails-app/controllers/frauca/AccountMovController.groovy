@@ -52,4 +52,12 @@ class AccountMovController extends RestfulController<AccountMov>{
 		categorizerService.manualCatUncategorized(concept,Category.get(cat))
 		render "Done"
 	}
+	
+	def availableYears(){
+		render AccountMov.executeQuery("select distinct(year(valueDate)) as years from AccountMov order by years desc")
+	}
+	def availableMonth(int year){
+		render AccountMov.executeQuery("select distinct(month(valueDate)) as months from AccountMov where year(valueDate)=? order by months desc",[year])
+	}
 }
+

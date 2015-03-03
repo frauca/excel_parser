@@ -33,7 +33,7 @@ def showAllMovs(){
     }
 }
 
-readFile('D:/proyectos/docs/personal/learn/docs/2014_12_08_mediolanum.xls')
+readFile('C:\\Users\\Oscar\\Desktop\\EXTRACTES\\27012015.xls')
 
 showAllMovsAllFiles()
 showAllFiles()
