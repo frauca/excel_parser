@@ -7,7 +7,7 @@
 </head>
 <body>
 <div ng-controller="queryOverViewCtrl" ng-init="initChartsDef()">
-faig un error auqi en mig
+faig un error auqi en mig (que fa aixo aqui?)
 	<div class="col-lg-12">
 		<div class="panel panel-default" >
 			<div class="panel-heading">
