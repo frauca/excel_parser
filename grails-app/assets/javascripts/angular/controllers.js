@@ -307,26 +307,28 @@ movsControllers.controller('movAccountCtrl', function($scope, $http, $filter, $r
 });
 
 
-movsControllers.controller('queryOverViewCtrl', function($scope, $http, $filter, $resource, $timeout,Acc_movs) {
+movsControllers.controller('queryOverViewCtrl', function($scope, $http, $filter, $resource, $timeout, Acc_movs) {
 
-	$scope.rogerYears=Acc_movs.years();
-	console.log("test"+$scope.rogerYears);
+	$scope.years=Acc_movs.years();
+	//console.log("test"+$scope.rogerYears);
+	
 	$scope.initChartsDef = function() {
 		$http.get('query/overView').success(function(data) {
 			/* Draw char Categories */
 			drawCategoryBarChart(data);
 			/* Draw char Balance */
 			drawBalanceDonutChart(data);
-			/*Initialyze to null */
-		//	$scope.year=null;
-		//	$scope.month=null;
 		});
 	}
-
+   
 	$scope.updateCharts = function() {
 		var params = "";
-		if (($scope.year) && ($scope.year.value!="0"))
-			params += 'year=' + $scope.year.value;
+		if ($scope.year)
+			params += 'year=' + $scope.year;
+		if($scope.year){
+			$scope.months=Acc_movs.months($scope.year);
+			//console.log("test months ::    "+$scope.months + "  year::: " + $scope.year);
+		}
 		if (($scope.month) && ($scope.month.value!="0"))
 			params += '&month=' + $scope.month.value;
 		$http.get('query/overView?' + params).success(function(data) {
@@ -403,34 +405,6 @@ movsControllers.controller('queryOverViewCtrl', function($scope, $http, $filter,
 		/* Set Data */
 		donutchart.setData(parseDataToTypeChart(data, "balance"));
 	}
-	
-	$scope.years = [
-	               	                { name: '2008', value: 2008 },
-	                { name: '2009', value: 2009 },
-					{ name: '2010', value: 2010 },
-					{ name: '2011', value: 2011 },
-					{ name: '2012', value: 2012 },
-	                { name: '2013', value: 2013 },
-	                { name: '2014', value: 2014 },
-	                { name: '2015', value: 2015 }
-	            ];
-	$scope.months = [
-	             
-	                { name: 'Gener', value: 01 },
-					{ name: 'Febrer', value: 02 },
-					{ name: 'Març', value: 03 },
-					{ name: 'Abril', value: 04 },
-	                { name: 'Maig', value: 05 },
-	                { name: 'Juny', value: 06 },
-	                { name: 'Juliol', value: 07 },
-	                { name: 'Agost', value: 08 },
-					{ name: 'Setembre', value: 09 },
-	                { name: 'Octubre', value: 10 },
-	                { name: 'Novembre', value: 11 },
-	                { name: 'Desembre', value: 12 }
-	            ];
-	
-
 });
 
 
