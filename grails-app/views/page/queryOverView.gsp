@@ -7,8 +7,9 @@
 </head>
 <body>
 <div ng-controller="queryOverViewCtrl" ng-init="initChartsDef()">
-faig un error auqi en mig
+faig un errors auqi en mig
 	<div class="col-lg-12">
+	y una mica mes
 		<div class="panel panel-default" >
 			<div class="panel-heading">
               Filters
