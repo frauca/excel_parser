@@ -15,8 +15,7 @@ mierda pa ti
             </div> 
             <br />
 			<div class="col-lg-4" >	
-				Select year <select ng-options="year as year for year in years" ng-model="year" ng-change='updateCharts()'></select><br /><br />	
-				<!--  Select year <select ng-options='year.name for year in years track by year.value' ng-model="year" ng-change='updateCharts()'></select><br /><br />-->
+				Select year <select ng-options="year as year for year in years" ng-model="year" ng-change='updateCharts()'></select><br /><br />				
 				Select Month <select ng-options='month as month for month in months' ng-model="month" ng-change='updateCharts()'></select>
 			</div>
 			<div class="col-lg-1">
