@@ -482,3 +482,32 @@ movsControllers.controller('DatepickerToCtrl', function($scope) {
 	// $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
 	$scope.format = 'dd-MM-yyyy';
 });
+
+movsControllers.controller('queriesCtrl', function($scope,$http,ngTableParams,Query) {
+	$scope.tableParams = new ngTableParams({
+		page : 1, // show first page
+		count : 10,
+		sorting: {
+			valueDate: 'desc'     // initial sorting
+        }
+	// count per page
+	}, {
+		counts : [], // hides page sizes
+		getData : function($defer, params) {
+			$http.get("query").success(
+					function(data) {
+						params.total(data.length);
+						$defer.resolve(data.slice((params.page() - 1)
+								* params.count(), params.page()
+								* params.count()));
+					});
+		}
+	});
+	
+	$scope.addQuery = function(query) {
+		q = new Query(query);
+		Query.create(q, function(data) {
+			$scope.tableParams.reload();
+		});
+	}
+});

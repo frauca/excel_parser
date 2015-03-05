@@ -7,4 +7,6 @@ class PageController {
 	def configuration(){}
 	
 	def queryOverView(){}
+	
+	def queriesManager(){}
 }

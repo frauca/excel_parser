@@ -105,7 +105,15 @@
                         	<g:link controller="page" action="index" target="_self" ><i class="fa fa-home fa-fw"></i> Home</g:link>                           
                         </li>
                         <li>
-                        	<g:link controller="page" action="configuration" target="_self" ><i class="fa fa-gears fa-fw"></i> Settings</g:link>                           
+                        	<a href="#"><i class="fa fa-gears fa-fw"></i> Settings<span class="fa arrow"></span></a>
+                        	<ul class="nav nav-second-level collapse">
+                        		<li>
+                                	<g:link controller="page" action="configuration" target="_self" ></i> Settings</g:link>                                    
+                                </li>
+                                <li>
+                                	<g:link controller="page" action="queriesManager" target="_self" ></i> Queries</g:link>                                    
+                                </li>
+                            </ul>                           
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>

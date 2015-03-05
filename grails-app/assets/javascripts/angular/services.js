@@ -53,3 +53,11 @@ categoriesServices.factory('Directory', ['$resource',
 	      create: { method: 'post' }
 	  });
 	}]);
+
+categoriesServices.factory('Query', ['$resource',
+	function($resource){
+	  return $resource('query/:id.json', {id: "@id"},{
+		  update: { method: 'put', isArray: false },
+	      create: { method: 'post' }
+	  });
+	}]);
