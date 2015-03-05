@@ -43,7 +43,7 @@ categoriesServices.factory('Acc_movs', ['$resource',
      	query: {method:'GET', params:{max:'-1'}, isArray:true},
     	update: { method: 'put', isArray: false },
     	years: {url:'accountMov/availableYears',method:'GET', isArray:true},
-    	months: {url:'accountMov/availableMonth', method:'GET', params: {year: '@year'}, isArray:true}
+    	months: {url:'accountMov/availableMonth', method:'GET', isArray:true}
      });
    }]);
 

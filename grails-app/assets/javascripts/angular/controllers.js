@@ -314,33 +314,70 @@ movsControllers.controller('queryOverViewCtrl', function($scope, $http, $filter,
 	
 	$scope.initChartsDef = function() {
 		$http.get('query/overView').success(function(data) {
-			/* Draw char Categories */
-			drawCategoryBarChart(data);
-			/* Draw char Balance */
-			drawBalanceDonutChart(data);
+			
+			$scope.year=$scope.years[0];			
+			var params = "";
+						
+			if($scope.year){
+				params += 'year=' + $scope.year;				
+				$scope.months=Acc_movs.months({year: $scope.year});				
+				$scope.month=$scope.months[1];
+			}
+			if ($scope.month){
+				params += '&month=' + $scope.month;
+			}
+			$http.get('query/overView?' + params).success(function(data) {
+				/* Update data to char Categories */
+				drawCategoryBarChartIn(data);
+				/* Update data to char Balance */
+				drawCategoryBarChartOut(data);
+				
+				drawBalanceDonutChart(data);
+			});
 		});
 	}
    
 	$scope.updateCharts = function() {
+		
+		console.log("===============updateCharts====================");
 		var params = "";
 		if ($scope.year)
 			params += 'year=' + $scope.year;
 		if($scope.year){
-			$scope.months=Acc_movs.months($scope.year);
-			//console.log("test months ::    "+$scope.months + "  year::: " + $scope.year);
+			$scope.months=Acc_movs.months({year: $scope.year});
 		}
-		if (($scope.month) && ($scope.month.value!="0"))
-			params += '&month=' + $scope.month.value;
+		if ($scope.month)
+			params += '&month=' + $scope.month;
 		$http.get('query/overView?' + params).success(function(data) {
+						
 			/* Update data to char Categories */
-			drawCategoryBarChart(data);
+			drawCategoryBarChartIn(data);
 			/* Update data to char Balance */
-			drawBalanceDonutChart(data);
+			drawCategoryBarChartOut(data);
+			
+			//drawBalanceDonutChart(data);
 		});
 	}
 
-	var barchart = Morris.Bar({
-		element : 'pie-chart-barchar',
+	var barchartIn = Morris.Bar({
+		element : 'pie-chart-barchar-In',
+		// TODO: Inicialitzar?? data: {'y': 0, 'a': 0},
+		xkey : 'y',
+		ykeys : [ 'a' ],
+		labels : [ 'Import' ],
+		fillOpacity : 0.6,
+		hideHover : 'auto',
+		behaveLikeLine : true,
+		stacked : true,
+		resize : true,
+		pointFillColors : [ '#ffffff' ],
+		pointStrokeColors : [ 'black' ],
+		lineColors : [ 'gray', 'red' ],
+		grid : true
+	});
+	
+	var barchartOut = Morris.Bar({
+		element : 'pie-chart-barchar-Out',
 		// TODO: Inicialitzar?? data: {'y': 0, 'a': 0},
 		xkey : 'y',
 		ykeys : [ 'a' ],
@@ -362,48 +399,58 @@ movsControllers.controller('queryOverViewCtrl', function($scope, $http, $filter,
 		resize : true
 	});
 
-	function parseDataToTypeChart(data, type) {
-		if ("balance" == type) {
-			var arrayToPrint = [];
-			var dataIn;
-			var dataOut;
-			dataIn = {
-				'label' : 'ingresos',
-				'value' : data.ingresos.total
-			};
-			arrayToPrint.push(dataIn);
-			dataOut = {
-				'label' : 'gastos',
-				'value' : data.gastos.total * -1
-			};
-			arrayToPrint.push(dataOut);
 
-			return arrayToPrint;
-
-		} else if ("barchar" == type) {
-			var arrayToReturn = [];
-			var dataToadd;
-			for (var i = 0; i < data.categoria.length; i++) {
-				dataToadd = {
-					'y' : data.categoria[i][0],
-					'a' : data.categoria[i][1]
-				};
-				console.log(dataToadd);
-				arrayToReturn.push(dataToadd);
-			}
-
-			return arrayToReturn;
-		}
-	}
-
-	function drawCategoryBarChart(data) {
+	function drawCategoryBarChartIn(data) {
+		console.log("===============drawCategoryBarChartIn==");
+		
 		/* Set Data */
-		barchart.setData(parseDataToTypeChart(data, "barchar"));
+		var arrayToReturn = [];
+		var dataToadd;
+		for (var i = 0; i < data.ingresos.categoria.length; i++) {
+			dataToadd = {
+				'y' : data.ingresos.categoria[i][0],
+				'a' : data.ingresos.categoria[i][1]
+			};
+			console.log(dataToadd);
+			arrayToReturn.push(dataToadd);
+		}
+		barchartIn.setData(arrayToReturn);
+	}
+	
+	function drawCategoryBarChartOut(data) {
+		console.log("===============drawCategoryBarChartOut==");
+		/* Set Data */
+		var arrayToReturn = [];
+		var dataToadd;
+		for (var i = 0; i < data.gastos.categoria.length; i++) {
+			dataToadd = {
+				'y' : data.gastos.categoria[i][0],
+				'a' : data.gastos.categoria[i][1] * -1
+			};
+			console.log(dataToadd);
+			arrayToReturn.push(dataToadd);
+		}
+		barchartOut.setData(arrayToReturn);
 	}
 
 	function drawBalanceDonutChart(data) {
 		/* Set Data */
-		donutchart.setData(parseDataToTypeChart(data, "balance"));
+		var arrayToPrint = [];
+		var dataIn;
+		var dataOut;
+		dataIn = {
+			'label' : 'ingresos',
+			'value' : data.ingresos.total
+		};
+		arrayToPrint.push(dataIn);
+		dataOut = {
+			'label' : 'gastos',
+			'value' : data.gastos.total * -1
+		};
+		arrayToPrint.push(dataOut);
+
+		
+		donutchart.setData(arrayToPrint);
 	}
 });
 
