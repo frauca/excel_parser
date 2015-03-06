@@ -506,8 +506,32 @@ movsControllers.controller('queriesCtrl', function($scope,$http,ngTableParams,Qu
 	
 	$scope.addQuery = function(query) {
 		q = new Query(query);
-		Query.create(q, function(data) {
-			$scope.tableParams.reload();
-		});
+		if(!$scope.editing){
+			Query.create(q, function(data) {
+				$scope.tableParams.reload();
+			});
+		}else{
+			Query.update(q, function(data) {
+				$scope.tableParams.reload();
+			});
+		}
+		$scope.editing=false;
+		$scope.newQ = new Query();
 	}
+	
+	$scope.editQ = function(query) {
+		$scope.editing=true;
+		$scope.newQ = new Query(query);
+	}
+	
+	$scope.execute = function(query) {
+		console.log('execute');
+		$scope.showResult=true
+		$scope.q2e=query
+		$http.get("SQLQueries/execute?id="+query.id).then(
+				function(result) {
+					$scope.result=result.data
+				});
+	}
+	
 });

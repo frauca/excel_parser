@@ -11,4 +11,8 @@ class SQLQueriesController extends RestfulController<SQLQueries>{
 		super(SQLQueries)
 	}
 
+	def execute(Integer id) {
+		def q = SQLQueries.get(id)
+		respond SQLQueries.executeQuery(q.sql)
+	}
 }
