@@ -1,6 +1,7 @@
 package frauca
 
 import grails.rest.RestfulController
+import groovy.json.JsonSlurper;
 
 class SQLQueriesController extends RestfulController<SQLQueries>{
 	
@@ -12,7 +13,15 @@ class SQLQueriesController extends RestfulController<SQLQueries>{
 	}
 
 	def execute(Integer id) {
+		def jsonSlurper = new JsonSlurper()
 		def q = SQLQueries.get(id)
-		respond SQLQueries.executeQuery(q.sql)
+		def args= jsonSlurper.parseText(q.arguments)
+		def sql=q.sql
+		args.each {key,val->
+			log.debug key+"="+val
+			sql=sql.replaceAll(key, val)
+		}
+		log.debug "SQL:"+sql
+		respond SQLQueries.executeQuery(sql)
 	}
 }

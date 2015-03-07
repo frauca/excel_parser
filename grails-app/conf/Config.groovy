@@ -120,7 +120,7 @@ log4j.main = {
            'net.sf.ehcache.hibernate',
 		   'grails.app.jobs'
 	//debug 'grails.app'
-	info 'grails.app.services'
+	info 'grails.app'
 			//'grails.app.services'
 	//'grails.app.services.frauca' 
 	//trace 'grails.app.services.frauca.readers'

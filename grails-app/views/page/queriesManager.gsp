@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Pagina principal</title>
+<asset:javascript src="angular/queriesManager/controllersQM.js"/>
 </head>
 <body>
 	<div class="col-lg-12">
@@ -20,8 +21,8 @@
 			<div class="panel panel-default">
 				<table ng-table="tableParams" show-filter="true" class="table">
 			        <tr ng-repeat="q in $data">
-			        	<td data-title="'name'"><a href="" ng-click="execute(q)">{{q.name}}</a></td>
-			        	<td data-title="'sql'">{{q.sql}}</td>
+			        	<td data-title="'name'"><a href="" ng-click="showQuery(q)">{{q.name}}</a></td>
+			        	<td data-title="'sql'">{{q.sql.substring(1,80)}}...</td>
 			        	<td data-title="'Actions'">
 							<a href="" class="btn btn-default" ng-click="editQ(q)">Edit</a>
 						</td>
@@ -29,16 +30,17 @@
 		        </table>			
 			</div>
 		</div>
-		<div ng-if="showResult">
-			<div class="panel-heading"> 				    		 
-					<br>SQL: {{q2e.sql}}
-					 var str = "The #rain# 10 in SPAIN stays 30 #on# mainly 300 in the plain"; 
-        var res = str.match(/#[^#]+#/g);
-        for(cc in res){
-          document.write("<br>The value of lastIndex is " +res[cc]);
-        }
+		<div ng-if="showResult" class="panel panel-default">
+			<div class="panel-heading"> 				    
+					Genera el sql per posar alguna variable posala entre #var#		 
+					<br>SQL: <textarea rows="4" cols="80" ng-change="extractVars(q2e)"  ng-model="q2e.sql"></textarea>
+					<div ng-repeat="var in vars" >{{var}}: <input  ng-model="q2e.params[var]"></div>
+					<br><input  type="button" ng-click="execute(q2e)" value="Execute" />
+					
 			</div>
-
+			<div class="panel panel-default">
+				<a href="" ng-click="showQList()">list</a>
+			</div>
 			<div class="panel panel-default">
 				<table  class="table">
 			        <tr ng-repeat="line in result track by $index">

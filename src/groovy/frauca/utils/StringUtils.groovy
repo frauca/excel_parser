@@ -1,5 +1,6 @@
 package frauca.utils
 
+
 class StringUtils  {
 
 	static String replaceLast(String string, String substring, String replacement) {
@@ -17,4 +18,5 @@ class StringUtils  {
 		}
 		return res
 	}
+	
 }
