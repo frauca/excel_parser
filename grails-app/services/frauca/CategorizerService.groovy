@@ -30,23 +30,24 @@ class CategorizerService {
 	}
 	
 	def orderedUncategorizedConcepts(){
-		Categoritzation.executeQuery("""select concept,count(1) as num
+		Categoritzation.executeQuery("""select mov.concept
+										,count(1) as total
+                            			,(select count(1) from AccountMov as m3 left outer join m3.categoritzation as cat where m3.concept=mov.concept and cat is null) as nn
                                     from AccountMov mov
-                                     where mov.categoritzation is null
-                                     group by concept
-                                     order by num desc
+                                     group by mov.concept
+                                     order by nn desc
                                     """)
 	}
 	
 	def categorizedByConcept(concept){
-		log.info "%${concept}%"
+		log.trace "%${concept}%"
 		AccountMov.executeQuery("""select mov.concept as concept
                             ,count(1) as total
-                            ,(select count(1) from AccountMov as m3 left outer join m3.categoritzation as cat where m3.concept=mov.concept and cat is not null) as notnulls
-                            ,(select count(1) from AccountMov as m3 left outer join m3.categoritzation as cat where m3.concept=mov.concept and cat is null) as nulls
+                            ,(select count(1) from AccountMov as m3 left outer join m3.categoritzation as cat where m3.concept=mov.concept and cat is null) as nn
                                     from AccountMov as mov
                                     where mov.concept like ?
                                     group by mov.concept
+									order by nn desc
                                     ""","%${concept}%")
 	}
 

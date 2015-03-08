@@ -41,10 +41,18 @@
 			<div class="panel-heading">
 	    		<i class="fa fa-list fa-fw"></i> Pendents de categoritzar  
         	</div>
+        	<div class="panel panel-default">
+        		<form novalidate class="simple-form">
+					Concept: <input type="text" ng-model="concept" /> 
+					<br><input type="button" ng-click="tableParams2.reload" value="Filter" />
+				</form>
+        		
+        	</div>
 			<table ng-table="tableParams2" show-filter="true" class="table">
 	        <tr ng-repeat="mov in $data">
 	        	<td data-title="'concept'">{{mov[0]}}</td>
 	        	<td data-title="'Num'">{{mov[1]}}</td>
+	        	<td data-title="'NotNulls'" ng-class="{ 'minus': mov[0] == min[1],'plus': mov[0] != min[1] }">{{mov[2]}}</td>
 	            <td data-title="'Categorize'" >
 	            	<select ng-change="categorizeConcept(mov[0],catForUncategorized)" ng-model="catForUncategorized" ng-options="category.id as category.name for category in categories">
 	            		<option >Pendents Cat</option>

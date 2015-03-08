@@ -10,5 +10,4 @@ class PageController {
 	
 	def queriesManager(){}
 	
-	def categorizer2(){}
 }

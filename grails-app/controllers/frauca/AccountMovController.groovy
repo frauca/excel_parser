@@ -37,7 +37,13 @@ class AccountMovController extends RestfulController<AccountMov>{
 	}
 	
 	def showUncatPending() {
-		def res = categorizerService.orderedUncategorizedConcepts()
+		def res;
+		if(params.concept){
+			res = categorizerService.categorizedByConcept(params.concept)
+		}else{
+			res = categorizerService.orderedUncategorizedConcepts()
+		}
+		
 		switch(params.format){
 			case  "xml":
 				render( res  as XML)

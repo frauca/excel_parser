@@ -226,7 +226,7 @@ movsControllers.controller('uncatMovCtrl', function($scope, $http,$filter,ngTabl
 	}, {
 		counts : [], // hides page sizes
 		getData : function($defer, params) {
-			$http.get('accountMov/showUncatPending?max=-1').success(
+			$http.get(getUrl()).success(
 					function(data) {
 						params.total(data.length);//update paginator
 						$defer.resolve(data.slice((params.page() - 1)
@@ -235,6 +235,15 @@ movsControllers.controller('uncatMovCtrl', function($scope, $http,$filter,ngTabl
 					});
 		}
 	});
+	
+	function getUrl(){
+		var url='accountMov/showUncatPending?max=-1';
+		if($scope.concept){
+			url=url+"&concept="+$scope.concept
+		}
+		
+		return url;
+	}
 	
 	$scope.categorizeConcept= function(concept,cat){
 		console.log(" categorize " +concept+ " cat "+cat)
