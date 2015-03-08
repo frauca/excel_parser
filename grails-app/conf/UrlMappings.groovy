@@ -9,7 +9,7 @@ class UrlMappings {
 		"/account"(resources:"account")
 		"/file"(resources:"fileSource")
 		"/directory"(resources:"directorySource")
-		"/query"(resources:"SQLQueries")
+		"/sqlQuery"(resources:"SQLQueries")
 		
         "/$controller/$action?/$id?(.$format)?"{
             constraints {

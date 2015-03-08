@@ -113,6 +113,9 @@
                                 <li>
                                 	<g:link controller="page" action="queriesManager" target="_self" ></i> Queries</g:link>                                    
                                 </li>
+                                <li>
+                                	<g:link controller="page" action="categorizer2" target="_self" ></i> Categorizer 2</g:link>                                    
+                                </li>
                             </ul>                           
                         </li>
                         <li>

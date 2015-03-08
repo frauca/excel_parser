@@ -1,5 +1,5 @@
 
-movsControllers.controller('queriesCtrl', function($scope,$http,ngTableParams,Query) {
+movsControllers.controller('queriesCtrl', function($scope,$http,ngTableParams,SQLQuery) {
 	$scope.tableParams = new ngTableParams({
 		page : 1, // show first page
 		count : 10,
@@ -10,7 +10,7 @@ movsControllers.controller('queriesCtrl', function($scope,$http,ngTableParams,Qu
 	}, {
 		counts : [], // hides page sizes
 		getData : function($defer, params) {
-			$http.get("query").success(
+			$http.get("sqlQuery").success(
 					function(data) {
 						params.total(data.length);
 						$defer.resolve(data.slice((params.page() - 1)
@@ -21,23 +21,23 @@ movsControllers.controller('queriesCtrl', function($scope,$http,ngTableParams,Qu
 	});
 	
 	$scope.addQuery = function(query) {
-		q = new Query(query);
+		q = new SQLQuery(query);
 		if(!$scope.editing){
-			Query.create(q, function(data) {
+			SQLQuery.create(q, function(data) {
 				$scope.tableParams.reload();
 			});
 		}else{
-			Query.update(q, function(data) {
+			SQLQuery.update(q, function(data) {
 				$scope.tableParams.reload();
 			});
 		}
 		$scope.editing=false;
-		$scope.newQ = new Query();
+		$scope.newQ = new SQLQuery();
 	}
 	
 	$scope.editQ = function(query) {
 		$scope.editing=true;
-		$scope.newQ = new Query(query);
+		$scope.newQ = new SQLQuery(query);
 	}
 	
 	$scope.showQuery = function(query) {
@@ -55,7 +55,7 @@ movsControllers.controller('queriesCtrl', function($scope,$http,ngTableParams,Qu
 		console.log("parameters "+query.params)
 		$scope.showResult=true
 		query.arguments=JSON.stringify(query.params)
-		Query.update(query, function(data) {
+		SQLQuery.update(query, function(data) {
 			executeById(query.id)
 		});
 	}

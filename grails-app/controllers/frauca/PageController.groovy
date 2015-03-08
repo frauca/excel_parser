@@ -9,4 +9,6 @@ class PageController {
 	def queryOverView(){}
 	
 	def queriesManager(){}
+	
+	def categorizer2(){}
 }

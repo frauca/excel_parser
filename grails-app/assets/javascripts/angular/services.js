@@ -55,9 +55,9 @@ categoriesServices.factory('Directory', ['$resource',
 	  });
 	}]);
 
-categoriesServices.factory('Query', ['$resource',
+categoriesServices.factory('SQLQuery', ['$resource',
 	function($resource){
-	  return $resource('query/:id.json', {id: "@id"},{
+	  return $resource('sqlQuery/:id.json', {id: "@id"},{
 		  update: { method: 'put', isArray: false },
 	      create: { method: 'post' }
 	  });

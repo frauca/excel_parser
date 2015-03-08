@@ -38,15 +38,16 @@ class CategorizerService {
                                     """)
 	}
 	
-	def CategorizedByConcept(concept){
-		AccountMov.executeQuery("""select mov.concept
-                            ,count(1)
-                            ,(select count(1) from AccountMov as m3 left outer join m3.categoritzation as cat where m3.concept=mov.concept and cat is not null)
-                            ,(select count(1) from AccountMov as m3 left outer join m3.categoritzation as cat where m3.concept=mov.concept and cat is null)
+	def categorizedByConcept(concept){
+		log.info "%${concept}%"
+		AccountMov.executeQuery("""select mov.concept as concept
+                            ,count(1) as total
+                            ,(select count(1) from AccountMov as m3 left outer join m3.categoritzation as cat where m3.concept=mov.concept and cat is not null) as notnulls
+                            ,(select count(1) from AccountMov as m3 left outer join m3.categoritzation as cat where m3.concept=mov.concept and cat is null) as nulls
                                     from AccountMov as mov
-                                    where mov.concept like '%?%'
+                                    where mov.concept like ?
                                     group by mov.concept
-                                    """,concept)
+                                    ""","%${concept}%")
 	}
 
 	def manualCategorizedConcept(){

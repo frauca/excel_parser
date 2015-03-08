@@ -5,6 +5,7 @@ import grails.converters.*
 class QueryController {
 	
 	def queryService
+	def categorizerService
 
     def overView() { 
 		
@@ -35,6 +36,19 @@ class QueryController {
 			wdata[it]=queryService.totalMovsAmount(pars)
 		}
 		res["weeks"]=wdata
+		
+		switch(params.format){
+			case  "xml":
+				render( res  as XML)
+			default:
+				render( res  as JSON)
+		}
+		
+	}
+	
+	def catByConcept() {
+		
+		def res = categorizerService.categorizedByConcept(params.concept)
 		
 		switch(params.format){
 			case  "xml":
