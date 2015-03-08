@@ -37,6 +37,17 @@ class CategorizerService {
                                      order by num desc
                                     """)
 	}
+	
+	def CategorizedByConcept(concept){
+		AccountMov.executeQuery("""select mov.concept
+                            ,count(1)
+                            ,(select count(1) from AccountMov as m3 left outer join m3.categoritzation as cat where m3.concept=mov.concept and cat is not null)
+                            ,(select count(1) from AccountMov as m3 left outer join m3.categoritzation as cat where m3.concept=mov.concept and cat is null)
+                                    from AccountMov as mov
+                                    where mov.concept like '%?%'
+                                    group by mov.concept
+                                    """,concept)
+	}
 
 	def manualCategorizedConcept(){
 		def q=AccountMov.withCriteria{
