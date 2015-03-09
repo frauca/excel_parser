@@ -44,7 +44,7 @@
         	<div class="panel panel-default">
         		<form novalidate class="simple-form">
 					Concept: <input type="text" ng-model="concept" /> 
-					<br><input type="button" ng-click="tableParams2.reload" value="Filter" />
+					<br><input type="button" ng-click="tableParams2.reload()" value="Filter" />
 				</form>
         		
         	</div>
