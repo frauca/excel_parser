@@ -21,6 +21,9 @@ class AccountMovController extends RestfulController<AccountMov>{
 		if(params.ccc){
 			q=q.where{account{id==params.ccc}}
 		}
+		if(params.uncat=="true"){
+			q=q.where{isNull("categoritzation")}
+		}
 		respond q.list(params).collect(){
 			[
 				id:it.id,

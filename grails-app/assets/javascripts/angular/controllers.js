@@ -50,11 +50,15 @@ movsControllers.controller('movListCtrl', function($scope, $http, $filter,ngTabl
 
 	function getMovsURL() {
 		movsurl = 'acount_movs.json?max=1000&sort=valueDate&order=desc';
+		console.log("uncat"+$scope.uncategorized);
 		if ($scope.selectedFile) {
 			movsurl += "&file=" + $scope.selectedFile;
 		}
 		if ($scope.selectAccount) {
 			movsurl += "&ccc=" + $scope.selectAccount;
+		}
+		if ($scope.uncategorized) {
+			movsurl += "&uncat=true";
 		}
 		return movsurl;
 	}
@@ -68,9 +72,7 @@ movsControllers.controller('movListCtrl', function($scope, $http, $filter,ngTabl
 		});
 		$scope.tableParams.reload();
 	}
-	$scope.changedFile = function() {
-		$scope.tableParams.reload();
-	}
+	
 });
 
 movsControllers.controller('movCategorCtrl', function($scope, Categoritzation,Category, $modalInstance, $q) {

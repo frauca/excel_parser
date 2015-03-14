@@ -15,9 +15,10 @@
 					<option/>
 				</select>
 		 		<i class="fa fa-file-excel-o fa-fw"></i> File 
-				<select ng-change="changedFile()" ng-model="selectedFile" ng-options="file.id as file.name for file in files">
+				<select ng-change="tableParams.reload()" ng-model="selectedFile" ng-options="file.id as file.name for file in files">
 					<option/>
 				</select>
+				Nomes sense cat <input ng-change="tableParams.reload()" type="checkbox" ng-model="uncategorized">
         	</div>
 			<table ng-table="tableParams" show-filter="true" class="table">
 	        <tr ng-repeat="mov in $data">
