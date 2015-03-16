@@ -85,7 +85,7 @@ abstract class BaseBankReader {
 		 row.operationDate=getDateVale( getOperationDateCell(rownum))
 		 row.valueDate=getDateVale(getValueDateCell(rownum))
 		 row.conceptRaw=getConcpetCell(rownum)
-		 row.concept = getConceptFromRaw(row.conceptRaw)
+		 row.concept = getConceptFromRaw(row.conceptRaw).replaceAll("'", " ")
 		 row.amount=getDoubeVale(getAmountCell(rownum))
 		 row.totalAmount=getDoubeVale(getTotalAmountCell(rownum))
 		 row.rowOfDoc=rownum

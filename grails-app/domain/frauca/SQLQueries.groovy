@@ -13,6 +13,9 @@ class SQLQueries {
 	Date dateCreated
 	Date lastUpdated
 	
+	static mapping = {
+		sql type: "text"
+	}
 	
     static constraints = {
 		arguments nullable: true 

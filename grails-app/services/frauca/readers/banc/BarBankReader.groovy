@@ -29,6 +29,7 @@ class BarBankReader extends BaseBankReader {
 			}
 		}
 	}
+	 
 	@Override
 	public BaseBankReader iCouldHandle(File file) {
 		BarBankReader me = new BarBankReader()
