@@ -8,9 +8,11 @@ class Category {
 	String name
 	Date dateCreated
 	Date lastUpdated
+	Category father
 	
     static constraints = {
 		name unique: true
+		father nullable: true
     }
 	
 	static mapping = {

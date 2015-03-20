@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Configuracions</title>
+<asset:javascript src="angular/configuration/controllersCN.js"/>
 </head>
 <body>
 	<div class="col-lg-12">
