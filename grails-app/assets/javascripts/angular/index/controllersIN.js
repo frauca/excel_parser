@@ -1,7 +1,7 @@
-movsControllers.controller('movListCtrl', function($scope, $http, $filter,ngTableParams, $modal, Acc_movs, Categoritzation, File, Account) {
+movsControllers.controller('movListCtrl', function($scope, $http, $filter,ngTableParams, $modal, Acc_movs, Categoritzation, File, Account,Category) {
 
 	setSelects();
-
+	$scope.showFilter=false;
 	$scope.tableParams = new ngTableParams({
 		page : 1, // show first page
 		count : 10,
@@ -58,11 +58,26 @@ movsControllers.controller('movListCtrl', function($scope, $http, $filter,ngTabl
 		if ($scope.uncategorized) {
 			movsurl += "&uncat=true";
 		}
+		if ($scope.unSubCat) {
+			movsurl += "&unSubCat=true";
+		}
+		if ($scope.category) {
+			movsurl += "&category="+$scope.category;
+		}
+		if ($scope.year) {
+			movsurl += "&year="+$scope.year;
+		}
+		if ($scope.month) {
+			movsurl += "&month="+$scope.month;
+		}
 		return movsurl;
 	}
 	function setSelects() {
 		$scope.files = File.query();
 		$scope.accounts = Account.query();
+		$scope.categories = Category.query();
+		$scope.years = Acc_movs.years();
+		$scope.months = [1,2,3,4,5,6,7,8,9,10,11,12]
 	}
 	$scope.changedCCC = function() {
 		$scope.files = File.query({
@@ -70,7 +85,10 @@ movsControllers.controller('movListCtrl', function($scope, $http, $filter,ngTabl
 		});
 		$scope.tableParams.reload();
 	}
-	
+	$scope.updateSub = function(){
+		$scope.subcats =Category.subcat({father:$scope.category});
+		$scope.tableParams.reload();
+	}
 });
 
 movsControllers.controller('movCategorCtrl', function($scope, Categoritzation,Category, $modalInstance, $q) {
@@ -108,7 +126,6 @@ movsControllers.controller('movCategorCtrl', function($scope, Categoritzation,Ca
 	}
 	
 	$scope.updateSub = function(){
-		console.log("t1"+$scope.cat.category);
 		$scope.subcats =Category.subcat({father:$scope.cat.category});
 	}
 	function getSyncCategoritzation(catId) {

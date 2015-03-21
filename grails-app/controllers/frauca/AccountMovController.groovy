@@ -24,17 +24,33 @@ class AccountMovController extends RestfulController<AccountMov>{
 		if(params.uncat=="true"){
 			q=q.where{isNull("categoritzation")}
 		}
+		if(params.unSubCat=="true"){
+			q=q.where{categoritzation{isNull("subcat")}}
+		}
+		
+		if(params.category){
+			q=q.where{categoritzation{category{id==params.category}}}
+		}
+		if(params.year){
+			q=q.where{year(valueDate)==params.year}
+		}
+		if(params.month){
+			q=q.where{month(valueDate)==params.month}
+		}
 		respond q.list(params).collect(){
 			[
 				id:it.id,
 				operationDate:it?.operationDate?.format("yyyy/MM/dd"),
 				valueDate:it?.valueDate?.format("yyyy/MM/dd"),
 				concept:it.concept,
+				conceptRaw:it?.conceptRaw,
 				amount:it.amount,
 				total:it.totalAmount,
 				categoritzaion:it.categoritzation?.id,
 				categoryName:it.categoritzation?.category?.name,
-				categoryType:it.categoritzation?.type
+				categoryType:it.categoritzation?.type,
+				filePath:it?.original?.sourceFile?.path,
+				ccc:it?.account?.name
 			]
 		}
 	}

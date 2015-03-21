@@ -11,15 +11,25 @@
 	<div class="col-lg-12" ng-controller="movListCtrl">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-	    		<i class="fa fa-list fa-fw"></i> Accounts   
-	       		<select ng-change="changedCCC()" ng-model="selectAccount" ng-options="account.id as (account.name + ' - ' + account.ccc) for account in accounts">
-					<option/>
-				</select>
-		 		<i class="fa fa-file-excel-o fa-fw"></i> File 
-				<select ng-change="tableParams.reload()" ng-model="selectedFile" ng-options="file.id as file.name for file in files">
-					<option/>
-				</select>
-				Nomes sense cat <input ng-change="tableParams.reload()" type="checkbox" ng-model="uncategorized">
+				<i ng-click="showFilter=!showFilter" ng-class="{'glyphicon-chevron-down': !showFilter, 'glyphicon-chevron-up': showFilter}" class="pull-right glyphicon"></i>
+				Filters:
+				<div ng-show="showFilter" ng-hide="!showFilter">
+					<i class="fa fa-list fa-fw"></i> Accounts   
+		       		<select ng-change="changedCCC()" ng-model="selectAccount" ng-options="account.id as (account.name + ' - ' + account.ccc) for account in accounts">
+						<option/>
+					</select>
+			 		<i class="fa fa-file-excel-o fa-fw"></i> File 
+					<select ng-change="tableParams.reload()" ng-model="selectedFile" ng-options="file.id as file.name for file in files">
+						<option/>
+					</select>
+					Nomes sense cat <input ng-change="tableParams.reload()" type="checkbox" ng-model="uncategorized">
+					Nomes sense subcat <input ng-change="tableParams.reload()" type="checkbox" ng-model="unSubCat">
+					<br>category:<select ng-model="category" ng-change="updateSub()" ng-options="category.id as category.name for category in categories"></select>
+		    		subcat:<select ng-model="subcat" ng-options="subcat.id as subcat.name for subcat in subcats"></select>
+		    		year <select ng-options="year as year for year in years" ng-model="year" ng-change='tableParams.reload()'></select>
+		    		month <select ng-options='month as month for month in months' ng-model="month" ng-change='tableParams.reload()'></select>
+				</div>
+	    		
         	</div>
 			<table ng-table="tableParams" show-filter="true" class="table">
 	        <tr ng-repeat="mov in $data">
