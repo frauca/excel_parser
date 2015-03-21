@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Pagina principal</title>
+<asset:javascript src="angular/index/controllersIN.js"/>
 </head>
 <body>
 	<div class="col-lg-12">

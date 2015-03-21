@@ -9,7 +9,8 @@ categoriesServices.factory('Category', ['$resource',
     return $resource('category/:id.json', {id: "@id"},{
     	query: {method:'GET', params:{max:'-1'}, isArray:true},
     	update: { method: 'put', isArray: false },
-    	create: { method: 'post' }
+    	create: { method: 'post' },
+    	subcat: {method:'GET', params:{max:'-1',father:':father'}, isArray:true},
     });
   }]);
 
