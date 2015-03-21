@@ -13,6 +13,7 @@
 			<div class="panel-heading"> 				    		 
 				<form novalidate class="simple-form">
 					Name: <input type="text" ng-model="newQ.name" /> 
+					<br>Desc: <textarea rows="1" cols="80"  ng-model="newQ.description"></textarea>
 					<br>SQL: <textarea rows="4" cols="80"  ng-model="newQ.sql"></textarea>
 					<br><input  ng-if="!editing" type="button" ng-click="addQuery(newQ)" value="Add" />
 					<br><input  ng-if="editing" type="button" ng-click="addQuery(newQ)" value="Edit" />
@@ -22,7 +23,7 @@
 				<table ng-table="tableParams" show-filter="true" class="table">
 			        <tr ng-repeat="q in $data">
 			        	<td data-title="'name'"><a href="" ng-click="showQuery(q)">{{q.name}}</a></td>
-			        	<td data-title="'sql'">{{q.sql.substring(1,80)}}...</td>
+			        	<td data-title="'description'">{{q.description.substring(1,80)}}...</td>
 			        	<td data-title="'Actions'">
 							<a href="" class="btn btn-default" ng-click="editQ(q)">Edit</a>
 						</td>
