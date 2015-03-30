@@ -46,6 +46,15 @@ movsControllers.controller('movListCtrl', function($scope, $http, $filter,ngTabl
 		});
 	}
 
+	$scope.editMov = function(mov) {
+		$scope.acc_mov = mov
+		var modalInstance = $modal.open({
+			templateUrl : 'modal/editMov',
+			controller : 'movEditCtrl',
+			scope : $scope
+		});
+	}
+	
 	function getMovsURL() {
 		movsurl = 'acount_movs.json?max=1000&sort=valueDate&order=desc';
 		console.log("uncat"+$scope.uncategorized);
@@ -108,11 +117,11 @@ movsControllers.controller('movCategorCtrl', function($scope, Categoritzation,Ca
 	} else {
 		$scope.updating = false;
 		$scope.cat = new Categoritzation();
-		$scope.cat.type = "MANUAL";
 	}
 
 	// $scope.cat.accountMov=$scope.acc_mov.id;
 	$scope.save = function(cat) {
+		$scope.cat.type = "MANUAL";
 		if ($scope.updating) {
 			Categoritzation.update(cat, function(data) {
 				$modalInstance.close(data);
@@ -180,3 +189,11 @@ movsControllers.controller('uncatMovCtrl', function($scope, $http,$filter,ngTabl
 	}
 });
 
+
+movsControllers.controller('movEditCtrl', function($scope, $http,Acc_movs,$modalInstance) {
+	$scope.mov=Acc_movs.get({id:$scope.acc_mov.id});
+	$scope.save = function (mov){
+		Acc_movs.update(mov);
+		$modalInstance.close();
+	}
+});

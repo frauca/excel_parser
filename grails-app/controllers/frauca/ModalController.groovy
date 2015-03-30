@@ -4,4 +4,6 @@ class ModalController {
 	static layout = 'blank'
 	
     def setCategory() { }
+	
+	def editMov(){}
 }
