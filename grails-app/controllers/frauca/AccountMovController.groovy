@@ -7,12 +7,12 @@ import grails.rest.RestfulController
 class AccountMovController extends RestfulController<AccountMov>{
 
 	def categorizerService;
-	
+
 	AccountMovController(){
 		super(AccountMov)
 	}
-	
-	
+
+
 	def index(Integer max) {
 		def q=AccountMov.where{}
 		if(params.file){
@@ -27,7 +27,7 @@ class AccountMovController extends RestfulController<AccountMov>{
 		if(params.unSubCat=="true"){
 			q=q.where{categoritzation{isNull("subcat")}}
 		}
-		
+
 		if(params.category){
 			q=q.where{categoritzation{category{id==params.category}}}
 		}
@@ -54,7 +54,7 @@ class AccountMovController extends RestfulController<AccountMov>{
 			]
 		}
 	}
-	
+
 	def showUncatPending() {
 		def res;
 		if(params.concept){
@@ -62,27 +62,35 @@ class AccountMovController extends RestfulController<AccountMov>{
 		}else{
 			res = categorizerService.orderedUncategorizedConcepts()
 		}
-		
+
 		switch(params.format){
 			case  "xml":
 				render( res  as XML)
 			default:
-			render( res  as JSON)
+				render( res  as JSON)
 		}
-		
 	}
-	
+
 	def categorizedAll(String concept,long cat) {
 		log.debug "all ${concept} as ${cat}"
 		categorizerService.manualCatUncategorized(concept,Category.get(cat))
 		render "Done"
 	}
-	
+
 	def availableYears(){
 		render AccountMov.executeQuery("select distinct(year(valueDate)) as years from AccountMov order by years desc")
 	}
 	def availableMonth(int year){
 		render AccountMov.executeQuery("select distinct(month(valueDate)) as months from AccountMov where year(valueDate)=? order by months desc",[year])
+	}
+	def similarConcepts(long id){
+		def res = AccountMov.executeQuery("select distinct(concept) from AccountMov where conceptRaw = (select conceptRaw from AccountMov where id=?)",id)
+		switch(params.format){
+			case  "xml":
+				render( res  as XML)
+			default:
+				render( res  as JSON)
+		}
 	}
 }
 

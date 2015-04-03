@@ -3,6 +3,8 @@
 <head>
 <title>Pagina principal</title>
 <asset:javascript src="angular/index/controllersIN.js"/>
+<asset:javascript src="plugins/ui-select/select.js"/>
+<asset:stylesheet src="plugins/ui-select/select.css"/>
 </head>
 <body>
 	<div class="col-lg-12">

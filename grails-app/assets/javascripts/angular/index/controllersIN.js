@@ -190,8 +190,11 @@ movsControllers.controller('uncatMovCtrl', function($scope, $http,$filter,ngTabl
 });
 
 
-movsControllers.controller('movEditCtrl', function($scope, $http,Acc_movs,$modalInstance) {
-	$scope.mov=Acc_movs.get({id:$scope.acc_mov.id});
+movsControllers.controller('movEditCtrl', function($scope, $http,Acc_movs,$modalInstance,Account) {
+	$scope.mov=Acc_movs.get({id:$scope.acc_mov.id},function(data){
+		$scope.mov.ccc=Account.get({id:data.account.id});
+	});
+	$scope.concepts=Acc_movs.concepts({idm:$scope.acc_mov.id});
 	$scope.save = function (mov){
 		Acc_movs.update(mov);
 		$modalInstance.close();
