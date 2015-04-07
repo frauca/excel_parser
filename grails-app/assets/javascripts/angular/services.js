@@ -45,7 +45,8 @@ categoriesServices.factory('Acc_movs', ['$resource',
     	update: { method: 'put', isArray: false },
     	years: {url:'accountMov/availableYears',method:'GET', isArray:true},
     	months: {url:'accountMov/availableMonth', method:'GET', isArray:true},
-    	concepts:{url:'accountMov/similarConcepts?id=:idm', method:'GET', isArray:true}
+    	concepts:{url:'accountMov/similarConcepts?id=:idm', method:'GET', isArray:true},
+    	addInfo:{url:'accountMov/additionalInfo.json?id=:idm', method:'GET', isArray:false}
      });
    }]);
 

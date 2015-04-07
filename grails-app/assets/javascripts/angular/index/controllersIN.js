@@ -17,8 +17,8 @@ movsControllers.controller('movListCtrl', function($scope, $http, $filter,ngTabl
 						params.total(data.length);
 						var orderedData = params.sorting() ? $filter('orderBy')
 								(data, params.orderBy()) : data;
-						orderedData = params.filter() ? $filter('filter')(
-								orderedData, params.filter()) : orderedData;
+						orderedData = params.filter() ? $filter('filter')
+								(orderedData, params.filter()) : orderedData;
 						$defer.resolve(orderedData.slice((params.page() - 1)
 								* params.count(), params.page()
 								* params.count()));
@@ -56,7 +56,7 @@ movsControllers.controller('movListCtrl', function($scope, $http, $filter,ngTabl
 	}
 	
 	function getMovsURL() {
-		movsurl = 'acount_movs.json?max=1000&sort=valueDate&order=desc';
+		movsurl = 'accountMov/genericQuery.json?max=1000&sort=valueDate&order=desc';
 		console.log("uncat"+$scope.uncategorized);
 		if ($scope.selectedFile) {
 			movsurl += "&file=" + $scope.selectedFile;
@@ -72,6 +72,9 @@ movsControllers.controller('movListCtrl', function($scope, $http, $filter,ngTabl
 		}
 		if ($scope.category) {
 			movsurl += "&category="+$scope.category;
+		}
+		if ($scope.subcat) {
+			movsurl += "&subcat="+$scope.subcat;
 		}
 		if ($scope.year) {
 			movsurl += "&year="+$scope.year;
@@ -194,6 +197,7 @@ movsControllers.controller('movEditCtrl', function($scope, $http,Acc_movs,$modal
 	$scope.mov=Acc_movs.get({id:$scope.acc_mov.id},function(data){
 		$scope.mov.ccc=Account.get({id:data.account.id});
 	});
+	$scope.addInfo=Acc_movs.addInfo({idm:$scope.acc_mov.id})
 	$scope.concepts=Acc_movs.concepts({idm:$scope.acc_mov.id});
 	$scope.save = function (mov){
 		Acc_movs.update(mov);

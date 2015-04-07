@@ -15,6 +15,7 @@
 		    <br>totalAmount:{{mov.totalAmount}}
 		    <br>ccc:{{mov.ccc.rawCCC}}-{{mov.ccc.name}}-{{mov.account}}
 		    <br>id: {{mov.id}}
+		    <br>filePath: {{addInfo.filePath}}
 		   </div>
     </div>
     

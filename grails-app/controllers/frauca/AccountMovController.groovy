@@ -4,6 +4,8 @@ import grails.converters.JSON
 import grails.converters.XML
 import grails.rest.RestfulController
 
+import java.text.DateFormat
+
 class AccountMovController extends RestfulController<AccountMov>{
 
 	def categorizerService;
@@ -13,46 +15,82 @@ class AccountMovController extends RestfulController<AccountMov>{
 	}
 
 
-	def index(Integer max) {
-		def q=AccountMov.where{}
+	def genericQuery(Integer max) {
+		String conds=" 1=1"
+		def prs=[];
+		if(params.id){
+			conds+=" and mov.id=?"
+			prs<<params.id.toLong()
+		}
 		if(params.file){
-			q=q.where{original{sourceFile{id==params.file}}}
+			conds+=" and mov.original.sourceFile.id=?"
+			prs<<params.file.toLong()
 		}
 		if(params.ccc){
-			q=q.where{account{id==params.ccc}}
+			conds+=" and ac.id=?"
+			prs<<params.ccc.toLong()
 		}
 		if(params.uncat=="true"){
-			q=q.where{isNull("categoritzation")}
+			conds+=" and cat.id is null"
 		}
 		if(params.unSubCat=="true"){
-			q=q.where{categoritzation{isNull("subcat")}}
+			conds+=" and cat.subcat is null"
 		}
 
 		if(params.category){
-			q=q.where{categoritzation{category{id==params.category}}}
+			conds+=" and ctg.id=? "
+			prs<<params.category.toLong()
+		}
+		if(params.subcat){
+			conds+=" and cat.subcat.id=? "
+			prs<<params.subcat.toLong()
 		}
 		if(params.year){
-			q=q.where{year(valueDate)==params.year}
+			conds+=" and year(mov.valueDate)=? "
+			prs<<params.year.toInteger()
 		}
 		if(params.month){
-			q=q.where{month(valueDate)==params.month}
+			conds+=" and month(mov.valueDate)=? "
+			prs<<params.month.toInteger()
 		}
-		respond q.list(params).collect(){
-			[
-				id:it.id,
-				operationDate:it?.operationDate?.format("yyyy/MM/dd"),
-				valueDate:it?.valueDate?.format("yyyy/MM/dd"),
-				concept:it.concept,
-				conceptRaw:it?.conceptRaw,
-				amount:it.amount,
-				total:it.totalAmount,
-				categoritzaion:it.categoritzation?.id,
-				categoryName:it.categoritzation?.category?.name,
-				categoryType:it.categoritzation?.type,
-				filePath:it?.original?.sourceFile?.path,
-				ccc:it?.account?.name
-			]
+		def prodlist = index2Render(conds, prs, params)
+		respond prodlist 
+	}
+
+	private List index2Render(String conds,  List prs, Map params) {
+		String hql ="""select mov.id
+								,mov.operationDate
+                                ,mov.valueDate
+                                ,mov.concept
+                                ,mov.conceptRaw
+                                ,mov.amount
+                                ,mov.totalAmount as total
+                                ,cat.id as categoritzation
+                                ,ctg.name as categoryName
+                                ,cat.type as categoryType
+                                ,ac.name as ccc
+                             from AccountMov as mov
+                                 left outer join mov.categoritzation as cat
+                                 left outer join cat.category ctg
+                                 join mov.account as ac
+                             where ${conds}
+                             order by mov.valueDate desc""";
+		log.debug(hql)
+		def prods=AccountMov.executeQuery(hql,prs,params)
+		def prodlist = prods.collect { result ->
+			[ 'id': result[0],
+				'operationDate': result[1].format('yyyy-MM-dd'),
+				'valueDate':result[2].format('yyyy-MM-dd'),
+				'concept':result[3],
+				'conceptRaw':result[4],
+				'amount':result[5],
+				'total':result[6],
+				'categoritzaion':result[7],
+				'categoryName':result[8],
+				'categoryType':result[9],
+				'ccc':result[10] ]
 		}
+		return prodlist
 	}
 
 	def showUncatPending() {
@@ -91,6 +129,12 @@ class AccountMovController extends RestfulController<AccountMov>{
 			default:
 				render( res  as JSON)
 		}
+	}
+	
+	def additionalInfo(long id){
+		AccountMov mov=AccountMov.get(id);
+		def res =['filePath':mov?.original?.sourceFile.path]
+		respond res
 	}
 }
 

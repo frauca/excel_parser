@@ -13,7 +13,6 @@
 		    <input type="submit" ng-click="save(cat)" value="Save" />
 		    <br>concept:{{acc_mov.concept}}
 		    <br>conceptRaw:{{acc_mov.conceptRaw}}
-		    <br>file:{{acc_mov.filePath}}
 		   </div>
     </div>
     

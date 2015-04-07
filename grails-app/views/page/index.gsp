@@ -27,7 +27,7 @@
 					Nomes sense cat <input ng-change="tableParams.reload()" type="checkbox" ng-model="uncategorized">
 					Nomes sense subcat <input ng-change="tableParams.reload()" type="checkbox" ng-model="unSubCat">
 					<br>category:<select ng-model="category" ng-change="updateSub()" ng-options="category.id as category.name for category in categories"></select>
-		    		subcat:<select ng-model="subcat" ng-options="subcat.id as subcat.name for subcat in subcats"></select>
+		    		subcat:<select ng-model="subcat" ng-change="updateSub()" ng-options="subcat.id as subcat.name for subcat in subcats"></select>
 		    		year <select ng-options="year as year for year in years" ng-model="year" ng-change='tableParams.reload()'></select>
 		    		month <select ng-options='month as month for month in months' ng-model="month" ng-change='tableParams.reload()'></select>
 				</div>
@@ -42,7 +42,7 @@
 	            	<span ng-class="{ 'plus': mov.amount >= 0,'minus': mov.amount < 0 }">{{mov.amount}}</span>
 	            </td>
 	            <td data-title="'Total'">{{mov.total}}</td>
-	            <td data-title="'Category'" sortable="'category'">
+	            <td data-title="'Category'" >
 	            	<a ng-if="!mov.categoryName"	href="" class="btn btn-warning" ng-click="setCategory(mov)">No Catalogat</a>
 	            	<a ng-if="mov.categoryName"	ng-class="{'btn-success': mov.categoryType.name=='MANUAL','btn-primary': mov.categoryType.name=='AUTOMATIC','btn-info': mov.categoryType.name=='MULTIPLE'}" "href="" class="btn " ng-click="setCategory(mov)">{{mov.categoryName}}</a>
 	            </td>
