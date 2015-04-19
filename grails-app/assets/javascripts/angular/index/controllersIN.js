@@ -54,6 +54,12 @@ movsControllers.controller('movListCtrl', function($scope, $http, $filter,ngTabl
 			scope : $scope
 		});
 	}
+	$scope.deleteMov = function(mov) {
+		console.log('deleting');
+		Acc_movs.del(mov, function() {
+			$scope.tableParams.reload();
+		});
+	}
 	
 	function getMovsURL() {
 		movsurl = 'accountMov/genericQuery.json?max=1000&sort=valueDate&order=desc';

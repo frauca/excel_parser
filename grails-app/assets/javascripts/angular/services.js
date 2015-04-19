@@ -43,6 +43,7 @@ categoriesServices.factory('Acc_movs', ['$resource',
      return $resource('acount_movs/:id.json', {id: "@id"},{
      	query: {method:'GET', params:{max:'-1'}, isArray:true},
     	update: { method: 'put', isArray: false },
+    	del: {method:'DELETE'},
     	years: {url:'accountMov/availableYears',method:'GET', isArray:true},
     	months: {url:'accountMov/availableMonth', method:'GET', isArray:true},
     	concepts:{url:'accountMov/similarConcepts?id=:idm', method:'GET', isArray:true},

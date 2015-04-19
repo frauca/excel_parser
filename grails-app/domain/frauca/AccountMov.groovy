@@ -40,6 +40,7 @@ class AccountMov {
 		totalAmountRaw blank:false
 		totalAmount nullable:true 
 		categoritzation nullable:true;
+		original nullable:true
     }
 	
 	public AccountMov(AccountMovRaw raw){

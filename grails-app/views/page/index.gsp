@@ -48,6 +48,7 @@
 	            </td>
 	            <td data-title="'Edit'">
 	            	<a href="" class="btn btn-default" ng-click="editMov(mov)">Edit</a>
+	            	<a href="" class="btn btn-danger" ng-click="deleteMov(mov)">Del</a>
 	            </td>
 	        </tr>
 	        </table>			
