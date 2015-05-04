@@ -1,5 +1,7 @@
 import frauca.AccountMov
 import frauca.FileSource
+import frauca.readers.sheetables.BaseSheetable;
+import frauca.readers.sheetables.JODSheetableReader
 
 def readFile(def path){
     println "reading"
@@ -8,6 +10,11 @@ def readFile(def path){
     c.readFile(path)
     c.processAllSourceFiles()
     println "readed"
+}
+
+def readBarCCC(file){
+    BaseSheetable ss=new JODSheetableReader(file)
+    return ss.getSheetName()
 }
 
 
@@ -33,9 +40,9 @@ def showAllMovs(){
     }
 }
 
-readFile('C:\\Users\\Oscar\\Desktop\\EXTRACTES\\27012015.xls')
-
-showAllMovsAllFiles()
-showAllFiles()
-showAllMovs()
+//readFile('C:\\Users\\Oscar\\Desktop\\EXTRACTES\\27012015.xls')
+println readBarCCC(new File('/home/rofc/Documents/projects/docs/personal/learn/docs/bar.ods'))
+//showAllMovsAllFiles()
+//showAllFiles()
+//showAllMovs()
 "Done"

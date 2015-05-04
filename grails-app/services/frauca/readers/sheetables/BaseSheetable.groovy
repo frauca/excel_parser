@@ -12,4 +12,6 @@ abstract class BaseSheetable {
 	def abstract getCeilValue(def ceil)
 	
 	abstract int getLastRowNum()
+	
+	def abstract getSheetName()
 }

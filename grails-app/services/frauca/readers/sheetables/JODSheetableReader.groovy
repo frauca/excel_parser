@@ -7,6 +7,11 @@ import org.jopendocument.dom.spreadsheet.SpreadSheet
 class JODSheetableReader extends BaseSheetable  {
 
 	SpreadSheet sheettable
+	@Override
+	public Object getSheetName() {
+		return sheet.getName()
+	}
+
 	Sheet sheet
 	
 	JODSheetableReader(File  f){

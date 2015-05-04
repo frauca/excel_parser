@@ -7,29 +7,7 @@ import frauca.utils.StringUtils;
 
 class BarBankReader extends BaseBankReader {
 
-	/**
-	 * This file has not account information a dummy value is setted. This dummy value must no be repeated in two files
-	 * @return null if can not be found or Account if it could
-	 */
-	 Account getAccount() {
-		log.debug "get the account of the bank"
-		def ccc = "00001"
-		def ac = Account.findByRawCCC(ccc)
-		if(ac){
-			return ac
-		}else{
-			ac = new Account()
-			ac.rawCCC = ccc
-			ac.save()
-			if(ac.hasErrors()){
-				ac.errors.allErrors.each{log.error "could not save account "+it}
-			}else{
-				log.debug "the ccc is on a place "+ac.rawCCC
-				return ac
-			}
-		}
-	}
-	 
+	
 	@Override
 	public BaseBankReader iCouldHandle(File file) {
 		BarBankReader me = new BarBankReader()
@@ -42,7 +20,7 @@ class BarBankReader extends BaseBankReader {
 
 	@Override
 	public Object getAccountCeilVal() {
-		return null;
+		def ccc=sheettable.getCeilValue("A3")
 	}
 
 	@Override
@@ -84,7 +62,7 @@ class BarBankReader extends BaseBankReader {
 	@Override
 	public String getConceptFromRaw(String raw) {
 		String concept =StringUtils.removeAnyReplacements(raw, /RECIBO SEPA \d+  /)
-		concept =StringUtils.removeAnyReplacements(concept, /RECIBO A SU CARGO Nº \d+ /)
+		concept =StringUtils.removeAnyReplacements(concept, /RECIBO A SU CARGO Nï¿½ \d+ /)
 		concept =StringUtils.removeAnyReplacements(concept, /COMPRA CON TARJETA SERVIRED /)
 		concept =StringUtils.removeAnyReplacements(concept, /DISPOSICION CAJERO AUTOMATICO /)
 		concept =StringUtils.removeAnyReplacements(concept, /DISPOSICION /)

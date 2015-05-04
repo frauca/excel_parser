@@ -11,6 +11,12 @@ import org.apache.poi.ss.usermodel.WorkbookFactory
 
 class POISheetableReader extends BaseSheetable  {
 
+	@Override
+	public Object getSheetName() {
+		// TODO Auto-generated method stub
+		return sheet.getSheetName()
+	}
+
 	// Use a file
 	Workbook wb
 	Sheet sheet
