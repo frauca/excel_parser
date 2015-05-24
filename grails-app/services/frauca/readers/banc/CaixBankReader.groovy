@@ -4,7 +4,6 @@ import frauca.readers.sheetables.JODSheetableReader
 
 class CaixBankReader extends BaseBankReader {
 	
-	
 	@Override
 	public BaseBankReader iCouldHandle(File file) {
 		CaixBankReader me = new CaixBankReader()
