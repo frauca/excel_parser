@@ -52,13 +52,7 @@ class CaixBankReader extends BaseBankReader {
 		if(!pagos){
 			pagos=0
 		}
-		
-		Double ingresos=getDoubeVale(sheettable.getCeilValue("F"+row))
-		if(!ingresos){
-			ingresos=0
-		}
-		log.debug "${ingresos}-${pagos}=${ingresos-pagos} ${row} '${sheettable.getCeilValue("D"+row)}'"
-		ingresos - pagos 
+		return pagos;
 	}
 
 	@Override
