@@ -27,7 +27,7 @@ class CaixBankReader extends BaseBankReader {
 
 	@Override
 	public int getFirstDataRow() {
-		return 9;
+		return 4;
 	}
 	
 	@Override
