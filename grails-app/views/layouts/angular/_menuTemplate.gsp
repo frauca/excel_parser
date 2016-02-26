@@ -26,13 +26,12 @@
 			<li><a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>
 					Charts<span class="fa arrow"></span></a>
 				<ul class="nav nav-second-level collapse">
+					<li><g:link controller="page" action="basicAnalyzer"
+							target="_self">
+							</i> Basic analisis</g:link></li>
 					<li><g:link controller="page" action="queryOverView"
 							target="_self">
 							</i> Charts Analyze (jmorris)</g:link></li>
-					<%--<li>
-                                    <a href="morris.html">Morris.js Charts</a>
-                                </li>
-                            --%>
 				</ul> <!-- /.nav-second-level --></li>
 		</ul>
 	</div>

@@ -10,7 +10,7 @@ movsControllers.controller('queriesCtrl', function($scope,$http,ngTableParams,SQ
 	}, {
 		counts : [], // hides page sizes
 		getData : function($defer, params) {
-			$http.get("sqlQuery").success(
+			$http.get("sqlQuery?max=-1").success(
 					function(data) {
 						params.total(data.length);
 						$defer.resolve(data.slice((params.page() - 1)

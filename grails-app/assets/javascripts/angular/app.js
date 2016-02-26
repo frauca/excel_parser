@@ -2,6 +2,7 @@ var app = angular.module('app', [
                 'ngTable',
                 'movsControllers',
                 'categoriesServices',
+                'ngAnimate',
                 'ui.bootstrap',
                 'stpa.morris'
 ]);

@@ -20,12 +20,15 @@
   		<asset:stylesheet src="plugins/bootstrap/3.3.1/bootstrap-theme.css"/>
   		<asset:stylesheet src="plugins/ng-table/ng-table.css"/>
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 		<asset:javascript src="plugins/bootstrap/3.3.1/bootstrap.js"/>
 		<asset:javascript src="plugins/metisMenu/dist/metisMenu.min.js"/>
 		<!-- Custom Theme JavaScript -->
    		<asset:javascript src="plugins/dist/js/sb-admin-2.js" />
 		<asset:javascript src="plugins/angular/1.3.8/angular.js"/>
 		<asset:javascript src="plugins/angular/1.3.8/angular-resource.js"/>
+		<asset:javascript src="plugins/angular/1.3.8/angular-animate.js"/>
 		<asset:javascript src="plugins/angular-ui/0.12/ui-bootstrap-tpls-0.12.0.js"/>
 		<asset:javascript src="plugins/ng-table/ng-table.js"/>		
 		<asset:javascript src="angular/app.js"/>

@@ -1,5 +1,6 @@
 package frauca
 
+import frauca.command.BasicAnalyzerCommand
 import grails.converters.*
 
 class QueryController {
@@ -58,4 +59,6 @@ class QueryController {
 		}
 		
 	}
+	
+	
 }

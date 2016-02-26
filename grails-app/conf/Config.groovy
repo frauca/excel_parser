@@ -65,6 +65,7 @@ grails.converters.encoding = "UTF-8"
 // scaffolding templates configuration
 grails.scaffolding.templates.domainSuffix = 'Instance'
 
+
 // Set to false to use the new Grails 1.2 JSONBuilder in the render method
 grails.json.legacy.builder = false
 // enabled native2ascii conversion of i18n properties files
@@ -123,7 +124,8 @@ log4j.main = {
 	info 'grails.app'
 			//'grails.app.services'
 	//'grails.app.services.frauca' 
-	//debug 'grails.app.controllers.frauca'
+	debug 'grails.app.controllers.frauca',
+					'grails.app.services.frauca'
 	//trace	'grails.app.services.frauca.readers'
 	//	'grails.app.services.frauca.readers.banc'
 }

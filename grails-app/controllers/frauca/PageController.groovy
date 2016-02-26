@@ -10,4 +10,6 @@ class PageController {
 	
 	def queriesManager(){}
 	
+	def basicAnalyzer(){}
+	
 }

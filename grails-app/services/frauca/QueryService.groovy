@@ -1,5 +1,7 @@
 package frauca
 
+import frauca.command.BasicAnalyzerCommand;
+import frauca.command.BasicAnalyzerResult;
 import grails.transaction.Transactional
 
 @Transactional
@@ -63,5 +65,6 @@ class QueryService {
 		return res
 
     }
+	
 	
 }
