@@ -1,5 +1,7 @@
 package frauca
 
+import com.sun.org.apache.bcel.internal.classfile.SourceFile;
+
 import frauca.readers.banc.BaseBankReader;
 import grails.transaction.Transactional
 
@@ -77,6 +79,120 @@ class AccountMovRawService {
 				return last[0]
 			}else{
 				return last
+			}
+		}
+	}
+	
+	public AccountMov[] nextNDaysByOperationDate(AccountMov[] movs,int n){
+		AccountMov[] res=[];
+		int totDays=0;
+		Date currentDate=null;
+		for(mov in movs){
+			res+=mov;
+			if(mov.operationDate!=currentDate){
+				currentDate=mov.operationDate;
+				if(totDays++>n){
+					return res;
+				}
+			}
+		}
+		return res;
+	}
+	
+	
+	/**
+	 * Make from the date to upper movements it add to the total the amount and compare with the total  of the previous
+	 * If it is diferent thent it save the correct result and add it to the erroneous ones
+	 * @param date
+	 * @param accountId
+	 * @return
+	 */
+	public AccountMov[] recalcTotals(Date date,long accountId){
+		def all = AccountMov.executeQuery("From AccountMov where operationDate > ? and account.id=? order by operationDate,original.orderOfDoc,id",[date,accountId]);
+		def res=[];
+		for(int i=0;i<all.size()-1;i++){
+			AccountMov current=all[i];
+			AccountMov nextOne=all[i+1];
+			if((current.totalAmount+nextOne.amount).round(2)!=nextOne.totalAmount){
+				nextOne.totalAmount=(current.totalAmount+nextOne.amount).round(2);
+				res+=nextOne;
+			}
+		}
+		AccountMov.saveAll(res);
+		return res;
+ 	}
+	
+	/**
+	 * Make from the date to upper movements compare total and total raws
+	 * If it is diferent thent it save the correct result and add it to the erroneous ones
+	 * @param date
+	 * @param accountId
+	 * @return
+	 */
+	public AccountMov[] setTotals(Date date,long accountId){
+		
+		AccountMov[] all = AccountMov.executeQuery("From AccountMov where operationDate > ? and account.id=? order by operationDate,original.orderOfDoc,id",[date,accountId]);
+		orderFromFileSource(all);
+		def res=[];
+		all.each {mov->
+			if(mov.totalAmount!=mov.totalAmountRaw){
+				res+=mov;
+				mov.totalAmount=mov.totalAmountRaw;
+				mov.save();
+			}
+		}
+		return res;
+	 }
+	
+	/**
+	 * It is assumed that the ordered list is all ascending or descening so the first two diferent operation date will be used to tell if they are ascending or not
+	 * @param ordered
+	 * @return true if date are ascending
+	 */
+	public boolean areDateAscending(Object orderedO){
+		if(orderedO instanceof Iterable<AccountMovRaw>){
+			AccountMovRaw[] ordered=(AccountMovRaw[])orderedO
+			for(int i=0;i<ordered.size()-1;i++){
+				AccountMovRaw current=ordered[i];
+				AccountMovRaw nextOne=ordered[i+1];
+				if(current.operationDate<nextOne.operationDate){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	
+	
+	/**
+	 * Make from the date to upper movements compare total and total raws
+	 * If it is diferent thent it save the correct result and add it to the erroneous ones
+	 * @param date
+	 * @param accountId
+	 * @return
+	 */
+	public void orderFromFileSource(AccountMov[] movs){
+		def all = movs*.original*.sourceFile.unique();
+		all.each {file->
+			setOrder(file)
+		}
+	 }
+	
+	/**
+	 * If the order is not set on some child of file source it will be set
+	 * @param fileSourceId
+	 * @return
+	 */
+	public def setOrder(FileSource file){
+		def all = AccountMovRaw.executeQuery("From AccountMovRaw where sourceFile = ? order by id",[file])
+		if(!areDateAscending(all)){
+			all=all.reverse();
+		}
+		all.eachWithIndex {mov,index->
+			if(!mov.orderOfDoc){
+				mov.orderOfDoc=index;
+				mov.save();
 			}
 		}
 	}

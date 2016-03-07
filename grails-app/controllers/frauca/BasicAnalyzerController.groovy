@@ -33,4 +33,26 @@ class BasicAnalyzerController {
 				render( res  as JSON)
 		}
 	}
+	
+	def showYearDetailBottom(String bottomDate,String accountKey){
+		Date bottomDateD=new Date().parse("yyyy-MM-dd", bottomDate)
+		def res=basicAnalyzerService.showYearDetailBottom(bottomDateD,accountKey);
+		switch(params.format){
+			case  "xml":
+				render( res  as XML)
+			default:
+				render( res  as JSON)
+		}
+	}
+	
+	def showYearDetailTop(String topDate,String accountKey){
+		Date bottomDateD=new Date().parse("yyyy-MM-dd", topDate)
+		def res=basicAnalyzerService.showYearDetailTop(bottomDateD,accountKey);
+		switch(params.format){
+			case  "xml":
+				render( res  as XML)
+			default:
+				render( res  as JSON)
+		}
+	}
 }

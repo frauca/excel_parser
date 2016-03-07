@@ -12,4 +12,6 @@ class PageController {
 	
 	def basicAnalyzer(){}
 	
+	def refactor(){}
+	
 }

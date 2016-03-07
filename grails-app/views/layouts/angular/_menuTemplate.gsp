@@ -22,6 +22,9 @@
 					<li><g:link controller="page" action="queriesManager"
 							target="_self">
 							</i> Queries</g:link></li>
+					<li><g:link controller="page" action="refactor"
+							target="_self">
+							</i> Refactor</g:link></li>
 				</ul></li>
 			<li><a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>
 					Charts<span class="fa arrow"></span></a>

@@ -55,10 +55,10 @@
 								<g:render template="/page/basicAnal/totalWeek" />
 							</div>
 							<div id="monthly" class="tab-pane fade">
-								Monthly
+								<g:render template="/page/basicAnal/totalMonth" />
 							</div>
 							<div id="anual" class="tab-pane fade ">
-								Anual
+								<g:render template="/page/basicAnal/totalYear" />
 							</div>
 						</div>
 				</div>	

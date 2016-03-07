@@ -10,6 +10,7 @@ import grails.transaction.Transactional
 @Transactional
 class BasicAnalyzerService {
 
+	def accountMovRawService;
 	
 	/**
 	 * return the result from the query in a BasicResult format
@@ -51,5 +52,22 @@ class BasicAnalyzerService {
 			pars<<qry.toDate;
 		}
 		return conditions;
+	}
+	
+	def showYearDetailBottom(Date bottomDate,String account){
+		def pars=[bottomDate,account]
+		AccountMov[] bottom=AccountMov.executeQuery("From AccountMov mov where operationDate<=? and account.name=? order by operationDate desc",pars,[max:30]);
+		bottom=accountMovRawService.nextNDaysByOperationDate(bottom, 2);
+		bottom=bottom.reverse();
+		bottom+=AccountMov.executeQuery("From AccountMov mov where operationDate>? and account.name=? order by operationDate desc",pars,[max:2]);
+		return bottom;
+	}
+	
+	def showYearDetailTop(Date topDate,String account){
+		def pars=[topDate,account]
+		AccountMov[] top=AccountMov.executeQuery("From AccountMov mov where operationDate<=? and account.name=? order by operationDate desc",pars,[max:30]);
+		top=accountMovRawService.nextNDaysByOperationDate(top, 1);
+		top+=AccountMov.executeQuery("From AccountMov mov where operationDate>? and account.name=? order by operationDate desc",pars,[max:2]);
+		return top;
 	}
 }

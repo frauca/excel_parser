@@ -9,6 +9,7 @@ import java.text.DateFormat
 class AccountMovController extends RestfulController<AccountMov>{
 
 	def categorizerService;
+	def accountMovRawService;
 
 	AccountMovController(){
 		super(AccountMov)
@@ -74,7 +75,7 @@ class AccountMovController extends RestfulController<AccountMov>{
                                  left outer join cat.category ctg
                                  join mov.account as ac
                              where ${conds}
-                             order by mov.valueDate desc""";
+                             order by mov.operationDate desc,mov.original.orderOfDoc asc,mov.id""";
 		log.debug(hql)
 		def prods=AccountMov.executeQuery(hql,prs,params)
 		def prodlist = prods.collect { result ->
@@ -135,6 +136,28 @@ class AccountMovController extends RestfulController<AccountMov>{
 		AccountMov mov=AccountMov.get(id);
 		def res =['filePath':mov?.original?.sourceFile.path]
 		respond res
+	}
+	
+	def recalcTotals(String sdate,long accountId){
+		Date date=new Date().parse("yyyy-MM-dd", sdate);
+		def res = accountMovRawService.recalcTotals(date, accountId);
+		switch(params.format){
+			case  "xml":
+				render( res  as XML)
+			default:
+				render( res  as JSON)
+		}
+	}
+	
+	def setTotals(String sdate,long accountId){
+		Date date=new Date().parse("yyyy-MM-dd", sdate);
+		def res = accountMovRawService.setTotals(date, accountId);
+		switch(params.format){
+			case  "xml":
+				render( res  as XML)
+			default:
+				render( res  as JSON)
+		}
 	}
 }
 

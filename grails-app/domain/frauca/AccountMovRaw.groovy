@@ -20,15 +20,18 @@ class AccountMovRaw {
 	String conceptRaw
 	/**
 	 * Tell about the process for read its
+	 * If it has been correctly imported (state=imported) then it point to the corresponding movent
 	 */
 	String state
 	/**
 	 * Wich row was on the document
 	 */
 	long rowOfDoc
+	
 	/**
-	 * If it has been correctly imported (state=imported) then it point to the corresponding movent
+     * As it has been readed but if the rowOfDoc is reversed order will be oposite, and if date_of concept is ascending it will be the same
 	 */
+	Long orderOfDoc
 
 	static belongsTo = [sourceFile:FileSource,mov:AccountMov]
 	
@@ -40,6 +43,7 @@ class AccountMovRaw {
 		sourceFile blank:false
 		rowOfDoc blank:true 
 		mov nullable: true
+		orderOfDoc nullable: true
 		state inList: ["new", "copied", "duplicated"]
     }
 	
