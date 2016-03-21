@@ -70,12 +70,13 @@ class AccountMovController extends RestfulController<AccountMov>{
                                 ,ctg.name as categoryName
                                 ,cat.type as categoryType
                                 ,ac.name as ccc
+                                ,mov.original.orderOfDoc as orderOfDoc
                              from AccountMov as mov
                                  left outer join mov.categoritzation as cat
                                  left outer join cat.category ctg
                                  join mov.account as ac
                              where ${conds}
-                             order by mov.operationDate desc,mov.original.orderOfDoc asc,mov.id""";
+                             order by mov.operationDate desc,mov.original.orderOfDoc desc,mov.id""";
 		log.debug(hql)
 		def prods=AccountMov.executeQuery(hql,prs,params)
 		def prodlist = prods.collect { result ->
@@ -89,7 +90,8 @@ class AccountMovController extends RestfulController<AccountMov>{
 				'categoritzaion':result[7],
 				'categoryName':result[8],
 				'categoryType':result[9],
-				'ccc':result[10] ]
+				'ccc':result[10] ,
+			    'orderOfDoc':result[11]]
 		}
 		return prodlist
 	}
@@ -158,6 +160,22 @@ class AccountMovController extends RestfulController<AccountMov>{
 			default:
 				render( res  as JSON)
 		}
+	}
+	
+	def seeDiferences(String sdate,long accountId){
+		Date date=new Date().parse("yyyy-MM-dd", sdate);
+		def res = accountMovRawService.seeDiferences(date, accountId);
+		switch(params.format){
+			case  "xml":
+				render( res  as XML)
+			default:
+				render( res  as JSON)
+		}
+	}
+	
+	def reOrderDocs(long accountId){
+		def res = accountMovRawService.reOrderDocs(accountId);
+		return "done"
 	}
 }
 

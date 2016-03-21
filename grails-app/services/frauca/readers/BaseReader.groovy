@@ -19,7 +19,6 @@ class BaseReader {
 	File file
 	BaseBankReader bnkReader
 
-
 	// first default constructor
 	BaseReader (FileSource file) {
 		super()

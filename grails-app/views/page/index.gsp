@@ -36,7 +36,7 @@
 			<table ng-table="tableParams" show-filter="true" class="table">
 	        <tr ng-repeat="mov in $data">
 	        	<td data-title="'Operation'">{{mov.operationDate}}</td>
-	        	<td data-title="'Value'" sortable="'valueDate'">{{mov.valueDate}}</td>
+	        	<td data-title="'Order'" sortable="'order'">{{mov.orderOfDoc}}</td>
 	            <td data-title="'Concept'" filter="{ 'concept': 'text' }">{{mov.concept}}</td>
 	            <td data-title="'Amount'" sortable="'amount'">
 	            	<span ng-class="{ 'plus': mov.amount >= 0,'minus': mov.amount < 0 }">{{mov.amount}}</span>

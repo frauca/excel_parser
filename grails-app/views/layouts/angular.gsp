@@ -29,7 +29,7 @@
 		<asset:javascript src="plugins/angular/1.3.8/angular.js"/>
 		<asset:javascript src="plugins/angular/1.3.8/angular-resource.js"/>
 		<asset:javascript src="plugins/angular/1.3.8/angular-animate.js"/>
-		<asset:javascript src="plugins/angular-ui/0.12/ui-bootstrap-tpls-0.12.0.js"/>
+		<asset:javascript src="plugins/angular-ui/1.2.5/ui-bootstrap-tpls-1.2.5.min.js"/>
 		<asset:javascript src="plugins/ng-table/ng-table.js"/>		
 		<asset:javascript src="angular/app.js"/>
 		<asset:javascript src="angular/controllers.js"/>

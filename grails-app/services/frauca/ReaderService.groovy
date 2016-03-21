@@ -57,7 +57,10 @@ class ReaderService {
 			file.state="error_not_readed"
 		}else{
 			log.debug "read all moves"
-			accountMovRawService.saveAllMov(file,reader.readAllMovements())
+			AccountMovRaw[] all=reader.readAllMovements();
+			log.debug "set order of Document"
+			accountMovRawService.setOrder(all);
+			accountMovRawService.saveAllMov(file,all)
 			file.state="parsed"
 			file.account=reader.getAccount()
 		}

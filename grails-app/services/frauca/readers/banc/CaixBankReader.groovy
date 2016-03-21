@@ -62,7 +62,12 @@ class CaixBankReader extends BaseBankReader {
 
 	@Override
 	public String getConceptFromRaw(String raw) {
-		return raw;
+		def concept =(raw =~ /\d+-GMV /).replaceAll("GMV ")
+		if(concept.contains("PAGAMENT TRANSFER")){
+			concept=concept.substring(0, 38)
+		}
+		log.trace "from ${raw} to ${concept}"
+		return concept;
 	}
 
 }

@@ -6,11 +6,11 @@
 	      </div>
 	      <div class="panel-body">
 		    valueDate: <input type="text" ng-model="mov.valueDate">
-		    <br>concept: <input type="text" ng-model="mov.concept"><select ng-options='concept as concept for concept in concepts' ng-model="mov.concept"></select>
+		    <br>concept: <input type="text" ng-model="mov.concept">
+		    <select ng-options='concept as concept for concept in concepts' ng-model="mov.concept"></select>
 		    <br><input type="submit" ng-click="save(mov)" value="Update" />
 		    <br>operationDate:{{mov.operationDate}}
 		    <br>conceptRaw:{{mov.conceptRaw}}
-		    <br>file:{{acc_mov.filePath}}
 		    <br>totalAmountRaw:{{mov.totalAmountRaw}}
 		    <br>totalAmount:{{mov.totalAmount}}
 		    <br>ccc:{{mov.ccc.rawCCC}}-{{mov.ccc.name}}-{{mov.account}}

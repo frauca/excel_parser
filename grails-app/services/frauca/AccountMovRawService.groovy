@@ -2,6 +2,7 @@ package frauca
 
 import com.sun.org.apache.bcel.internal.classfile.SourceFile;
 
+import frauca.command.ValidateTotalsCommand;
 import frauca.readers.banc.BaseBankReader;
 import grails.transaction.Transactional
 
@@ -11,6 +12,8 @@ import grails.transaction.Transactional
  */
 @Transactional
 class AccountMovRawService {
+	
+	def totalsAmountService;
 
     def saveAllMov(FileSource fileSource,AccountMovRaw[] movs) {
 		log.debug "${movs.size()} raw movements are going to be save"
@@ -33,7 +36,7 @@ class AccountMovRawService {
 	 */
 	def processAllPendingMoves(BaseBankReader bnkReader){
 		log.trace "the new state move accounts are going to be saved"
-		def newMoves=AccountMovRaw.findAllByState("new",[sort: "rowOfDoc", order: "asc"])
+		def newMoves=AccountMovRaw.findAllByState("new",[sort: "orderOfDoc", order: "asc"])
 		Account ccc=bnkReader.getAccount()
 		AccountMov lastest=findLatestMovForAccount(ccc)
 		log.debug "${newMoves.size()} accountmoves are going to be procesed with ${bnkReader} in ${ccc}"
@@ -134,7 +137,7 @@ class AccountMovRawService {
 		AccountMov[] all = AccountMov.executeQuery("From AccountMov where operationDate > ? and account.id=? order by operationDate,original.orderOfDoc,id",[date,accountId]);
 		orderFromFileSource(all);
 		def res=[];
-		all.each {mov->
+		all.eachWithIndex  {mov,i->
 			if(mov.totalAmount!=mov.totalAmountRaw){
 				res+=mov;
 				mov.totalAmount=mov.totalAmountRaw;
@@ -150,14 +153,12 @@ class AccountMovRawService {
 	 * @return true if date are ascending
 	 */
 	public boolean areDateAscending(Object orderedO){
-		if(orderedO instanceof Iterable<AccountMovRaw>){
-			AccountMovRaw[] ordered=(AccountMovRaw[])orderedO
-			for(int i=0;i<ordered.size()-1;i++){
-				AccountMovRaw current=ordered[i];
-				AccountMovRaw nextOne=ordered[i+1];
-				if(current.operationDate<nextOne.operationDate){
-					return true;
-				}
+		AccountMovRaw[] ordered=(AccountMovRaw[])orderedO
+		for(int i=0;i<ordered.size()-1;i++){
+			AccountMovRaw current=ordered[i];
+			AccountMovRaw nextOne=ordered[i+1];
+			if(current.operationDate<nextOne.operationDate){
+				return true;
 			}
 		}
 		return false;
@@ -174,8 +175,10 @@ class AccountMovRawService {
 	 */
 	public void orderFromFileSource(AccountMov[] movs){
 		def all = movs*.original*.sourceFile.unique();
+		long lastPos=0;
 		all.each {file->
-			setOrder(file)
+			lastPos=setOrder(file,lastPos)+1
+			log.debug("for file ${file.name} last pos ${lastPos}")
 		}
 	 }
 	
@@ -184,16 +187,59 @@ class AccountMovRawService {
 	 * @param fileSourceId
 	 * @return
 	 */
-	public def setOrder(FileSource file){
-		def all = AccountMovRaw.executeQuery("From AccountMovRaw where sourceFile = ? order by id",[file])
+	public long setOrder(FileSource file,long inc){
+		AccountMovRaw[] all = AccountMovRaw.executeQuery("From AccountMovRaw where sourceFile = ? order by id",[file])
+		setOrder(all,inc)
+		long res=all.max{it.orderOfDoc}.orderOfDoc
+		log.debug("Inner File count ${file.name} last pos ${res}")
+		return res;
+	}
+
+	/**
+	 * Set the orderofDoc for the elements
+	 * @param all list of elements to set the order
+	 * @return
+	 */
+	def setOrder(AccountMovRaw[] all,long inc) {
+		log.debug("Ordering from ${inc}")
 		if(!areDateAscending(all)){
 			all=all.reverse();
 		}
 		all.eachWithIndex {mov,index->
-			if(!mov.orderOfDoc){
-				mov.orderOfDoc=index;
+			if(mov.orderOfDoc!=index+inc){
+				mov.orderOfDoc=index+inc;
+				log.debug("Ordering ${mov.id} from ${mov.orderOfDoc}")
 				mov.save();
 			}
 		}
+		return all.max{it.orderOfDoc}.orderOfDoc;
+	}
+	
+	def seeDiferences(Date date,Long accountId){
+		AccountMov[] all = AccountMov.executeQuery("From AccountMov where operationDate > ? and account.id=? order by operationDate,original.orderOfDoc,id",[date,accountId]);
+		def res=[]
+		if(all){
+			AccountMov current=all[0];
+			res+=new ValidateTotalsCommand(mov: current,movRaw: current.original,total:current.totalAmount,totalRaw:current.totalAmountRaw );
+			for(int i=0;i<all.size()-1;i++){
+				current=all[i];
+				AccountMov nextOne=all[i+1];
+				res+=new ValidateTotalsCommand(mov: nextOne,
+												movRaw: nextOne.original,
+												total:current.totalAmount+nextOne.amount,
+												totalRaw:current.totalAmountRaw+nextOne.amount );
+			}
+		}
+		return res;
+	}
+	
+	/**
+	 * Order the numberOf doc of all account
+	 * @param accountId
+	 * @return
+	 */
+	def reOrderDocs(long accountId){
+		AccountMov[] all = AccountMov.executeQuery("From AccountMov where account.id=? order by operationDate,original.orderOfDoc,id",[accountId]);
+		orderFromFileSource(all);
 	}
 }
