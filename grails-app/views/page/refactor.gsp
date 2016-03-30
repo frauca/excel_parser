@@ -15,6 +15,7 @@
 	</div>
 	<div class="col-lg-12" >
 		<accordion close-others="oneAtATime">
+			<g:render template="refactor/fileValidators" />   
 	    	<g:render template="refactor/recalcTotals" />   
 	    	<g:render template="refactor/setTotals" />  
 	    	<g:render template="refactor/seeDiferences" />  

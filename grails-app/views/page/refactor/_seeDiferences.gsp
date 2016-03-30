@@ -18,15 +18,23 @@ See Diferences<i class="pull-right glyphicon"
 	        <tr ng-repeat="dif in $data">
 	        	<td data-title="'Date'">{{dif.mov.operationDate}}</td>
 	        	<td data-title="'Order'" >{{dif.movRaw.orderOfDoc}}</td>
+	        	<td data-title="'Order'" >{{dif.movRaw.rowOfDoc}}</td>
 	            <td data-title="'Concept'" >{{dif.mov.concept}}</td>
 	            <td data-title="'Amount'" >{{dif.mov.amount}}</td>
 	            <td data-title="'total'" >
 	            	<span ng-class="{ 'plus': dif.isValid,'minus': !dif.isValid }">{{dif.total}} </span>/ {{dif.mov.totalAmount}}
+	            	<span ng-show="dif.total!=dif.totalRaw" class="glyphicon glyphicon-thumbs-down red"/>
 	            </td>
 	            <td data-title="'totalRaw'" >
 	            	<span ng-class="{ 'plus': dif.isValidRaw,'minus': !dif.isValidRaw }">{{dif.totalRaw}}</span>/ {{dif.mov.totalAmountRaw}}
+	            	<span ng-show="dif.mov.totalAmount!=dif.mov.totalAmountRaw" class="glyphicon glyphicon-thumbs-down red"/>
 	            </td>
-	            <td data-title="File"><button uib-popover="{{dif.sourceFile.name}}" popover-title="{{dif.sourceFile.name}}" type="button" class="btn btn-default">{{dif.sourceFile.id}}</button>
+	            <td data-title="File">
+	            <button ns-popover   ns-popover-template="popover"   ns-popover-trigger="click"   ns-popover-placement="bottom">    {{dif.sourceFile.id}}</button>
+	            <script type="text/ng-template" id="popover">
+ 					 <b>{{dif.sourceFile.name}}</b>
+  					<p>{{dif.sourceFile.path}}</p>
+				</script>
 	            </td>
 	        </tr>
 	        </table>

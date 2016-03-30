@@ -9,7 +9,7 @@ class FileSourceController extends RestfulController<FileSource>{
 	}
 	
 	def index(Integer max) {
-		def q=FileSource.where{}
+		def q=FileSource.where{isNull("type")}
 		if(params.ccc){
 			q=q.where{account{id==params.ccc}}
 		}

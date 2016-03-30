@@ -6,4 +6,6 @@ class ModalController {
     def setCategory() { }
 	
 	def editMov(){}
+	
+	def fileValidateModal(){}
 }

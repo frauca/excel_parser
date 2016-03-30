@@ -13,15 +13,19 @@ class FileSource {
 	String name
 	String state
 	Date creationTime
-	
+	/**
+	 * This type is used to differ from the daily ones from the big ones who are used to reorder every thing
+	 */
+	String type
 	
 	static hasMany = [rawMovs: AccountMovRaw]
 	static belongsTo = [account:Account]
     static constraints = {
 		path blank:false
 		name blank:false
-		state inList: ["new", "parsed", "error","error_not_readed"]
+		state inList: ["new", "parsed", "error","error_not_readed","justAdded"]
 		account nullable: true
+		type nullable:true
     }
 	
 	static mapping = {

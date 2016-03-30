@@ -219,15 +219,15 @@ class AccountMovRawService {
 		AccountMov[] all = AccountMov.executeQuery("From AccountMov where operationDate > ? and account.id=? order by operationDate,original.orderOfDoc,id",[date,accountId]);
 		def res=[]
 		if(all){
-			AccountMov current=all[0];
-			res+=new ValidateTotalsCommand(mov: current,movRaw: current.original,total:current.totalAmount,totalRaw:current.totalAmountRaw );
+			ValidateTotalsCommand last=new ValidateTotalsCommand(mov: all[0],movRaw: all[0].original,total:all[0].totalAmount,totalRaw:all[0].totalAmountRaw );
+			res+=last
 			for(int i=0;i<all.size()-1;i++){
-				current=all[i];
 				AccountMov nextOne=all[i+1];
-				res+=new ValidateTotalsCommand(mov: nextOne,
+				last=new ValidateTotalsCommand(mov: nextOne,
 												movRaw: nextOne.original,
-												total:current.totalAmount+nextOne.amount,
-												totalRaw:current.totalAmountRaw+nextOne.amount );
+												total:last.total+nextOne.amount,
+												totalRaw:last.totalRaw+nextOne.amount );
+				res+=last
 			}
 		}
 		return res;

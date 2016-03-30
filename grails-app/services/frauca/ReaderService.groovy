@@ -50,6 +50,17 @@ class ReaderService {
 	 * @return
 	 */
 	def process(FileSource file){
+		BaseReader reader = parse(file)
+		if(reader.bnkReader){
+			accountMovRawService.processAllPendingMoves(reader.bnkReader)
+		}
+	}
+
+	/**
+	 * @param file
+	 * @return the reader to this file source. all the movements of the file has been parsed but not procesed
+	 */
+	def BaseReader parse(FileSource file) {
 		log.debug "process "+file.path
 		BaseReader reader=new BaseReader(file)
 		if(!reader.bnkReader){
@@ -59,15 +70,14 @@ class ReaderService {
 			log.debug "read all moves"
 			AccountMovRaw[] all=reader.readAllMovements();
 			log.debug "set order of Document"
-			accountMovRawService.setOrder(all);
+			accountMovRawService.setOrder(all,0);
 			accountMovRawService.saveAllMov(file,all)
 			file.state="parsed"
 			file.account=reader.getAccount()
+			file.rawMovs=all
 		}
 		file.save()
-		if(reader.bnkReader){
-			accountMovRawService.processAllPendingMoves(reader.bnkReader)
-		}
+		return reader
 	}
 	
 }

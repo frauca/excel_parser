@@ -44,7 +44,7 @@ class AccountMovRaw {
 		rowOfDoc blank:true 
 		mov nullable: true
 		orderOfDoc nullable: true
-		state inList: ["new", "copied", "duplicated"]
+		state inList: ["new", "copied", "duplicated","pending"]
     }
 	
 	AccountMovRaw(){

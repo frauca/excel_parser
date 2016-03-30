@@ -4,7 +4,8 @@ var app = angular.module('app', [
                 'categoriesServices',
                 'ngAnimate',
                 'ui.bootstrap',
-                'stpa.morris'
+                'stpa.morris',
+                'nsPopover'
 ]);
 
 angular.module('app').config(function ($locationProvider) {
