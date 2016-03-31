@@ -1,5 +1,5 @@
 <accordion-group is-open="status.isFirstOpen"> <accordion-heading>
-Recalc totals <i class="pull-right glyphicon"
+On each mov set the total as its amount + previous total <i class="pull-right glyphicon"
 	ng-class="{'glyphicon-chevron-down': status.isFirstOpen, 'glyphicon-chevron-right': !status.isFirstOpen}"></i>
 </accordion-heading>
 <div ng-controller="recalcTotalsCtrl">

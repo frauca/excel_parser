@@ -34,9 +34,15 @@ class FileValidatorBind {
 	 */
 	def persistTheAssociation(){
 		if(correctMov&&possibles&&isCleanMatch()){
+			boolean hasBeenModified=false
 			AccountMov mov=possibles[0]
 			if(mov.original!=correctMov){
 				mov.original=correctMov;
+			}
+			if(mov.totalAmountRaw!=mov.original.totalAmount){
+				mov.totalAmountRaw=mov.original.totalAmount
+			}
+			if(hasBeenModified){
 				mov.save()
 			}
 		}

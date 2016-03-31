@@ -1,5 +1,5 @@
 <accordion-group is-open="status.isSecondOpen"> <accordion-heading>
-Set totals Raws<i class="pull-right glyphicon"
+On each mov set total equals total Raw<i class="pull-right glyphicon"
 	ng-class="{'glyphicon-chevron-down': status.isSecondOpen, 'glyphicon-chevron-right': !status.isSecondOpen}"></i>
 </accordion-heading>
 <div ng-controller="recalcTotalsCtrl">

@@ -18,14 +18,13 @@ See Diferences<i class="pull-right glyphicon"
 	        <tr ng-repeat="dif in $data">
 	        	<td data-title="'Date'">{{dif.mov.operationDate}}</td>
 	        	<td data-title="'Order'" >{{dif.movRaw.orderOfDoc}}</td>
-	        	<td data-title="'Order'" >{{dif.movRaw.rowOfDoc}}</td>
 	            <td data-title="'Concept'" >{{dif.mov.concept}}</td>
 	            <td data-title="'Amount'" >{{dif.mov.amount}}</td>
-	            <td data-title="'total'" >
+	            <td data-title="'total/movTot'" >
 	            	<span ng-class="{ 'plus': dif.isValid,'minus': !dif.isValid }">{{dif.total}} </span>/ {{dif.mov.totalAmount}}
 	            	<span ng-show="dif.total!=dif.totalRaw" class="glyphicon glyphicon-thumbs-down red"/>
 	            </td>
-	            <td data-title="'totalRaw'" >
+	            <td data-title="'totalRaw/movRaw'" >
 	            	<span ng-class="{ 'plus': dif.isValidRaw,'minus': !dif.isValidRaw }">{{dif.totalRaw}}</span>/ {{dif.mov.totalAmountRaw}}
 	            	<span ng-show="dif.mov.totalAmount!=dif.mov.totalAmountRaw" class="glyphicon glyphicon-thumbs-down red"/>
 	            </td>
