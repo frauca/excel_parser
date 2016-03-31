@@ -5,11 +5,10 @@
 	          Mov 
 	      </div>
 	      <div class="panel-body">
-		    valueDate: <input type="text" ng-model="mov.valueDate">
+		    valueDate: <input type="text" ng-model="mov.valueDate">/operationDate:<input type="text" ng-model="mov.operationDate">
 		    <br>concept: <input type="text" ng-model="mov.concept">
 		    <select ng-options='concept as concept for concept in concepts' ng-model="mov.concept"></select>
 		    <br><input type="submit" ng-click="save(mov)" value="Update" />
-		    <br>operationDate:{{mov.operationDate}}
 		    <br>conceptRaw:{{mov.conceptRaw}}
 		    <br>totalAmountRaw:{{mov.totalAmountRaw}}
 		    <br>totalAmount:{{mov.totalAmount}}
