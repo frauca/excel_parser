@@ -49,7 +49,7 @@ class AccountMov {
 		amount=raw.amount
 		totalAmountRaw=raw.totalAmount
 		concept=raw.concept
-		conceptRaw=raw.conceptRaw
+		conceptRaw=raw.concept
 		original=raw
 		addToRawMoves(raw)
 	}

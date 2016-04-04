@@ -30,7 +30,7 @@ class FileValidatorController {
 	 */
 	def validatorsFiles(){
 		render( fileValidatorService.validatorsFiles() as JSON)	
-	}
+	}	
 	
 	def processFileSource(long fsid){
 		render( fileValidatorService.process(FileSource.get(fsid)) as JSON)	

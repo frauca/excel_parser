@@ -19,7 +19,7 @@
 	        <tr ng-repeat="bind in $data">
 	        	<td data-title="'Bindings'"  sortable="'countMatches'" ><a href="" class="btn btn-default" ng-click="validateModal(bind)">{{bind.countMatches}}</a></td>
 	        	<td data-title="'Date'">{{bind.correctMov.operationDate}}</td>
-	        	<td data-title="'Order'" >{{bind.correctMov.orderOfDoc}}</td>
+	        	<td data-title="'Order'" sortable="'orderOfDoc'">{{bind.correctMov.orderOfDoc}}</td>
 	        	<td data-title="'Amount'" >{{bind.correctMov.amount}}</td>
 	        	<td data-title="'Concept'" >{{bind.correctMov.concept}}</td>
 	        </tr>

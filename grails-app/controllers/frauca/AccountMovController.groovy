@@ -47,11 +47,11 @@ class AccountMovController extends RestfulController<AccountMov>{
 			prs<<params.subcat.toLong()
 		}
 		if(params.year){
-			conds+=" and year(mov.valueDate)=? "
+			conds+=" and year(mov.operationDate)=? "
 			prs<<params.year.toInteger()
 		}
 		if(params.month){
-			conds+=" and month(mov.valueDate)=? "
+			conds+=" and month(mov.operationDate)=? "
 			prs<<params.month.toInteger()
 		}
 		def prodlist = index2Render(conds, prs, params)

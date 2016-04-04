@@ -6,6 +6,8 @@
 		     	<div class="col-md-12"><h3>{{bind.correctMov.concept}} - {{bind.correctMov.amount}}</h3></div>
 		     	<div class="col-md-4">id:{{bind.correctMov.id}}</div>
 		     	<div class="col-md-8">operation Date:{{bind.correctMov.operationDate}}</div>
+		     	<div class="col-md-8">value Date:{{bind.correctMov.valueDate}}</div>
+		     	<input		type="button" ng-click="copyTheMov()" value="Create the move" />
 		     </div>
 		  </div>
 	  </div>

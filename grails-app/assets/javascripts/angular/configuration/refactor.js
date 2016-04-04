@@ -102,7 +102,7 @@ app.controller('filesValidatorsCtrl', function($scope, $http, $filter, Account,n
 	
 });
 
-app.controller('fileValidateModalCtrl', function($scope, $http,ngTableParams) {
+app.controller('fileValidateModalCtrl', function($scope, $http,ngTableParams, $modalInstance) {
 	
 	$scope.bindeds = new ngTableParams({
 		page : 1, // show first page
@@ -112,4 +112,9 @@ app.controller('fileValidateModalCtrl', function($scope, $http,ngTableParams) {
 		counts : [] // hides page sizes
 	});
 	
+	$scope.copyTheMov=function(){
+		$http.post('accountMovRaw/copyToMov?rawId='+$scope.bind.correctMov.id).success(function(data){
+			$modalInstance.close()
+		});
+	}
 });

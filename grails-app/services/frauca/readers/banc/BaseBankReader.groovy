@@ -148,10 +148,10 @@ abstract class BaseBankReader {
 	 * @return
 	 */
 	public AccountMov findRawMove(AccountMovRaw rawmove){
-		//TODO detectar duplicats a autopista
+		//TODO detectar duplicats a autopista. comparem el raw del mov amb el del raw orginal, per que aixi es pugui modificar el moviment sense que el deixi de trobar
 		def dup = AccountMov.where{
 			(operationDate == rawmove.operationDate
-			&& conceptRaw == rawmove.conceptRaw
+			&& conceptRaw == rawmove.concept
 			&& amount == rawmove.amount
 			&& original.sourceFile != rawmove.sourceFile)
 		}

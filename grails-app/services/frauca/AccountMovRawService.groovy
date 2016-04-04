@@ -60,6 +60,31 @@ class AccountMovRawService {
 		}
 	}
 	
+	/**
+	 * @param raw
+	 * @return the new generated move from this raw
+	 */
+	def copyToMov(AccountMovRaw raw){
+		if(!raw||!raw.sourceFile||!raw.sourceFile.account){
+			throw new Exception("The account is needed to copy to move");
+		}else{
+			
+			AccountMov mov= AccountMov.findByOriginal(raw)
+			if(mov ){
+				throw new Exception("This raw has already a move and it will be copied");
+			}else{
+				mov=new AccountMov(raw)
+				mov = raw.copiedBy(mov)
+				mov.account=raw.sourceFile.account
+				mov.totalAmount=mov.totalAmountRaw
+				raw.state="copied"
+				saveAndPrintErrors(raw)
+				saveAndPrintErrors(mov)
+				return mov
+			}
+		}
+	}
+	
 	
 	/**
 	 * save the object and print the errors if it has errors.
