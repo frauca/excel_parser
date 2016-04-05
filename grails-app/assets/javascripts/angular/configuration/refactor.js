@@ -60,8 +60,10 @@ app.controller('filesValidatorsCtrl', function($scope, $http, $filter, Account,n
 	
 	$scope.bindings = new ngTableParams({
 		page : 1, // show first page
-		count : 10
-	// count per page
+		count : 10,// count per page
+		sorting: {
+			orderOfDoc: 'asc'     // initial sorting
+        }
 	}, {
 		counts : [], // hides page sizes
 		getData : function($defer, params) {
@@ -70,6 +72,8 @@ app.controller('filesValidatorsCtrl', function($scope, $http, $filter, Account,n
 						params.total(data.length);
 						var orderedData = params.sorting() ? $filter('orderBy')
 								(data, params.orderBy()) : data;
+						orderedData = params.filter() ? $filter('filter')
+										(orderedData, params.filter()) : orderedData;
 						$defer.resolve(orderedData.slice((params.page() - 1)
 								* params.count(), params.page()
 								* params.count()));

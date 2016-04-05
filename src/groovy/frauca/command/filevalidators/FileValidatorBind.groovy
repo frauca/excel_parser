@@ -49,4 +49,12 @@ class FileValidatorBind {
 			}
 		}
 	}
+	
+	def getOrderOfDoc(){
+		if(correctMov){
+			return correctMov.orderOfDoc
+		}else{
+			return -1
+		}
+	}
 }

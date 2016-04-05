@@ -6,7 +6,7 @@ movsControllers.controller('movListCtrl', function($scope, $http, $filter,ngTabl
 		page : 1, // show first page
 		count : 10,
 		sorting: {
-			valueDate: 'desc'     // initial sorting
+			operationDate: 'desc'     // initial sorting
         }
 	// count per page
 	}, {

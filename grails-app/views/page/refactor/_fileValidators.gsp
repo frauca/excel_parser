@@ -15,11 +15,11 @@
 					<input		type="button" ng-click="processFile()" value="Process this file" /> 
 				</form>
 			</div>
-			<table ng-table="bindings" show-filter="true" class="table">
+			<table ng-table="bindings"  class="table">
 	        <tr ng-repeat="bind in $data">
 	        	<td data-title="'Bindings'"  sortable="'countMatches'" ><a href="" class="btn btn-default" ng-click="validateModal(bind)">{{bind.countMatches}}</a></td>
 	        	<td data-title="'Date'">{{bind.correctMov.operationDate}}</td>
-	        	<td data-title="'Order'" sortable="'orderOfDoc'">{{bind.correctMov.orderOfDoc}}</td>
+	        	<td data-title="'Order'" sortable="'orderOfDoc'">{{bind.orderOfDoc}}</td>
 	        	<td data-title="'Amount'" >{{bind.correctMov.amount}}</td>
 	        	<td data-title="'Concept'" >{{bind.correctMov.concept}}</td>
 	        </tr>
