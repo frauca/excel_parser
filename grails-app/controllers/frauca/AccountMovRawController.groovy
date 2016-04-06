@@ -26,6 +26,7 @@ class AccountMovRawController extends RestfulController<AccountMovRaw> {
 		render( accountMovRawService.copyToMov(AccountMovRaw.get(rawId)) as JSON)
 		
 	}
+	
 }
 
 

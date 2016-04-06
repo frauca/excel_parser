@@ -38,11 +38,14 @@ class FileValidatorBind {
 			AccountMov mov=possibles[0]
 			if(mov.original!=correctMov){
 				mov.original.state='duplicated'
+				mov.original.save()
 				mov.original=correctMov;
 				correctMov.state='copied'
+				hasBeenModified=true
 			}
 			if(mov.totalAmountRaw!=mov.original.totalAmount){
 				mov.totalAmountRaw=mov.original.totalAmount
+				hasBeenModified=true
 			}
 			if(hasBeenModified){
 				mov.save()

@@ -42,6 +42,7 @@ class AccountMov {
 		categoritzation nullable:true;
 		original nullable:true
     }
+
 	
 	public AccountMov(AccountMovRaw raw){
 		operationDate=raw.operationDate

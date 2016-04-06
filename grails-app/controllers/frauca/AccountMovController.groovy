@@ -14,7 +14,7 @@ class AccountMovController extends RestfulController<AccountMov>{
 	AccountMovController(){
 		super(AccountMov)
 	}
-
+	
 
 	def genericQuery(Integer max) {
 		String conds=" 1=1"
@@ -176,6 +176,16 @@ class AccountMovController extends RestfulController<AccountMov>{
 	def reOrderDocs(long accountId){
 		def res = accountMovRawService.reOrderDocs(accountId);
 		return "done"
+	}
+	
+	def delete(AccountMov mov) {
+		accountMovRawService.delete(mov)
+		switch(params.format){
+			case  "xml":
+				render( mov  as XML)
+			default:
+				render( mov  as JSON)
+		}
 	}
 }
 

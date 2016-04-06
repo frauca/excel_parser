@@ -111,6 +111,7 @@ class FileValidatorService {
 			binds.putAt(0,reminder)
 		}
 		binds.sort{bindThemSorter(it)}
+		log.info("All ${rawMovs?.size()} has been bind");
 		return binds
 	}
 	

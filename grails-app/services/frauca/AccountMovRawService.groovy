@@ -147,6 +147,7 @@ class AccountMovRawService {
 			}
 		}
 		AccountMov.saveAll(res);
+		log.info("All ${res.size()} the reacalcs has been setted");
 		return res;
  	}
 	
@@ -166,9 +167,10 @@ class AccountMovRawService {
 			if(mov.totalAmount!=mov.totalAmountRaw){
 				res+=mov;
 				mov.totalAmount=mov.totalAmountRaw;
-				mov.save();
+				mov.save(flush:true);
 			}
 		}
+		log.info("All ${res.size()} the totals has been setted");
 		return res;
 	 }
 	
@@ -234,7 +236,7 @@ class AccountMovRawService {
 			if(mov.orderOfDoc!=index+inc){
 				mov.orderOfDoc=index+inc;
 				log.debug("Ordering ${mov.id} from ${mov.orderOfDoc}")
-				mov.save();
+				mov.save(flush:true);
 			}
 		}
 		return all.max{it.orderOfDoc}.orderOfDoc;
@@ -255,6 +257,7 @@ class AccountMovRawService {
 				res+=last
 			}
 		}
+		log.info("All ${res.size()} diferences has been send");
 		return res;
 	}
 	
@@ -266,5 +269,27 @@ class AccountMovRawService {
 	def reOrderDocs(long accountId){
 		AccountMov[] all = AccountMov.executeQuery("From AccountMov where account.id=? order by operationDate,original.orderOfDoc,id",[accountId]);
 		orderFromFileSource(all);
+	}
+	
+	/**
+	 * @param mov
+	 * @return
+	 */
+	def delete(AccountMov mov){
+		if(mov){
+			if(mov.original){
+				AccountMovRaw raw=mov.original;
+				raw.mov=null;
+				raw.save()
+			}
+			mov.rawMoves.each{raw->
+				raw.mov=null;
+				raw.save()
+			}
+			mov.original=null
+			mov.rawMoves=null
+			mov.save()
+			mov.delete()
+		}
 	}
 }
