@@ -16,23 +16,23 @@ See Diferences<i class="pull-right glyphicon"
 		</div>
 		<table ng-table="seeDifsTable" show-filter="true" class="table">
 	        <tr ng-repeat="dif in $data">
-	        	<td data-title="'Date'">{{dif.mov.operationDate}}</td>
-	        	<td data-title="'Order'" >{{dif.movRaw.orderOfDoc}}</td>
-	            <td data-title="'Concept'" >{{dif.mov.concept}}</td>
-	            <td data-title="'Amount'" >{{dif.mov.amount}}</td>
+	        	<td data-title="'Date'">{{dif.operationDate}}</td>
+	        	<td data-title="'Order'" >{{dif.orderOfDoc}}</td>
+	            <td data-title="'Concept'" >{{dif.concept}}</td>
+	            <td data-title="'Amount'" >{{dif.amount}}</td>
 	            <td data-title="'total/movTot'" >
-	            	<span ng-class="{ 'plus': dif.isValid,'minus': !dif.isValid }">{{dif.total}} </span>/ {{dif.mov.totalAmount}}
+	            	<span ng-class="{ 'plus': dif.isValid,'minus': !dif.isValid }">{{dif.total}} </span>/ {{dif.totalAmount}}
 	            	<span ng-show="dif.total!=dif.totalRaw" class="glyphicon glyphicon-thumbs-down red"/>
 	            </td>
 	            <td data-title="'totalRaw/movRaw'" >
-	            	<span ng-class="{ 'plus': dif.isValidRaw,'minus': !dif.isValidRaw }">{{dif.totalRaw}}</span>/ {{dif.mov.totalAmountRaw}}
-	            	<span ng-show="dif.mov.totalAmount!=dif.mov.totalAmountRaw" class="glyphicon glyphicon-thumbs-down red"/>
+	            	<span ng-class="{ 'plus': dif.isValidRaw,'minus': !dif.isValidRaw }">{{dif.totalRaw}}</span>/ {{dif.totalAmountRaw}}
+	            	<span ng-show="dif.totalAmount!=dif.totalAmountRaw" class="glyphicon glyphicon-thumbs-down red"/>
 	            </td>
 	            <td data-title="File">
-	            <button ns-popover   ns-popover-template="popover"   ns-popover-trigger="click"   ns-popover-placement="bottom">    {{dif.sourceFile.id}}</button>
+	            <button ns-popover   ns-popover-template="popover"   ns-popover-trigger="click"   ns-popover-placement="bottom">    {{dif.fileId}}</button>
 	            <script type="text/ng-template" id="popover">
- 					 <b>{{dif.sourceFile.name}}</b>
-  					<p>{{dif.sourceFile.path}}</p>
+ 					 <b>{{dif.fileName}}</b>
+  					<p>{{dif.filePath}}</p>
 				</script>
 	            </td>
 	        </tr>

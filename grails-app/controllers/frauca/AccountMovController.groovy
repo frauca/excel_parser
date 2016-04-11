@@ -1,10 +1,9 @@
 package frauca
 
+import frauca.command.ValidateTotalsCommand
 import grails.converters.JSON
 import grails.converters.XML
 import grails.rest.RestfulController
-
-import java.text.DateFormat
 
 class AccountMovController extends RestfulController<AccountMov>{
 
@@ -164,7 +163,26 @@ class AccountMovController extends RestfulController<AccountMov>{
 	
 	def seeDiferences(String sdate,long accountId){
 		Date date=new Date().parse("yyyy-MM-dd", sdate);
-		def res = accountMovRawService.seeDiferences(date, accountId);
+		ValidateTotalsCommand[] restmp = accountMovRawService.seeDiferences(date, accountId);
+		def res=[]
+		restmp.each{ dif->
+			def map=[:]
+			map['operationDate']=dif.mov.operationDate
+			map['orderOfDoc']=dif.movRaw.orderOfDoc
+			map['concept']=dif.mov.concept
+			map['amount']=dif.mov.amount
+			map['total']=dif.total
+			map['totalAmount']=dif.mov.totalAmount
+			map['totalRaw']=dif.totalRaw
+			map['totalAmountRaw']=dif.mov.totalAmountRaw
+			map['fileId']=dif.sourceFile.id
+			map['fileName']=dif.sourceFile.name
+			map['filePath']=dif.sourceFile.path
+			map['isValid']=dif.isValid
+			map['isValidRaw']=dif.isValidRaw
+			res+=map
+		
+		}
 		switch(params.format){
 			case  "xml":
 				render( res  as XML)
