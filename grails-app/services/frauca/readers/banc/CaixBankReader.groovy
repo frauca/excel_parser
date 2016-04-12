@@ -35,6 +35,7 @@ class CaixBankReader extends BaseBankReader {
 		sheettable.getCeilValue("B"+row)
 	}
 
+	
 	@Override
 	public Object getValueDateCell(int row) {
 		sheettable.getCeilValue("C"+row)
