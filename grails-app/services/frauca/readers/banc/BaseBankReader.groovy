@@ -69,6 +69,7 @@ abstract class BaseBankReader {
 				 AccountMovRaw row=readRowMovements(i)
 				 if(row.amount&&row.concept){
 				 	rows << row
+					rowsWithoutAmount=0;//must be consecutive
 				 }else{
 				 	rowsWithoutAmount++;
 				 	log.debug "The row ${i}  has not ammount value and has not been added from ${row?.sourceFile?.name} (there are ${rowsWithoutAmount} without amount)"
