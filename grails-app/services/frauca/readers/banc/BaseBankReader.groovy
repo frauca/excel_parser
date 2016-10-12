@@ -74,7 +74,7 @@ abstract class BaseBankReader {
 				 	rowsWithoutAmount++;
 				 	log.debug "The row ${i}  has not ammount value and has not been added from ${row?.sourceFile?.name} (there are ${rowsWithoutAmount} without amount)"
 					if(rowsWithoutAmount>20){
-						log.info("There are more than 20 rows without amount. reader will stop reding this ${row?.sourceFile?.name} file")
+						log.info("On the row  ${i}  there are more than 20 rows without amount. reader will stop reding this ${row?.sourceFile?.name} file")
 						break;
 					}
 				 }
