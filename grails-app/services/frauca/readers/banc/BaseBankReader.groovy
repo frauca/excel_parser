@@ -63,13 +63,19 @@ abstract class BaseBankReader {
 	AccountMovRaw[] readAllMovements(){
 		 def rows=[]
 		 log.debug "we are going to read from ${getFirstDataRow()} to ${sheettable.getLastRowNum()}"
+		 int rowsWithoutAmount=0;
 		 for(int i in getFirstDataRow()..sheettable.getLastRowNum()){
 			 try{
 				 AccountMovRaw row=readRowMovements(i)
 				 if(row.amount&&row.concept){
 				 	rows << row
 				 }else{
-				 	log.debug "The row ${i} has not ammount value and has not been added from ${row?.sourceFile?.name}"
+				 	rowsWithoutAmount++;
+				 	log.debug "The row ${i}  has not ammount value and has not been added from ${row?.sourceFile?.name} (there are ${rowsWithoutAmount} without amount)"
+					if(rowsWithoutAmount>20){
+						log.info("There are more than 20 rows without amount. reader will stop reding this ${row?.sourceFile?.name} file")
+						break;
+					}
 				 }
 			 }catch(e){
 			 	log.debug "stop reading file at ${i} because ${e.message}"
