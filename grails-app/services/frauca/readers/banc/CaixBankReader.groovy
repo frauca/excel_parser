@@ -6,12 +6,16 @@ class CaixBankReader extends BaseBankReader {
 	
 	@Override
 	public BaseBankReader iCouldHandle(File file) {
-		CaixBankReader me = new CaixBankReader()
+		CaixBankReader me = instance();
 		me.sheettable = new JODSheetableReader(file)
 		if(me.itsMine()){
 			return me
 		}
 		return null;
+	}
+	
+	protected CaixBankReader instance(){
+		return new CaixBankReader();
 	}
 
 	@Override
