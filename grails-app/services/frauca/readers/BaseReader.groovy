@@ -5,6 +5,7 @@ import frauca.AccountMovRaw
 import frauca.FileSource
 import frauca.readers.banc.CaixBankReader
 import frauca.readers.banc.CaixaBankReader3
+import frauca.readers.banc.CaixaBankReader4MecaguenTusMuertos;
 import frauca.readers.banc.IngBank2Reader
 import frauca.readers.banc.BarBank2Reader
 import frauca.readers.banc.BarBankReader
@@ -43,9 +44,10 @@ class BaseReader {
 	
 	
 	def findSuitableBankReader(File file){
-		BaseBankReader[] suitables = [new BarBankReader(), new IngBankReader()
-							,new MedBankReader(),new IngBank2Reader(),new BarBank2Reader(), 
-							new CaCaBankReader(),new CaixBankReader(),new CaixaBankReader3()]
+		BaseBankReader[] suitables = [new MedBankReader(),new CaixaBankReader4MecaguenTusMuertos(), new IngBankReader()
+							,new IngBank2Reader(),new CaixaBankReader3(),
+							,new CaCaBankReader(),new CaixBankReader(),new BarBank2Reader(),new BarBankReader() 
+							]
 		suitables.find {suitable->
 			try{
 				log.debug "try to read it with ${suitable}"
