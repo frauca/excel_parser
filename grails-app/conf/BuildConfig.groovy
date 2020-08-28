@@ -34,16 +34,22 @@ grails.project.dependency.resolution = {
 
     repositories {
         inherits true // Whether to inherit repository definitions from plugins
-
         grailsPlugins()
         grailsHome()
         mavenLocal()
         grailsCentral()
         mavenCentral()
+        
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
         //mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
+        mavenRepo 'https://repo1.maven.org/maven2/'
+        mavenRepo 'https://repo.maven.apache.org/maven2/'
+        //if by any chance you can't connect to https url use this insecure url
+//      mavenRepo 'http://insecure.repo1.maven.org/maven2/'
+
+        mavenRepo 'https://repo.spring.io/milestone'
     }
 
     dependencies {
